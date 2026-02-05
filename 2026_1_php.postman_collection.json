@@ -1,0 +1,489 @@
+{
+	"info": {
+		"_postman_id": "7c357a2d-8a77-48ad-a574-c8387861866b",
+		"name": "2026_1_php",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9787867"
+	},
+	"item": [
+		{
+			"name": "api-sign-up email missing",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "127.0.0.1/api-sign-up",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"path": [
+						"api-sign-up"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api-sign-up email too short",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"6\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "user_email",
+							"value": "a",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "127.0.0.1/api-sign-up",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"path": [
+						"api-sign-up"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api-sign-up email too long",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"50\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "user_email",
+							"value": "1234567890123456789012345678901234567890123456789012345678901234567890",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "127.0.0.1/api-sign-up",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"path": [
+						"api-sign-up"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api-sign-up email invalid",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"email\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "user_email",
+							"value": "abc@abc",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "127.0.0.1/api-sign-up",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"path": [
+						"api-sign-up"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api-sign-up email valid",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Email valid, but password is not\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"pm.test(\"Email is valid, but password is too short\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"6\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "user_email",
+							"value": "a@a.com",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "127.0.0.1/api-sign-up",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"path": [
+						"api-sign-up"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api-sign-up password missing",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "user_email",
+							"value": "a@a.com",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "127.0.0.1/api-sign-up",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"path": [
+						"api-sign-up"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api-sign-up password too short",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"pm.test(\"Password too short\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"6\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "user_email",
+							"value": "a@a.com",
+							"type": "text"
+						},
+						{
+							"key": "user_password",
+							"value": "a",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "127.0.0.1/api-sign-up",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"path": [
+						"api-sign-up"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api-sign-up password too long",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"pm.test(\"Password too short\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"50\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "user_email",
+							"value": "a@a.com",
+							"type": "text"
+						},
+						{
+							"key": "user_password",
+							"value": "12345678901234567890123456789012345678901234567890123456789012345678901234567890",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "127.0.0.1/api-sign-up",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"path": [
+						"api-sign-up"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api-sign-up password valid",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Password is valid\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Password is valid\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"ok\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "user_email",
+							"value": "a@a.com",
+							"type": "text"
+						},
+						{
+							"key": "user_password",
+							"value": "password",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "127.0.0.1/api-sign-up",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"path": [
+						"api-sign-up"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api-sign-up email already exists",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Email already exists\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"pm.test(\"Password is valid\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"email\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "user_email",
+							"value": "a@a.com",
+							"type": "text"
+						},
+						{
+							"key": "user_password",
+							"value": "password",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "127.0.0.1/api-sign-up",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"path": [
+						"api-sign-up"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

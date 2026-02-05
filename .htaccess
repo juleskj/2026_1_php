@@ -1,0 +1,12 @@
+RewriteEngine On
+
+RewriteRule ^login$ page_login.php [L]
+
+
+
+# generic extensionless PHP routing
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([^\.]+)$ $1.php [L]
+
+ErrorDocument 404 /404.php
