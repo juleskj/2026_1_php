@@ -16,11 +16,30 @@
         }).addTo(map);
 
         // Add a marker
+
+        let marker = L.marker([55.67960020013266, 12.56464935119663], {
+            item_pk: "1"
+        }).addTo(map);
+        marker.on('click', function (e) {
+            alert("Marker ID: " + this.options.item_pk);
+        }); 
+        
+        
+        marker = L.marker([55.6899549465982, 12.526712188294855], {
+            item_pk: "2"
+        }).addTo(map);
+        marker.on('click', function (e) {
+            alert("Marker ID: " + this.options.item_pk);
+        });           
+        /*
         let marker = L.marker([55.67960020013266, 12.56464935119663]).addTo(map);
-        marker.bindPopup("20").openPopup();
+        marker.bindPopup("10").openPopup();
+        marker.item_pk = "1"
 
         marker = L.marker([55.6899549465982, 12.526712188294855]).addTo(map);
-        marker.bindPopup("20").openPopup();        
+        marker.bindPopup("20").openPopup();    
+        marker.item_pk = "2"    
+        */
     </script>
 
 
