@@ -8,7 +8,7 @@
 
     <script>
         // Initialize the map
-        const map = L.map('map').setView([51.505, -0.09], 13);
+        const map = L.map('map').setView([55.67960020013266, 12.56464935119663], 10);
 
         // Add OpenStreetMap tiles
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -16,8 +16,11 @@
         }).addTo(map);
 
         // Add a marker
-        const marker = L.marker([51.505, -0.09]).addTo(map);
-        marker.bindPopup("<b>Hello!</b><br>This is a Leaflet map.").openPopup();
+        let marker = L.marker([55.67960020013266, 12.56464935119663]).addTo(map);
+        marker.bindPopup("20").openPopup();
+
+        marker = L.marker([55.6899549465982, 12.526712188294855]).addTo(map);
+        marker.bindPopup("20").openPopup();        
     </script>
 
 
