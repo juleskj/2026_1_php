@@ -7,7 +7,7 @@ services:
     depends_on:
       - mariadb
     ports:
-      - 80:80
+      - 3333:80 # 0 - 65535 from 0 to 1024 are reserved 1025 and above 655535
     volumes:
       - .:/var/www/html
 
