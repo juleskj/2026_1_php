@@ -1,3 +1,4 @@
+
 function clearMarkers(data){
     const urlParams = new URLSearchParams(window.location.search)
 

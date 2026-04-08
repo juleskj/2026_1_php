@@ -44,6 +44,7 @@ function _validate_user_email() {
     return $user_email;
 }
 
+
 // ##############################
 define("user_username_min", 6);
 define("user_username_max", 20);
@@ -64,6 +65,7 @@ function _validate_user_username(){
 define("user_password_min", 6);
 define("user_password_max", 50);
 function _validate_user_password(){
+
     $user_password = $_POST["user_password"] ?? "";
     $user_password = trim($user_password);
     if(strlen($user_password) < user_password_min){
