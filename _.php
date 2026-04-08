@@ -46,19 +46,50 @@ function _validate_user_email() {
 
 
 // ##############################
-define("user_username_min", 6);
-define("user_username_max", 20);
+define("USER_USERNAME_MIN", 2);
+define("USER_USERNAME_MAX", 20);
 function _validate_user_username(){
     $user_username = $_POST["user_username"] ?? "";
     $user_username = trim($user_username);
-    if(strlen($user_username) < user_username_min){
-        throw new Exception("Username min ".user_username_min." characters", 400);
+    if(strlen($user_username) < USER_USERNAME_MIN){
+        throw new Exception("Username min ".USER_USERNAME_MIN." characters", 400);
     }
-    if(strlen($user_username) > user_username_max){
-        throw new Exception("Username max ".user_username_max." characters", 400);
+    if(strlen($user_username) > USER_USERNAME_MAX){
+        throw new Exception("Username max ".USER_USERNAME_MAX." characters", 400);
     }
     return $user_username;
 }
+
+// ##############################
+define("USER_FORENAME_MIN", 2);
+define("USER_FORENAME_MAX", 20);
+function _validate_user_forename(){
+    $user_forename = $_POST["user_forename"] ?? "";
+    $user_forename = trim($user_forename);
+    if(strlen($user_forename) < USER_FORENAME_MIN){
+        throw new Exception("forename min ".USER_FORENAME_MIN." characters", 400);
+    }
+    if(strlen($user_forename) > USER_FORENAME_MAX){
+        throw new Exception("forename max ".USER_FORENAME_MAX." characters", 400);
+    }
+    return $user_forename;
+}
+
+// ##############################
+define("USER_LASTNAME_MIN", 2);
+define("USER_LASTNAME_MAX", 20);
+function _validate_user_lastname(){
+    $user_lastname = $_POST["user_lastname"] ?? "";
+    $user_lastname = trim($user_lastname);
+    if(strlen($user_lastname) < USER_LASTNAME_MIN){
+        throw new Exception("forename min ".USER_LASTNAME_MIN." characters", 400);
+    }
+    if(strlen($user_lastname) > USER_LASTNAME_MAX){
+        throw new Exception("forename max ".USER_LASTNAME_MAX." characters", 400);
+    }
+    return $user_lastname;
+}
+
 
 
 // ##############################

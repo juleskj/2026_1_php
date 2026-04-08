@@ -29,12 +29,19 @@ try{
     //TODO:validate hashed password to check if actually password
     if (password_verify($user_password, $user['user_password'])) {
         // TODO: Put user in session
-        
-        $_SESSION["user"] = $user;
+        // TODO: remove password and pk
+        unset($user['user_password']);
+             
 
+    
+        $_SESSION['user'] = [
+            'user_pk'    => $user['user_pk'],    
+            'user_email' => $user['user_email'],
+            'user_username' => $user['user_username'],
+        ];
 
         _(json_encode($user));
-        _("ok");
+        header('Location: /');
     } else {
         throw new Exception("Password incorect");
     }

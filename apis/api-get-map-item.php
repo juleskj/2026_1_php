@@ -32,9 +32,6 @@ try{
 }
 
 ?>
-<!-- <browser mix-function="zoomOnMark">
-   <?=  json_encode($item) ?>
-</browser> -->
 
 <browser mix-update="#info">
     <?php
