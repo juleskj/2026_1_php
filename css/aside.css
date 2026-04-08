@@ -1,8 +1,33 @@
 
+.hidden{
+    display: none;
+}
 
 
 aside, #info{ 
     grid-area: 2/2;
+
+    min-width: 230px;
+    height: 250px;
+    width: calc(100% - 20px);
+    box-shadow: 1px 5px 10px gray;
+    margin: 10px;
+    overflow-y:scroll;
+    background: white;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 2;
+
+    @media(min-width:768px){
+        overflow: hidden;
+        box-shadow: none;
+        height: auto;
+        width: auto;
+        position: relative;
+        margin: 0;
+    }
+
     .energy-label{
         min-width: 2rem;
         height: 2rem;
@@ -57,7 +82,12 @@ aside, #info{
             overflow-x: scroll;
             scroll-snap-type: x mandatory;
             height: 100%;
-            max-height: 250px;
+            overflow-y:hidden;
+            max-height: 150px;
+            @media (min-width: 768px){
+                max-height: 250px;
+                
+            }
                        
         }
         li {
@@ -204,9 +234,14 @@ aside, #info{
     position: relative;
     overflow: hidden;
     min-height: 100px;
+    max-height: 150px;
+    @media(min-width:768px){
+        max-height: 250px;
+    }
+
     img{
         grid-area: 1/1;
-      
+        height: 100%;
     }
     p{
         grid-area: 1/1;

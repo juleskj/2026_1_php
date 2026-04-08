@@ -1,7 +1,5 @@
 <?php
 
-
-
 // start the session
 session_start();
 
@@ -10,9 +8,6 @@ if (!isset($_SESSION['viewed_homes'])) {
     $_SESSION['viewed_homes'] = [];
 
 }
-
-
-
 
 $title = "Home";
 

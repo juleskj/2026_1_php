@@ -77,3 +77,23 @@ function zoomOnMark(item){
     item = JSON.parse(item);
     map.flyTo([item.lat, item.lon], 11);
 }
+
+
+function showInfo(button) {
+    
+    document.getElementById('info').classList.remove('hidden');
+
+    
+    const itemPk = button.getAttribute('data-item-pk');
+
+    
+    fetch(`api-get-map-item?item_pk=${itemPk}`)
+        .then(response => response.text())
+        .then(data => {
+            // Update the aside's content
+            document.getElementById('info').innerHTML = data;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
