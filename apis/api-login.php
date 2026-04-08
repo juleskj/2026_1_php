@@ -38,9 +38,11 @@ try{
             'user_pk'    => $user['user_pk'],    
             'user_email' => $user['user_email'],
             'user_username' => $user['user_username'],
+            'user_lastname' => $user['user_lastname'],
+            'user_forename' => $user['user_forename'],
         ];
 
-        _(json_encode($user));
+        // _(json_encode($user));
         header('Location: /');
     } else {
         throw new Exception("Password incorect");

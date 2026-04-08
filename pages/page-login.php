@@ -8,6 +8,12 @@
     <title>Document</title>
 </head>
 <body>
-    Login
+    <form action="/api-login" method="POST">
+        <label for="email">email</label>
+        <input type="email" name="user_email" id="email" value="jules@gmail.com">
+        <label for="password">password</label>
+        <input type="password" name="user_password" id="password" value="password">
+        <button>submit</button>
+    </form>
 </body>
 </html>
