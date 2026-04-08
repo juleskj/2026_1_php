@@ -1,0 +1,234 @@
+
+
+
+aside, #info{ 
+    grid-area: 2/2;
+    .energy-label{
+        min-width: 2rem;
+        height: 2rem;
+        border-radius: 2px;
+        padding: 0.5rem;
+        --energy-color: grey;
+        background-color: var(--energy-color); /* Light brown for the walls */
+        text-align: center;
+        line-height
+
+        &.a{
+            --energy-color: var(--dark-green);
+        }
+        &.b{
+            background-color: var(--green);
+        }
+        &.c{
+            background-color: var(--light-green);
+        }
+        &.d{
+            background-color: var(--yellow);
+            border: solid 1px var(--black);
+        }
+        &.e{
+            background-color: var(--orange);
+        }
+        &.f{
+            background-color: var(--dark-orange);
+        }
+        &.g{
+            background-color:  var(--red);
+        }
+
+
+    }
+
+
+
+
+    & *::first-letter{
+        text-transform: capitalize;
+    }
+    min-width: 230px;
+    section{
+        display: flex;
+        flex-flow: column;
+        gap: 0.2rem;
+
+        /* images carusel css */
+        ul {
+            display: flex;
+            overflow-x: scroll;
+            scroll-snap-type: x mandatory;
+            height: 100%;
+            max-height: 250px;
+                       
+        }
+        li {
+            list-style-type: none;
+            scroll-snap-align: center;
+            flex: 0 0 100%;
+            
+        }
+        
+        ul::-webkit-scrollbar {
+        display: none;
+        }
+
+        ul::scroll-button(*) {
+        border: 0;
+        font-size: 1rem;
+        
+        opacity: 0.7;
+        cursor: pointer;
+        color: var(--black);
+        background: var(--white);
+        border-radius: 5px;
+        opacity: 0.7;
+        aspect-ratio: 1;
+        z-index: 2;
+
+        }
+
+        ul::scroll-button(*):hover,
+        ul::scroll-button(*):focus {
+        opacity: 1;
+        }
+
+        ul::scroll-button(*):active {
+        translate: 1px 1px;
+        }
+
+       
+        ul::scroll-button(left) {
+        content: "◄" / "Previous";
+        }
+
+        ul::scroll-button(right) {
+        content: "►" / "Next";
+        }
+        ul {
+        anchor-name: --my-carousel;
+        }
+
+        ul::scroll-button(*) {
+        position: absolute;
+        position-anchor: --my-carousel;
+        
+        }
+        ul::scroll-button(left) {
+        right: calc(anchor(left) - 40px);
+        bottom: calc(anchor(bottom) + 1rem);
+        }
+
+        ul::scroll-button(right) {
+        left: calc(anchor(right) - 40px);
+        bottom: calc(anchor(bottom) + 1rem);
+        }
+
+        ul {
+        scroll-marker-group: after;
+        }
+
+        ul::scroll-marker-group {
+        position: absolute;
+        position-anchor: --my-carousel;
+        bottom: calc(anchor(bottom) + 1.2rem);
+
+        display: flex;
+        justify-self: anchor-center;
+        justify-content: center;
+        gap: 20px;
+        z-index: 2;
+        }
+
+        li::scroll-marker {
+           
+        content: attr(data-accName);
+        width: 10px;
+        height: 10px;
+        background-color: var(--white);
+       
+        border-radius: 50%;
+        overflow: hidden;
+        text-indent: 16px;
+        }
+
+        li::scroll-marker:target-current {
+            background-color: var(--white);
+            opacity: 0.5;
+            
+        }
+
+    }
+
+    .property-price{
+        font-size: x-large;
+        font-weight: 600;
+        padding-top: 0.7rem;
+    }
+
+   section section:has(.property-price) {
+        padding:0 0.2rem ;
+
+    }
+    .row{
+        padding: 0.5rem 0;
+        margin: 0.2rem;
+        border-top: 1px solid var(--white);
+        display: flex;
+        flex-flow: row;
+        justify-content: end;
+        align-items: center;
+        &::first-letter{
+            text-transform: capitalize;
+        }   
+        h4{
+            margin-right: auto;
+        }     
+    }
+    
+
+}
+
+.property-img {
+    width: 500px;
+    max-width: 100%;
+    height: 100%;
+    max-height: 300px;
+    object-fit: cover;
+}
+.floor-plan-img {
+    
+    object-fit: contain;
+}
+
+.img-container{
+    display: grid;
+    position: relative;
+    overflow: hidden;
+    min-height: 100px;
+    img{
+        grid-area: 1/1;
+      
+    }
+    p{
+        grid-area: 1/1;
+        display: block;
+        align-self: start;
+        text-align: center;
+        padding: 0.2rem;
+        background-color:  var(--red);
+        color: var(--white);
+        
+        z-index: 1;
+    }
+}
+
+
+#sold{
+    color: var(--white);
+    background-color: var(--red);
+    border: none;
+    text-transform: uppercase;
+    font-weight: bolder;
+    display: block;
+    padding: 1rem 0.2rem;
+    margin: 0.1rem 2rem;
+}

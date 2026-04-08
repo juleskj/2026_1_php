@@ -1,12 +1,15 @@
 RewriteEngine On
+#RewriteCond %{REQUEST_URI}  !(\.png|\.jpg|\.webp|\.gif|\.jpeg|\.zip|\.css|\.svg|\.js|\.pdf)$
+#RewriteRule (.*) routes.php [QSA,L] 
 
-RewriteRule ^login$ page_login.php [L]
+RewriteRule ^$      /pages/page-index.php  
 
+RewriteRule ^page-map$      /pages/page-map.php 
+RewriteRule ^api-get-map-item$      /apis/api-get-map-item.php [NC,L]
+RewriteRule ^api-delete-item$      /apis/api-delete-item.php [NC,L]
+RewriteRule ^api-search$      /apis/api-search.php [NC,L]
+RewriteRule ^api-city-search$      /apis/api-city-search.php [NC,L]
+RewriteRule ^api-sign-up$      /apis/api-sign-up.php [NC,L]
+RewriteRule ^api-login$         /apis/api-login.php [NC,L]
 
-
-# generic extensionless PHP routing
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^([^\.]+)$ $1.php [L]
-
-ErrorDocument 404 /404.php
+RewriteRule ^session_destroy$      /session_destroy.php [NC,L]

@@ -1,0 +1,39 @@
+
+body{
+    display: grid;
+    grid-template-rows: auto 1fr 0;
+    grid-template-columns:[full-start] 1fr [content] minmax(0, 1024px) 1fr  [full-end] ;
+}
+
+body > * {
+    grid-column: content;
+}
+
+
+footer, main, nav{
+    
+    display: grid;
+    grid-column: full;
+    grid-template-columns: subgrid;
+    gap: 2rem 0; 
+    
+
+    > * {
+        grid-column: content;
+    }
+
+}
+
+.grid_1-1-1{
+    display: grid;
+    grid-column: full;
+    grid-template-columns: repeat(auto-fit, minmax(min-content, 300px));
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    background-color: rgb(188, 188, 188);
+    height: 80vh;
+}
+
+/* to have an element to be the full with just put 
+grid-column:full; and grid-template-columns: subgrid; */
