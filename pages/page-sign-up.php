@@ -1,25 +1,14 @@
+<?php
 
 
+$title = "Sign up";
 
+require_once __DIR__."/../micro-components/_header.php";
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    sign up
-    <!--
-    $user_email = _validate_user_email();
-    $user_password = _validate_user_password();
-    $user_username = _validate_user_username();
-    $hashed_password  
-    -->
+?>
 
-
-    <form action="/api-sign-up" method="POST">
+<main >
+   <form action="/api-sign-up" method="POST">
         <label for="username">Username</label>
         <input id="username" type="text" name="user_username" value="jens24">
         <br>
@@ -44,5 +33,10 @@
 
     </form>
 
-</body>
-</html>
+</main>
+
+<?php
+
+require_once __DIR__."/../micro-components/_footer.php";
+
+

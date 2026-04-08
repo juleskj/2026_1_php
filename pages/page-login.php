@@ -1,19 +1,29 @@
+<?php
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <form action="/api-login" method="POST">
-        <label for="email">email</label>
-        <input type="email" name="user_email" id="email" value="jules@gmail.com">
-        <label for="password">password</label>
-        <input type="password" name="user_password" id="password" value="password">
-        <button>submit</button>
+$title = "Login";
+
+require_once __DIR__."/../micro-components/_header.php";
+
+?>
+
+<main id="page-login">
+    <form id="login-form" action="/api-login" method="POST">
+        <label for="email">
+            email 
+            <input type="email" name="user_email" id="email" value="jules@gmail.com">
+        </label>
+        
+        <label for="password">
+            password 
+            <input type="password" name="user_password" id="password" value="password">
+        </label>
+       
+        <button class="filled-btn blue">submit</button>
     </form>
-</body>
-</html>
+
+</main>
+
+<?php
+
+require_once __DIR__."/../micro-components/_footer.php";

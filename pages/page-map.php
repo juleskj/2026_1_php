@@ -52,7 +52,7 @@
     <main id="page-map">
         <section class="map-container">
 
-            <form mix-post action="api-search">
+            <form id="map-form" mix-post action="api-search">
                 
                 <label for="bed-select">beds:</label>
 
@@ -119,7 +119,8 @@
                 
                 
                 let items = <?=  $items?>       
-                                               
+                    
+                
                 
                 items.forEach(item => {
                     var marker = L.marker([item.lat, item.lon], {
@@ -127,8 +128,9 @@
                             className: '',
                             html: `
                                 <button 
-                                    class="marker  ${item.type.replaceAll(" ", "_")}" onclick="mixhtml(); return false;"
-                                    mix-get="api-get-map-item?item_pk=${item.pk}">
+                                    class="marker  ${item.type.replaceAll(" ", "_")}"
+                                    data-item-pk="${item.pk}"
+                                    onclick="showInfo(this)">
                                 </button>
                             `,
                         }),
@@ -142,7 +144,7 @@
             </script>
     
     
-            <aside id="info"></aside>
+            <aside class="hidden" id="info"></aside>
         </section>
     </main>
   

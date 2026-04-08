@@ -31,13 +31,12 @@ try{
 
 }
 
-?>
 
-<browser mix-update="#info">
-    <?php
-        require __DIR__ . "/../micro-components/_aside.php"
-    ?>
-</browser>
+require __DIR__ . "/../micro-components/_aside.php";
+
+
+
+
 
 
 

@@ -34,8 +34,8 @@ require_once __DIR__."/../_.php";
     <nav>
         <a href="/">Home</a>
         <a href="/page-map">Map</a>
-        <a href="/">Login</a>
-        <a class="filled-btn blue" href="/">Sign up</a>
+        <a href="/login">Login</a>
+        <a class="filled-btn blue" href="/sign-up">Sign up</a>
        
         <!-- <button mix-get="/apis/api-get-more-items"> get more items</button> -->
         
