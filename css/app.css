@@ -32,7 +32,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-
+    
       &::-webkit-scrollbar {
         height: 0.7rem;
         width: 0.7rem;
@@ -182,7 +182,7 @@ footer{
 
 
 .filled-btn{
-    
+    transition: all 0.1s ease-out;
     font-size: 1rem;
     padding: 0.2rem 0.2rem;
     min-width: 80px;
@@ -193,9 +193,9 @@ footer{
     &.white{
     background-color: var(--white);
     color: var(--blue);
-    border: 1px solid var(--white);
+    border: 1px solid var(--blue);
         &:hover, &:focus{
-            border: solid 1px var(--white);
+            
             background-color: var(--blue);
             color: var(--white);
             
@@ -271,9 +271,7 @@ footer{
     font-weight: bolder;
     white-space: nowrap;
     align-self: center;
-    border: solid 1px var(--blue);
     text-decoration: none;
-    color: var(--blue);
     padding: 0.6rem 1em;
     margin: 0 1rem;
    
@@ -284,8 +282,40 @@ footer{
 
 
 .scroll-item{
+    position: relative;
 
+    & .bookmark{
+        
+        padding: 0.5rem;
+        background-color: var(--white);
+        border-radius: 50px;
+        position: absolute;
+        right: 5%;
+        top:  5%;
+        cursor: pointer;
+        z-index: 3;
+        border: none;
+
+        &::after{
+            content: " ";
+            background-image: url(/images/heart-regular.svg);
+            background-repeat: no-repeat;
+            
+            object-fit: contain;
+            display: block;
+            height: 1rem;
+            width: 1rem;
+           
+            
+            transition: all 0.1s ease-out;
+        }
+        
+        &:hover::after{
+            
+            background-image: url(/images/heart-solid.svg);
+        }
     
+    }
 
     display: grid;
     grid-template-rows: 60% 40%;
@@ -306,7 +336,9 @@ footer{
     
     article{
         align-self: center;
-        padding: 0rem 0.5rem;
+        margin: 0rem 0.5rem;
+        position: relative;
+        
 
         p:has(span) span:not(:last-child){
             border-right: 1px solid gray;
