@@ -40,15 +40,15 @@ if (!empty($_SESSION['user'])) {
 </head>
 <body>
     <nav>
-        <a href="/">Home</a>
+        <a  href="/">Home</a>
         <a href="/page-map">Map</a>
         <?php if( !$user): ?>
             <a href="/login">Login</a>
             <a class="filled-btn blue" href="/sign-up">Sign up</a>
         <?php else:?>
             <a href="/page-profile">Account</a>
-            <p><?= _($user["user_forename"] . " " . $user["user_lastname"] ) ?></p>
-            <button onclick="logout()">logout</button>
+            
+            <button class="filled-btn blue" onclick="logout()">logout</button>
          <?php endif;?>
         
         
