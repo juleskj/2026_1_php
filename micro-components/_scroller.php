@@ -1,3 +1,15 @@
+
+<?php
+    $user = "";
+
+    if(!empty($_SESSION["user"])){
+        $user = $_SESSION["user"];
+    }
+
+
+?>
+
+
 <section class="scroll-container">
 
     <h2><?php _($scroller_header ?? "header")?></h2>
@@ -5,7 +17,9 @@
     <section class="scroller" >
         <?php foreach ($items as $item): ?>
             <article id="<?= _($item["pk"]) ?>" class="scroll-item">
-                <button class="bookmark"></button>
+                <?php if($user){ ?>
+                    <button onclick="saveProperty(this);" class="bookmark"></button>
+                <?php } ?>
                 <a href="/page-map?item_pk=<?= $item['pk']?>">
                     <img 
                     class="property-img" 
@@ -27,3 +41,23 @@
 
     </section>
 </section>
+
+<script>
+
+function saveProperty(button){
+
+    console.log(button);
+    const item_pk = button.closest(".scroll-item").id
+
+    console.log(item_pk)
+
+    fetch(`api-save-property?item_pk=${item_pk}`)
+    .then(res=>res.text())
+    .then(data=> data)
+    .catch(error=>console.log(error))
+
+
+
+}
+
+</script>

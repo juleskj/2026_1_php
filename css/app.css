@@ -305,6 +305,7 @@ footer{
             display: block;
             height: 1rem;
             width: 1rem;
+            pointer-events: none;
            
             
             transition: all 0.1s ease-out;
