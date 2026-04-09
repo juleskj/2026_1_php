@@ -2,8 +2,15 @@
 
 try{
     require_once __DIR__."/../_.php";
-    $user_email = _validate_user_email();
     $user_password = _validate_user_password();
+    $password_verify = $_POST["password_verify"] ?? "";
+    
+    if ($user_password !== $password_verify){
+        throw new Exception("Password dont maatch");
+        exit;
+    }
+        
+    $user_email = _validate_user_email();
     $user_username = _validate_user_username();
 
     $user_forename = _validate_user_forename();

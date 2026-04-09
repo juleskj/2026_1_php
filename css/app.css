@@ -13,7 +13,7 @@
 --red: rgb(189, 74, 74);  
 
 --black:rgb(20, 20, 20) ;
---white:rgb(233, 233, 233) ;
+--white:#fcfafa ;
 --blue: rgb(64, 92, 185); 
 
 }
@@ -331,22 +331,49 @@ footer{
 }
 
 
-#login-form{
-        display: flex;
+section:has(#login-form) , section:has(#signup-form){
+    display: flex;
     flex-flow: column;
     gap: 0.5rem;
     justify-content: center;
     align-items: stretch;
     margin: auto;
+    max-width: 250px;
+
+   
 
     label{
-        display: grid;
-        grid-template-columns: auto 1fr;
-        gap: 1rem;
+        display: block;
         text-transform: capitalize;
+        &:not(:last-of-type){
+            padding-bottom: 1rem;
+        }
+
+        &:last-of-type{
+            padding-bottom: 2rem;
+        }
+        
+        input{
+            display: block;
+            width: 100%;
+            background: var(--white);
+            color: var(--black);
+            border: 1px solid var(--blue);
+            font-size: 1rem;
+            padding: 0.2rem 0.2rem;
+            &[type=password]{
+                color: var(--blue);
+            }
+        }
     }
 
     button{
         text-transform: uppercase;
+        align-self:stretch;
+        width: 100%;
+        padding: 0.5rem 0;
     }
 }
+
+ 
+ 

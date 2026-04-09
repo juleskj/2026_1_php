@@ -93,17 +93,17 @@ function _validate_user_lastname(){
 
 
 // ##############################
-define("user_password_min", 6);
-define("user_password_max", 50);
+define("USER_PASSWORD_MIN", 6);
+define("USER_PASSWORD_MAX", 50);
 function _validate_user_password(){
 
     $user_password = $_POST["user_password"] ?? "";
     $user_password = trim($user_password);
-    if(strlen($user_password) < user_password_min){
-        throw new Exception("Password min ".user_password_min." characters", 400);
+    if(strlen($user_password) < USER_PASSWORD_MIN){
+        throw new Exception("Password min ".USER_PASSWORD_MIN." characters", 400);
     }
-    if(strlen($user_password) > user_password_max){
-        throw new Exception("Password max ".user_password_max." characters", 400);
+    if(strlen($user_password) > USER_PASSWORD_MAX){
+        throw new Exception("Password max ".USER_PASSWORD_MAX." characters", 400);
     }
     return $user_password;
 }
