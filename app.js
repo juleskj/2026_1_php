@@ -97,3 +97,27 @@ function showInfo(button) {
             console.error('Error:', error);
         });
 }
+
+
+function logout(){
+    fetch('api-logout', {
+        method: 'POST', 
+        credentials: 'same-origin'
+    })
+    .then(response => {
+        if (response.ok) {
+            
+            window.location.reload();
+        } else {
+            alert('Logout failed. Please try again.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred during logout.');
+    });
+}
+
+
+
+

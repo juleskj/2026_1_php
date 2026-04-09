@@ -5,8 +5,6 @@ try{
 
     require_once __DIR__."/../_.php";
 
-    // TODO: validate username
-    // TODO:validate email
     $user_email = _validate_user_email();
     $user_password = _validate_user_password();
 
@@ -23,17 +21,18 @@ try{
 
 
     if (!$user) {
-        throw new Exception("User not found");   
+        throw new Exception("no user");
+        exit;
+        
     }
 
     //TODO:validate hashed password to check if actually password
     if (password_verify($user_password, $user['user_password'])) {
-        // TODO: Put user in session
-        // TODO: remove password and pk
+       
+        // remove password from user
         unset($user['user_password']);
-             
-
-    
+        
+        // put user in session
         $_SESSION['user'] = [
             'user_pk'    => $user['user_pk'],    
             'user_email' => $user['user_email'],
@@ -42,14 +41,33 @@ try{
             'user_forename' => $user['user_forename'],
         ];
 
-        // _(json_encode($user));
+        // redirect to home page
         header('Location: /');
     } else {
-        throw new Exception("Password incorect");
+        throw new Exception("password incorect");
+        exit;
     }
 }catch (Exception $e){
 
+    if(str_contains($e, "no user")){
+        http_response_code(400);
+
+       $_SESSION['flash_message'] = "no user found, did you spell your email corect?";
+        header('Location: /login');
+        exit;
+    }
+
+    if(str_contains($e, "password incorect")){
+        http_response_code(400);
+
+        $_SESSION['flash_message'] = "Password incorect";
+        header('Location: /login');
+        exit;
+    }
+
+
     _($e);
+
 
 }
 finally{

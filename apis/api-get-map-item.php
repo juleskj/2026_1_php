@@ -31,8 +31,9 @@ try{
 
 }
 
+ require __DIR__ . "/../micro-components/_aside.php"; ?>
 
-require __DIR__ . "/../micro-components/_aside.php";
+
 
 
 
