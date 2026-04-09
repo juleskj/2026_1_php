@@ -2,6 +2,14 @@
 
 require_once __DIR__."/../_.php";
 
+$user = "";
+
+if (!empty($_SESSION['user'])) {
+    
+    $user= $_SESSION['user'];
+
+}
+
 ?>
 
 
@@ -34,10 +42,15 @@ require_once __DIR__."/../_.php";
     <nav>
         <a href="/">Home</a>
         <a href="/page-map">Map</a>
-        <a href="/login">Login</a>
-        <a class="filled-btn blue" href="/sign-up">Sign up</a>
-       
-        <!-- <button mix-get="/apis/api-get-more-items"> get more items</button> -->
+        <?php if( !$user): ?>
+            <a href="/login">Login</a>
+            <a class="filled-btn blue" href="/sign-up">Sign up</a>
+        <?php else:?>
+            <a href="/page-profile">Account</a>
+            <p><?= _($user["user_forename"] . " " . $user["user_lastname"] ) ?></p>
+            <button onclick="logout()">logout</button>
+         <?php endif;?>
+        
         
     </nav>
 

@@ -16,6 +16,7 @@ footer, main, nav{
     grid-column: full;
     grid-template-columns: subgrid;
     gap: 2rem 0; 
+    position: relative;
     
 
     > * {

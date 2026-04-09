@@ -1,12 +1,15 @@
 <?php 
 
 try{
+
+    session_start();
+
     require_once __DIR__."/../_.php";
     $user_password = _validate_user_password();
     $password_verify = $_POST["password_verify"] ?? "";
     
     if ($user_password !== $password_verify){
-        throw new Exception("Password dont maatch");
+        throw new Exception("password dont match");
         exit;
     }
         
@@ -49,32 +52,37 @@ try{
 
     $stmt->execute();
 
+    $_SESSION['flash_message'] = "Welcome to boligsiden! pleas login to your new account";
     header('Location: /login');
     exit;
 }
 catch(Exception $e){
 
-echo $e;
-    
-    
+
     if(str_contains($e, "user_email") && str_contains($e, "Duplicate entry")){
         http_response_code(409);
 
-        ?>
-        <browser mix-update="#message"><p>email already exists</p></browser>
-        <?php
+        $_SESSION['flash_message'] = "email already exists";
+        header('Location: /sign-up');
 
-    
         exit;
     }
+
+    if(str_contains($e, "password dont match")){
+        http_response_code(409);
+
+        $_SESSION['flash_message'] = "password dont match";
+        header('Location: /sign-up');
+        
+        exit;
+    }
+
 
     if(str_contains($e, "user_username") && str_contains($e, "Duplicate entry")){
         http_response_code(400);
         
-
-        ?>
-        <browser mix-update="#message"><p>username already exists</p></browser>
-        <?php
+        $_SESSION['flash_message'] = "username already exists";
+        header('Location: /sign-up');
 
         exit;
     }

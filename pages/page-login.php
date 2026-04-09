@@ -1,16 +1,25 @@
 <?php
-
+session_start();
 
 $title = "Login";
 
 require_once __DIR__."/../micro-components/_header.php";
 
+    $message = "welcome back please login";
+
+    if (isset($_SESSION['flash_message'])) {
+
+        $message = $_SESSION['flash_message'] ?? '';
+
+        unset($_SESSION['flash_message']); 
+    }
 
 ?>
 
 <main id="page-login">
     <section>
         <h1>Login to boligside</h1>
+        <div class="alert-msg"><p><?= _($message); ?></p></div>
 
         <form id="login-form" action="/api-login" method="POST">
             <label for="email">

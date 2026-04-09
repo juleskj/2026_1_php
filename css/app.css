@@ -32,9 +32,10 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    
-    
+       
 }
+
+
 
 img{
     width:100%;
@@ -376,4 +377,11 @@ section:has(#login-form) , section:has(#signup-form){
 }
 
  
- 
+ .alert-msg{
+
+    color: var(--blue);
+    font-size: large;
+    &::first-letter{
+        text-transform: capitalize;
+    }
+ }

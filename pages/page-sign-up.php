@@ -1,15 +1,27 @@
 <?php
 
+session_start();
 
 $title = "Sign up";
 
 require_once __DIR__."/../micro-components/_header.php";
+
+$message = "welcome back please login";
+
+if (isset($_SESSION['flash_message'])) {
+
+    $message = $_SESSION['flash_message'] ?? '';
+
+    unset($_SESSION['flash_message']); 
+}
+
 
 ?>
 
 <main >
     <section>
         <h1>Sign up</h1>
+        <div class="alert-msg"><p><?= _($message); ?></p></div>
 
         <form id="signup-form" action="/api-sign-up" method="POST">
             <label for="username">Username must be between
@@ -32,7 +44,7 @@ require_once __DIR__."/../micro-components/_header.php";
         
         <label for="password_verify">Please verify password
             
-            <input min="<?= _(USER_PASSWORD_MIN) ?>" max="<?= _(USER_PASSWORD_MAX) ?>" id="password_verify" type="password" name="password_verify" value="Password1234">
+            <input min="<?= _(USER_PASSWORD_MIN) ?>" max="<?= _(USER_PASSWORD_MAX) ?>" id="password_verify" type="password" name="password_verify" value="Password123">
         </label>
         
         <label for="forename">Forename
