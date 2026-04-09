@@ -43,6 +43,8 @@ function get_viewed_homes(){
     $viewed_homes = [];
 
     if (!empty($_SESSION['viewed_homes'])) {
+        
+
         // Create a placeholder string for the IN clause ("?","?")
         $placeholders = implode(',', array_fill(0, count($_SESSION['viewed_homes']), '?'));
 
