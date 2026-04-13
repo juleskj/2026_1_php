@@ -123,7 +123,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-function _send_welcome_email($user_email,$token){
+function _send_welcome_email($user_email,$token, $isReverify = false){
     
     
     $mail = new PHPMailer(true);
@@ -146,17 +146,33 @@ function _send_welcome_email($user_email,$token){
 
     $mail->isHTML(true);
 
-    $mail->Subject = 'Welcome to boligsiden';
     $verificationLink = "http://127.0.0.1/verify-user?token=" . urlencode($token);
 
-    $mail->Body = "
-        <h2>Welcome!</h2>
-        <p>Thanks for signing up. We're excited to have you!</p>
-        <p>Please verify your account to log in</p>
-        <a href='$verificationLink'>verify your account</a>
-        <br>
-        <p>Best regards,<br>JuiceFrog</p>
-    ";
+    if($isReverify){
+
+        $mail->Subject = "Please Reverify Your Email";
+        $mail->Body = "
+            <h2>Reverify Your Account</h2>
+            <p>Your previous verification link expired. No worries!</p>
+            <p>Click the link below to verify your account:</p>
+            <a href='$verificationLink'>Verify Now</a>
+            <br>
+            <p>Best regards,<br>JuiceFrog</p>
+        ";
+
+    } else {
+        
+        $mail->Subject = 'Welcome to boligsiden';
+    
+        $mail->Body = "
+            <h2>Welcome!</h2>
+            <p>Thanks for signing up. We're excited to have you!</p>
+            <p>Please verify your account to log in</p>
+            <a href='$verificationLink'>verify your account</a>
+            <br>
+            <p>Best regards,<br>JuiceFrog</p>
+        ";
+    }
 
     $mail->AltBody = "Welcome! Thanks for signing up.";
 
