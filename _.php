@@ -117,8 +117,50 @@ function _no_cache(){
 }
 
 
+require_once __DIR__ . '/vendor/autoload.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+function _send_welcome_email($user_email){
+    
+    
+    $mail = new PHPMailer(true);
+
+    $sender_email = "juicefrog2610@gmail.com";
+    $email_password = "uwms bmfe bnhk qajz" ; 
 
 
+    $mail->isSMTP();
+    $mail->Host       = 'smtp.gmail.com';
+    $mail->SMTPAuth   = true;
+    $mail->Username   = $sender_email;
+    $mail->Password   = $email_password;
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+    $mail->Port       = 587;
+
+
+    $mail->setFrom($sender_email, 'JuiceFrog');
+    $mail->addAddress($user_email);
+
+    $mail->isHTML(true);
+
+    $mail->Subject = 'Welcome to boligsiden';
+
+    $mail->Body = "
+        <h2>Welcome!</h2>
+        <p>Thanks for signing up. We're excited to have you!</p>
+        <p>You can now log in and start using your account.</p>
+        <br>
+        <p>Best regards,<br>JuiceFrog</p>
+    ";
+
+    $mail->AltBody = "Welcome! Thanks for signing up.";
+
+    $mail->send();
+
+}
 
 
 
