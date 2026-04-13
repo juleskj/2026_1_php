@@ -7,6 +7,7 @@ RewriteRule ^$      /pages/page-index.php [NC,L]
 RewriteRule ^page-map$      /pages/page-map.php [NC,L] 
 RewriteRule ^login$         /pages/page-login.php [NC,L]
 RewriteRule ^sign-up$       /pages/page-sign-up.php [NC,L]
+RewriteRule ^verify-user$   /pages/verify-user.php [NC,L]
 
 RewriteRule ^api-save-property$      /apis/api-save-property.php [NC,L]
 RewriteRule ^api-logout$            /apis/api-logout.php [NC,L]

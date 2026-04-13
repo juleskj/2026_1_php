@@ -19,8 +19,15 @@ try{
     $user_forename = _validate_user_forename();
     $user_lastname = _validate_user_lastname();
 
+    $token = bin2hex(random_bytes(25)); // Returns 50 characters
+    date_default_timezone_set('Europe/Copenhagen'); //makes sure its the correct time stamp
+
+
+    $expires_at = date('Y-m-d H:i:s', strtotime('+1 hour'));
+
     $hashed_password = password_hash($user_password, PASSWORD_DEFAULT);
     $user_pk = bin2hex(random_bytes(25)); // Returns 50 characters
+
 
     require_once __DIR__."/../db.php";
     $sql = <<<SQL
@@ -30,7 +37,10 @@ try{
                 user_forename,
                 user_lastname,
                 user_pk,
-                user_email
+                user_email,
+                is_verified,
+                verification_token,
+                token_expires_at
             )
             VALUES (
                 :username,
@@ -38,7 +48,10 @@ try{
                 :forename,
                 :lastname,
                 :user_pk,
-                :email
+                :email,
+                0,
+                :token,
+                :expire_at
             )
             SQL;
     $stmt = $_db->prepare( $sql );
@@ -49,15 +62,22 @@ try{
     $stmt->bindValue(":forename", $user_forename);
     $stmt->bindValue(":lastname", $user_lastname);
     $stmt->bindValue(":password", $hashed_password);
+    $stmt->bindValue(":token", $token);
+    $stmt->bindValue(":expire_at", $expires_at);
+
 
     $stmt->execute();
 
-    $_SESSION['flash_message'] = "Welcome to boligsiden! pleas login to your new account";
+    $_SESSION['flash_message'] = "Welcome to boligsiden! please verfiy your account to login";
+
+    _send_welcome_email($user_email);
+
     header('Location: /login');
     exit;
 }
 catch(Exception $e){
 
+    
 
     if(str_contains($e, "user_email") && str_contains($e, "Duplicate entry")){
         http_response_code(409);
@@ -87,7 +107,9 @@ catch(Exception $e){
         exit;
     }
 
-    http_response_code($e->getCode());
-    // _($e->getMessage());
+    // TODO:fix http respone code
+    // http_response_code($e->getCode());
+    // // _($e->getMessage());
+    _($e);
     exit;
 }
