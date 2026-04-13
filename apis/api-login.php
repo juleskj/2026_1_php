@@ -52,13 +52,6 @@ try{
             'user_lastname' => $user['user_lastname'],
             'user_forename' => $user['user_forename'],
         ];
-
-
-    // TODO:make into funktion 
-    _send_welcome_email($user_email);
-    //TODO: sending a verification email
-    // TODO: welcome mail when verifired
-    // TODO: welcome mail when verifired
     // TODO:reset password
 
         // redirect to home page
