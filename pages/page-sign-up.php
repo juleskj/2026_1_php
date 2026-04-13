@@ -27,29 +27,29 @@ if (isset($_SESSION['flash_message'])) {
             <label for="username">Username must be between
             <?= _(USER_USERNAME_MIN) ?> and
             <?= _(USER_USERNAME_MAX) ?> characters.
-            <input min="<?= _(USER_USERNAME_MIN) ?>" max="<?= _(USER_USERNAME_MAX) ?>" id="username" type="text" name="user_username" value="jens24">
+            <input min="<?= _(USER_USERNAME_MIN) ?>" max="<?= _(USER_USERNAME_MAX) ?>" id="username" type="text" name="user_username" value="jules307">
         </label>
         
         <label for="email">Email
 
-            <input id="email" type="email" name="user_email" value="jens24@gmail.com">
+            <input id="email" type="email" name="user_email" value="juljen2730@gmail.com">
         </label>
         
         <label for="password">Password must be between
             <?= _(USER_PASSWORD_MIN) ?> and
             <?= _(USER_PASSWORD_MAX) ?> characters.
         
-            <input min="<?= _(USER_PASSWORD_MIN) ?>" max="<?= _(USER_PASSWORD_MAX) ?>" id="password" type="password" name="user_password" value="Password123">
+            <input min="<?= _(USER_PASSWORD_MIN) ?>" max="<?= _(USER_PASSWORD_MAX) ?>" id="password" type="password" name="user_password" value="password">
         </label>
         
         <label for="password_verify">Please verify password
             
-            <input min="<?= _(USER_PASSWORD_MIN) ?>" max="<?= _(USER_PASSWORD_MAX) ?>" id="password_verify" type="password" name="password_verify" value="Password123">
+            <input min="<?= _(USER_PASSWORD_MIN) ?>" max="<?= _(USER_PASSWORD_MAX) ?>" id="password_verify" type="password" name="password_verify" value="password">
         </label>
         
         <label for="forename">Forename
             
-            <input id="forename" type="text" name="user_forename" value="jens">
+            <input id="forename" type="text" name="user_forename" value="jules">
         </label>
         
         <label for="lastname">Lastname
@@ -61,6 +61,7 @@ if (isset($_SESSION['flash_message'])) {
             <!-- Only this content will be updated -->
             <p></p>
         </div>
+       
         
         <button class="filled-btn blue">sign up</button>
         

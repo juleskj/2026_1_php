@@ -151,7 +151,8 @@ function _send_welcome_email($user_email){
     $mail->Body = "
         <h2>Welcome!</h2>
         <p>Thanks for signing up. We're excited to have you!</p>
-        <p>You can now log in and start using your account.</p>
+        <p>Please verify your account to log in</p>
+        <a href='http://127.0.0.1/verify-user'>verify your account</a>
         <br>
         <p>Best regards,<br>JuiceFrog</p>
     ";
