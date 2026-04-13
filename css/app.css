@@ -79,6 +79,10 @@ nav{
     justify-content: end;
     gap: 1rem;
 
+    .filled-btn{
+        padding: 0.2rem 1rem;
+    }
+
     & *, a{
         
         margin: 0 1rem;
@@ -185,7 +189,7 @@ footer{
     transition: all 0.1s ease-out;
     font-size: 1rem;
     padding: 0.2rem 0.2rem;
-    min-width: 80px;
+   
     max-width: 100%;
     text-align: center;
     cursor: pointer;
