@@ -30,6 +30,7 @@ try{
 
 
     require_once __DIR__."/../db.php";
+    
     $sql = <<<SQL
             INSERT INTO users(
                 user_username,
@@ -54,6 +55,7 @@ try{
                 :expire_at
             )
             SQL;
+
     $stmt = $_db->prepare( $sql );
 
     $stmt->bindValue(":user_pk", $user_pk);
@@ -70,7 +72,7 @@ try{
 
     $_SESSION['flash_message'] = "Welcome to boligsiden! please verfiy your account to login";
 
-    _send_welcome_email($user_email);
+    _send_welcome_email($user_email,$token);
 
     header('Location: /login');
     exit;
