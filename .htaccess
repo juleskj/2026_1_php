@@ -17,5 +17,6 @@ RewriteRule ^api-search$      /apis/api-search.php [NC,L]
 RewriteRule ^api-city-search$      /apis/api-city-search.php [NC,L]
 RewriteRule ^api-sign-up$      /apis/api-sign-up.php [NC,L]
 RewriteRule ^api-login$         /apis/api-login.php [NC,L]
+RewriteRule ^resend-verification    /apis/api-resend-verification.php [NC,L]
 
 RewriteRule ^session_destroy$      /session_destroy.php [NC,L]

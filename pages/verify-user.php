@@ -1,5 +1,7 @@
 <?php
 
+    date_default_timezone_set('Europe/Copenhagen'); //makes sure its the correct time stamp
+
     $token = $_GET["token"] ?? "";
 
     if(!$token){
@@ -25,23 +27,20 @@
         exit;
     }
 
-    date_default_timezone_set('Europe/Copenhagen'); //makes sure its the correct time stamp
     
     $testdate = date("Y-m-d H:i:s", strtotime("-1 hour"));
     
-    echo $testdate . " " . date( "Y-m-d H:i:s", time());
-    // strtotime($user['token_expires_at'])
+    // $user['token_expires_at'] actullul token
 
-    if(strtotime($user['token_expires_at']) > time()){
+    if(strtotime($testdate) > time()){
         echo "verified!";
         exit;
-    } else {
-        echo "expired token.";
-        
+        } else {
+        // TODO:resend a new verification token in case its invalide
+        echo "your link has expired want to renew? <a href='/resend-verification?token=$token'>Click here</a> to request a new one.";
+                
     }
-    // $sql = "UPDATE users SET is_verified = 1, verification_token = NULL, token_expires_at = NULL
-    // WHERE verification_token = ?";
-
+    
     echo json_encode($user["user_username"]);
 
 
