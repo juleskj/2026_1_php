@@ -4,19 +4,8 @@ session_start();
 
 require_once __DIR__."/../_.php";
 
-
-
-
-
-
 try{   
     
-   
-
-    
-
-
-
     $user_email = _validate_user_email();
     $user_password = _validate_user_password();
 
@@ -31,14 +20,20 @@ try{
 
     $user = $stmt->fetch();
 
-
+    // checks if there actually is a user
     if (!$user) {
-        throw new Exception("no user");
+        throw new Exception("no user", 401);
         exit;
         
     }
 
-    //TODO:validate hashed password to check if actually password
+    // checks if the user is verified
+    if(!$user["is_verified"]){
+        throw new Exception("user not verified", 401);
+        exit;
+    }
+
+    // checks if the password is correct
     if (password_verify($user_password, $user['user_password'])) {
        
         // remove password from user
@@ -52,18 +47,26 @@ try{
             'user_lastname' => $user['user_lastname'],
             'user_forename' => $user['user_forename'],
         ];
-    // TODO:reset password
+
 
         // redirect to home page
         header('Location: /');
     } else {
-        throw new Exception("password incorect");
+        throw new Exception("password incorect", 401);
         exit;
     }
+
 }catch (Exception $e){
 
+    if(str_contains($e, "user not verified")){
+        http_response_code(401);
+        $_SESSION['flash_message'] = "user not verifed, please check you mail to verify account";
+        header('Location: /login');
+        exit;
+    }
+
     if(str_contains($e, "no user")){
-        http_response_code(400);
+        http_response_code(401);
 
        $_SESSION['flash_message'] = "no user found, did you spell your email corect?";
         header('Location: /login');
@@ -71,7 +74,7 @@ try{
     }
 
     if(str_contains($e, "password incorect")){
-        http_response_code(400);
+        http_response_code(401);
 
         $_SESSION['flash_message'] = "Password incorect";
         header('Location: /login');
@@ -79,8 +82,10 @@ try{
     }
 
 
-    _($e);
-
+  
+    http_response_code($e->getCode());
+    // _($e->getMessage());
+    exit;
 
 }
 finally{

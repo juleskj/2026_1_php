@@ -9,7 +9,7 @@ try{
     $password_verify = $_POST["password_verify"] ?? "";
     
     if ($user_password !== $password_verify){
-        throw new Exception("password dont match");
+        throw new Exception("password dont match", 400);
         exit;
     }
         
@@ -82,7 +82,7 @@ catch(Exception $e){
     
 
     if(str_contains($e, "user_email") && str_contains($e, "Duplicate entry")){
-        http_response_code(409);
+        http_response_code(400);
 
         $_SESSION['flash_message'] = "email already exists";
         header('Location: /sign-up');
@@ -91,7 +91,7 @@ catch(Exception $e){
     }
 
     if(str_contains($e, "password dont match")){
-        http_response_code(409);
+        http_response_code(400);
 
         $_SESSION['flash_message'] = "password dont match";
         header('Location: /sign-up');
@@ -109,9 +109,7 @@ catch(Exception $e){
         exit;
     }
 
-    // TODO:fix http respone code
-    // http_response_code($e->getCode());
-    // // _($e->getMessage());
-    _($e);
+    http_response_code($e->getCode());
+    
     exit;
 }

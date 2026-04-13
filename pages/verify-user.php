@@ -27,11 +27,7 @@
         exit;
     }
 
-    
-    // $testdate = date("Y-m-d H:i:s", strtotime("-1 hour"));
-    
-    // $user['token_expires_at'] actullul token
-
+    // checks if the users token exporation is leter then the time now
     if(strtotime($user['token_expires_at']) > time()){
         
         $sql = "UPDATE users SET verification_token= NULL, token_expires_at= NULL, is_verified = 1 
