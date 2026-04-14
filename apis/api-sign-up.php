@@ -72,7 +72,7 @@ try{
 
     $_SESSION['flash_message'] = "Welcome to boligsiden! please verfiy your account to login";
 
-    _send_welcome_email($user_email,$token);
+    _send_welcome_email($user_email);
 
     header('Location: /login');
     exit;
