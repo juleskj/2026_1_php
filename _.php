@@ -123,7 +123,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-function _send_welcome_email($user_email,$token, $isReverify = false){
+function _send_welcome_email($user_email, $isReverify = false){
     
     
     $mail = new PHPMailer(true);
@@ -146,7 +146,7 @@ function _send_welcome_email($user_email,$token, $isReverify = false){
 
     $mail->isHTML(true);
 
-    $verificationLink = "http://127.0.0.1/verify-user?token=" . urlencode($token);
+    $verificationLink = "http://127.0.0.1/verify-user?email=" . urlencode($user_email);
 
     if($isReverify){
 
