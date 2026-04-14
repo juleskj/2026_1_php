@@ -3,9 +3,9 @@
 
 try{
 
-        date_default_timezone_set('Europe/Copenhagen'); //makes sure its the correct time stamp
+date_default_timezone_set('Europe/Copenhagen'); //makes sure its the correct time stamp
 
-        $user_email = $_GET["email"] ?? "";
+$user_email = $_GET["email"] ?? "";
 
      
     require_once __DIR__ . "/../_.php";

@@ -33,6 +33,8 @@ try{
     
     if($user && strtotime($user['token_expires_at']) > time()){
     
+        // TODO set is verified to the actually time their verified and not 1
+        // TODO: change is_verified in db to hold time()
         $sql = "UPDATE users SET verification_token= NULL, token_expires_at= NULL, is_verified = 1 
             WHERE verification_token = :token";
         $stmt = $_db->prepare($sql);
