@@ -18,7 +18,11 @@ try{
 
     $user = $stmt->fetch();
     
-    
+    if(!$user){
+        $_SESSION['flash_message'] = "no user found";
+        header('Location: /login');
+        exit;
+    }
     // TODO:check token after sql selector?
     if($user["verification_token"] === NULL){
         $_SESSION['flash_message'] = "no email found to be verified";
@@ -41,7 +45,6 @@ try{
         exit;
 
     } else if ($user && strtotime($user['token_expires_at']) < time()) {
-        // TODO:resend a new verification token in case the token has expired
         // TODO: do not echo!
         echo "your link has expired want to renew? <a href='/resend-verification?email=$user_email'>Click here</a> to request a new one.";
         exit;        
