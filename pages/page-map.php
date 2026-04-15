@@ -1,4 +1,5 @@
 <?php
+    ini_set('memory_limit', '512M');
     session_start();
     $title = "Map";
     require_once __DIR__ . '/../session_utils.php';
