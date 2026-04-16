@@ -48,7 +48,7 @@ try{
             'user_forename' => $user['user_forename'],
         ];
 
-
+        // TODO: fetch all the save_homes and put into session when the user logs in
         // redirect to home page
         header('Location: /');
     } else {
