@@ -30,8 +30,9 @@ function clearMarkers(data){
                 className: '',
                 html: `
                     <button 
-                        class="marker ${item.type}" onclick="mixhtml(); return false;"
-                        mix-get="api-get-map-item?item_pk=${item.pk}">
+                        class="marker  ${item.type.replaceAll(" ", "_")}"
+                        data-item-pk="${item.pk}"
+                        onclick="showInfo(this)">
                     </button>
                 `,
             }),
