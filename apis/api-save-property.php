@@ -1,8 +1,13 @@
 <?php
 
-$item_pk = $_GET["item_pk"] ?? "";
+require_once __DIR__ . "/../_.php";
+
+
+try{
+
 
 //TODO: validate item pk
+$item_pk = validate_property_pk();
 // TODO: make sure user is in session
 // TODO: get user id
 // TODO: connect db
@@ -12,3 +17,15 @@ $item_pk = $_GET["item_pk"] ?? "";
 
 echo "ok";
 echo $item_pk;
+
+
+} catch (Exception $e){
+
+
+
+
+}
+
+
+
+

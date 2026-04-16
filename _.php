@@ -116,7 +116,7 @@ function _no_cache(){
     header('Clear-Site-Data: "cache", "cookies", "storage", "executionContexts"');
 }
 
-
+// ##############################
 require_once __DIR__ . '/vendor/autoload.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -177,6 +177,26 @@ function _send_welcome_email($user_email, $isReverify = false){
     $mail->AltBody = "Welcome! Thanks for signing up.";
 
     $mail->send();
+
+}
+
+
+// ##############################
+function validate_property_pk() {
+    $property_pk = $_GET['item_pk'] ?? null;
+
+    if(empty($property_pk)){
+         throw new Exception("property id missing", 400);
+    }
+    if (strlen($property_pk) !== 50) {
+        throw new Exception("invalide property id", 400);
+    }
+    
+    if (!ctype_xdigit($property_pk)) {
+        throw new Exception("invalide property id format", 400);
+    }
+
+    return $property_pk;
 
 }
 

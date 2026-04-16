@@ -68,7 +68,7 @@ try{
     if(str_contains($e, "no user")){
         http_response_code(401);
 
-       $_SESSION['flash_message'] = "no user found, did you spell your email corect?";
+        $_SESSION['flash_message'] = "no user found, did you spell your email corect?";
         header('Location: /login');
         exit;
     }
@@ -84,10 +84,7 @@ try{
 
   
     http_response_code($e->getCode());
-    // _($e->getMessage());
+    ($e->getMessage());
     exit;
 
-}
-finally{
-    die;
 }
