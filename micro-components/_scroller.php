@@ -31,7 +31,7 @@
                         
                         <p class="type <?= str_replace(' ', '_',  $item['type']); ?>"><?= _($item['type'] ?? '') ?></p>
                         <h3><?php _(number_format($item['price'], 0, ',', '.')) ?>kr</h3>
-                        <p><span><?php _($item['number_of_rooms'] ?? '') ?> beds</span><span>1 ba</span><span><?php _($item['lot_square_meters']) . " " || _($item['floor_square_meters'] ?? '')  ?> sqft</span></p>
+                        <p><span><?php _($item['number_of_rooms'] ?? '0') ?> beds</span><span>1 ba</span><span><?php _($item['lot_square_meters']) . " " || _($item['floor_square_meters'] ?? '')  ?> sqft</span></p>
                         <p><?php _($item['house_number'] ?? '')?> <?php _($item['road_name'])?>, <?php _($item['city_name'])?> <?php _($item['zip_code']) ?></p>
                     </article>
                 </a>
