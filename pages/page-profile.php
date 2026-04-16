@@ -6,11 +6,8 @@ try{
     require_once __DIR__ . "/../db.php";
        
 
-    $user = "";
-    if(!empty($_SESSION["user"])){
-        $user = $_SESSION["user"];
-    }
-
+   $user =  "";
+   
     if (!isset($_SESSION["user"])) {
         $_SESSION['flash_message'] = "Please login to see your profile";
         header('Location: /login');

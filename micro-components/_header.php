@@ -2,14 +2,7 @@
 
 require_once __DIR__."/../_.php";
 
-$user = "";
-
-if (!empty($_SESSION['user'])) {
-    
-    $user= $_SESSION['user'];
-
-}
-
+$user =  $_SESSION["user"] ?? "";
 ?>
 
 

@@ -1,10 +1,7 @@
-
 <?php
-    $user = "";
+    $user =  $_SESSION["user"] ?? "";
 
-    if(!empty($_SESSION["user"])){
-        $user = $_SESSION["user"];
-    }
+    $saved_homes = $_SESSION["saved_homes"] ?? [];
 
 
 ?>
@@ -18,7 +15,7 @@
         <?php foreach ($items as $item): ?>
             <article id="<?= _($item["pk"]) ?>" class="scroll-item">
                 <?php if($user){ ?>
-                    <button onclick="saveProperty(this);" class="bookmark"></button>
+                    <button onclick="saveProperty(this);" class="bookmark <?=    in_array($item["pk"], $saved_homes) ? "solid" : "regular"   ?>"></button>
                 <?php } ?>
                 <a href="/page-map?item_pk=<?= $item['pk']?>">
                     <img 
@@ -44,21 +41,7 @@
 
 <script>
 
-function saveProperty(button){
 
-    console.log(button);
-    const item_pk = button.closest(".scroll-item").id
-
-    console.log(item_pk)
-
-    fetch(`api-save-property?item_pk=${item_pk}`)
-    .then(res=>res.text())
-    .then(data=> data)
-    .catch(error=>console.log(error))
-
-
-
-}
 
 </script>
 

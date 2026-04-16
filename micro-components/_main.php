@@ -7,12 +7,8 @@
         $viewed_homes = get_viewed_homes();
     }
 
-    if(!empty($_SESSION['user'])){
-        $user =  $_SESSION['user'];
+   $user =  $_SESSION["user"] ?? "";
 
-    }
-
-    
 
     $sql = "SELECT * FROM affordable_homes";
     $stmt = $_db->prepare($sql);

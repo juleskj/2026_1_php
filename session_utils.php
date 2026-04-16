@@ -69,3 +69,35 @@ function get_viewed_homes(){
 
 
 
+
+
+function track_saved_homes($item_pk = null) {
+    /*
+        here i check if the item_pk is null and in the url, 
+        if its in the url i gets put in the items_pk variable
+    */
+    
+    if ($item_pk === null && isset($_GET["item_pk"])) {
+        $item_pk = $_GET["item_pk"];
+    }
+
+    // If the session array doesn't exist, create it
+    if (!isset($_SESSION['saved_homes'])) {
+        $_SESSION['saved_homes'] = [];
+    }
+
+    /*
+        if the item_pk is not null, when we got it from the url,
+        we add it to the session. but it if is null skip it 
+    */
+    if ($item_pk !== null && !in_array($item_pk, $_SESSION['saved_homes'])) {
+        array_push($_SESSION['saved_homes'], $item_pk);
+    }
+
+    // Return the session array
+    return $_SESSION['saved_homes'];
+}
+
+
+
+

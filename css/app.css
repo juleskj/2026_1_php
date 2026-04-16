@@ -300,9 +300,26 @@ footer{
         z-index: 3;
         border: none;
 
+        &.solid{
+            &::after{
+               background-image: url("/images/heart-solid.svg");
+            }
+            pointer-events: none;
+            z-index: 4;
+        }
+
+        &.regular{
+            &::after{
+               background-image: url("/images/heart-regular.svg");
+            }
+
+           
+
+        }
+
         &::after{
             content: " ";
-            background-image: url(/images/heart-regular.svg);
+           
             background-repeat: no-repeat;
             
             object-fit: contain;
