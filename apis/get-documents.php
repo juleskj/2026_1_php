@@ -19,7 +19,6 @@ foreach ($zips as $zip) {
 
     if ($document){
                 
-
         $sql = "INSERT INTO documents VALUES(:document_pk,:zip_fk,:document)";
         $stmt = $_db->prepare($sql);
         $stmt->bindValue(":document_pk", $document_pk);
