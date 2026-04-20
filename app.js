@@ -119,19 +119,3 @@ function logout(){
     });
 }
 
-function saveProperty(button){
-
-    console.log(button);
-    const item_pk = button.closest(".scroll-item").id
-    
-    button.classList.add("solid");
-    button.classList.remove("regular");
-    
-
-    fetch(`api-save-property?item_pk=${item_pk}`)
-    .then(res=>res.text())
-    .then(data=> data)
-    .catch(error=>console.log(error))
-
-}
-

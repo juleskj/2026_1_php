@@ -3,6 +3,9 @@
 
     $saved_homes = $_SESSION["saved_homes"] ?? [];
 
+    if (empty($_SESSION['csrf_token'])) {
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    }
 
 ?>
 
@@ -14,9 +17,15 @@
     <section class="scroller" >
         <?php foreach ($items as $item): ?>
             <article id="<?= _($item["pk"]) ?>" class="scroll-item">
+                
                 <?php if($user){ ?>
-                    <button onclick="saveProperty(this);" class="bookmark <?=    in_array($item["pk"], $saved_homes) ? "solid" : "regular"   ?>"></button>
+                    <form mix-post="api-save-property">
+                        <input type="hidden" name="item_pk" value="<?= _($item['pk'], ENT_QUOTES, 'UTF-8') ?>">
+                        <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
+                        <button id="save-<?=_($item['pk'])?>" class="bookmark <?= in_array($item["pk"], $saved_homes) ? "solid" : "regular" ?>"></button>
+                    </form>
                 <?php } ?>
+
                 <a href="/page-map?item_pk=<?= $item['pk']?>">
                     <img 
                     class="property-img" 

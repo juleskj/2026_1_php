@@ -183,7 +183,7 @@ function _send_welcome_email($user_email, $isReverify = false){
 
 // ##############################
 function validate_property_pk() {
-    $property_pk = $_GET['item_pk'] ?? null;
+    $property_pk = $_POST['item_pk'] ?? null;
 
     if(empty($property_pk)){
          throw new Exception("property id missing", 400);
