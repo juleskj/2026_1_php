@@ -77,8 +77,8 @@ function track_saved_homes($item_pk = null) {
         if its in the url i gets put in the items_pk variable
     */
     
-    if ($item_pk === null && isset($_GET["item_pk"])) {
-        $item_pk = $_GET["item_pk"];
+    if ($item_pk === null && isset($_post["item_pk"])) {
+        $item_pk = $_post["item_pk"];
     }
 
     // If the session array doesn't exist, create it
@@ -95,6 +95,42 @@ function track_saved_homes($item_pk = null) {
     }
 
     // Return the session array
+    return $_SESSION['saved_homes'];
+}
+
+
+function track_unsaved_homes($item_pk = null) {
+    /*
+        here i check if the item_pk is null and in the url, 
+        if its in the url i gets put in the items_pk variable
+    */
+    
+    if ($item_pk === null && isset($_POST["item_pk"])) {
+        $item_pk = $_POST["item_pk"];
+    }
+
+    // If the session array doesn't exist, create it
+    if (!isset($_SESSION['saved_homes'])) {
+        $_SESSION['saved_homes'] = [];
+    }
+
+    // if the item pk is not null unset the item in the array
+    if ($item_pk !== null) {
+        $needle = array_search($item_pk, $_SESSION['saved_homes']);
+        if ($needle !== false) { // Check if the key exists
+            unset($_SESSION['saved_homes'][$needle]);
+        }
+    }
+    
+    return $_SESSION['saved_homes'];
+}
+
+
+function get_saved_homes($user_pk) {
+//    TODO: get the information from db
+// TODO: set the infomation in the $_session["saved_homes"]
+
+    
     return $_SESSION['saved_homes'];
 }
 

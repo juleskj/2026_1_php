@@ -19,10 +19,10 @@
             <article id="<?= _($item["pk"]) ?>" class="scroll-item">
                 
                 <?php if($user){ ?>
-                    <form mix-post="api-save-property">
+                    <form id="save-form-<?=_($item['pk'])?>" mix-post="<?= in_array($item["pk"], $saved_homes) ? "api-unsave-property" : "api-save-property" ?>">
                         <input type="hidden" name="item_pk" value="<?= _($item['pk'], ENT_QUOTES, 'UTF-8') ?>">
                         <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
-                        <button id="save-<?=_($item['pk'])?>" class="bookmark <?= in_array($item["pk"], $saved_homes) ? "solid" : "regular" ?>"></button>
+                        <button class="bookmark <?= in_array($item["pk"], $saved_homes) ? "solid" : "regular" ?>"></button>
                     </form>
                 <?php } ?>
 
