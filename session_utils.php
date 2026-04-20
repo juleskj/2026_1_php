@@ -126,11 +126,25 @@ function track_unsaved_homes($item_pk = null) {
 }
 
 
-function get_saved_homes($user_pk) {
-//    TODO: get the information from db
-// TODO: set the infomation in the $_session["saved_homes"]
-
+function get_saved_homes() {
+    //    TODO: get the information from db
+    require_once __DIR__ . "/db.php";
+    global $_db; 
     
+    if (isset($_SESSION['user'])) {
+        $sql = "SELECT property_fk FROM `saved_property` WHERE user_fk = :user_pk";
+        $stmt = $_db->prepare($sql);
+        $stmt->bindValue(":user_pk", $_SESSION['user']['user_pk'] );
+        $stmt->execute();
+
+        $saved_properties = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+
+        if(!isset($_SESSION['saved_homes'])){
+            $_SESSION['saved_homes'] = $saved_properties;
+        }
+
+    }
+
     return $_SESSION['saved_homes'];
 }
 
