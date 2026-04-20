@@ -48,8 +48,10 @@ try{
             'user_forename' => $user['user_forename'],
         ];
 
+        require_once __DIR__ . "/../session_utils.php";
         // TODO: fetch all the save_homes and put into session when the user logs in
-        // redirect to home page
+        get_saved_homes();
+
         header('Location: /');
     } else {
         throw new Exception("password incorect", 401);
@@ -58,33 +60,9 @@ try{
 
 }catch (Exception $e){
 
-    if(str_contains($e, "user not verified")){
-        http_response_code(401);
-        $_SESSION['flash_message'] = "user not verifed, please check you mail to verify account";
-        header('Location: /login');
-        exit;
-    }
-
-    if(str_contains($e, "no user")){
-        http_response_code(401);
-
-        $_SESSION['flash_message'] = "no user found, did you spell your email corect?";
-        header('Location: /login');
-        exit;
-    }
-
-    if(str_contains($e, "password incorect")){
-        http_response_code(401);
-
-        $_SESSION['flash_message'] = "Password incorect";
-        header('Location: /login');
-        exit;
-    }
-
-
-  
-    http_response_code($e->getCode());
-    ($e->getMessage());
+    http_response_code(401);
+    $_SESSION['flash_message'] = "Invalid email or password.";
+    header('Location: /login');
     exit;
 
 }
