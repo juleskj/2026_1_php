@@ -182,11 +182,12 @@ function _send_welcome_email($user_email, $isReverify = false){
 
 
 // ##############################
-function validate_property_pk() {
-    $property_pk = $_POST['item_pk'] ?? null;
+function _validate_property_pk() {
+    
+    $property_pk = filter_input(INPUT_POST, "item_pk") ?? null;
 
     if(empty($property_pk)){
-         throw new Exception("property id missing", 400);
+        throw new Exception("property id missing", 400);
     }
     if (strlen($property_pk) !== 50) {
         throw new Exception("invalide property id", 400);
@@ -199,6 +200,9 @@ function validate_property_pk() {
     return $property_pk;
 
 }
+
+
+
 
 
 
