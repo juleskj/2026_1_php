@@ -309,7 +309,7 @@ footer{
             &::after{
                background-image: url("/images/heart-solid.svg");
             }
-            pointer-events: none;
+            
             z-index: 4;
         }
 
@@ -317,7 +317,7 @@ footer{
             &::after{
                background-image: url("/images/heart-regular.svg");
             }
-
+            z-index: 4;
            
 
         }
