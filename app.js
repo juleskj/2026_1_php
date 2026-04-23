@@ -52,7 +52,7 @@ function viewSearch(map,data){
     const selectBaths= document.querySelector('select[name="baths"]');
    
 
-    if(searchInput.value != 0 ||selectBeds.value  != 0 || selectBaths.value  != 0){
+    if(searchInput.value != "" || selectBeds.value  != 0 || selectBaths.value  != 0){
         // got to first item in searched data
         map.flyTo([data.items[0].lat, data.items[0].lon], 9);
         

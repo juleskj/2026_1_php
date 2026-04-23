@@ -152,7 +152,7 @@
             </script>
     
     
-            <aside class="hidden" id="info"></aside>
+            <aside class="" id="info"></aside>
         </section>
     </main>
   

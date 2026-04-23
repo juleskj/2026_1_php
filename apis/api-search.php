@@ -1,4 +1,5 @@
 <?php
+    ini_set('memory_limit', '512M');
     require_once __DIR__."/../_.php";
     require_once __DIR__ . "/../db.php";
 
@@ -63,6 +64,12 @@
     if(str_contains($e, "city_search") && str_contains($e, "must be max")){
     http_response_code(409);
     _("Search too long");
+        exit;
+    }
+
+    if(str_contains ( $e, "Only letters and spaces")){
+         http_response_code(409);
+        _("only letters and spaces allowed");
         exit;
     }
 

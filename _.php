@@ -203,20 +203,57 @@ function _validate_property_pk() {
 
 
 
+define("FLASH_MSG_MIN", 0);
+define("FLASH_MSG_MAX", 200);
+function _validate_flash_message($flash_msg){
+    $flash_msg = trim($flash_msg);
+    
+    if(strlen($flash_msg) < FLASH_MSG_MIN){
+        throw new Exception("flash must be at least ".FLASH_MSG_MIN." characters long", 400);
+    }
+    if(strlen($flash_msg) > FLASH_MSG_MAX){
+        throw new Exception("flash must be max ".FLASH_MSG_MAX." characters long", 400);
+    }
+    $pattern = '/^[a-zA-Z ]*$/';
+    if (!preg_match($pattern, $flash_msg)) {
+        throw new Exception("Invalid flash. Only letters and spaces are allowed.", 400);
+    }
+    return $flash_msg;
+}
 
 
 
+function _render_flash_msg(){
+
+    $message = "";
+    $flash_state = "";
+
+    if (isset($_SESSION['flash_message'])) {
+        $message = $_SESSION['flash_message'];
+        $flash_state = $_SESSION['flash_state'] ?? "message"; // Default to "message" if not set
+
+        
+        unset($_SESSION['flash_message']);
+        unset($_SESSION['flash_state']);
+    }
 
 
+    if ($message) {
+        $msg = $message;
+        include '../micro-components/_flash-message.php';
+    }
 
 
+    // how to user
+    /*
+     * remebemr start_session;
+     * when you user do
+     * 
+     *  $_SESSION['flash_state'] = "error";
+        $_SESSION['flash_message'] = "password dont match";
+        header('Location: $_SERVER['PHP_SELF'];);
+    
+    */
 
 
-
-
-
-
-
-
-
-
+}

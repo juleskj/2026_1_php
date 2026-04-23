@@ -5,25 +5,22 @@ session_start();
 $title = "Sign up";
 
 require_once __DIR__."/../micro-components/_header.php";
+require_once __DIR__."/../_.php";
 
-$message = "welcome back please login";
-
-if (isset($_SESSION['flash_message'])) {
-
-    $message = $_SESSION['flash_message'] ?? '';
-
-    unset($_SESSION['flash_message']); 
-}
-
-
+_render_flash_msg();
 ?>
 
+
+
+
 <main >
+
     <section>
         <h1>Sign up</h1>
-        <div class="alert-msg"><p><?= _($message); ?></p></div>
+        
+        <div class="alert-msg"><p>welcome to boligsiden please sign up</p></div>
 
-        <form id="signup-form" action="/api-sign-up" method="POST">
+        <form action="api-sign-up" method="post" id="signup-form">
             <label for="username">Username must be between
             <?= _(USER_USERNAME_MIN) ?> and
             <?= _(USER_USERNAME_MAX) ?> characters.
