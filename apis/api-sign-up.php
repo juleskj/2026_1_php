@@ -70,7 +70,8 @@ try{
 
     $stmt->execute();
 
-    $_SESSION['flash_message'] = "Welcome to boligsiden! please verfiy your account to login";
+    $_SESSION['flash_state'] = "success";
+    $_SESSION['flash_message'] = "Welcome to boligsiden please verfiy your account to login";
 
     _send_welcome_email($user_email);
 
@@ -84,6 +85,7 @@ catch(Exception $e){
     if(str_contains($e, "user_email") && str_contains($e, "Duplicate entry")){
         http_response_code(400);
 
+        $_SESSION['flash_state'] = "error";
         $_SESSION['flash_message'] = "email already exists";
         header('Location: /sign-up');
 
@@ -93,6 +95,7 @@ catch(Exception $e){
     if(str_contains($e, "password dont match")){
         http_response_code(400);
 
+        $_SESSION['flash_state'] = "error";
         $_SESSION['flash_message'] = "password dont match";
         header('Location: /sign-up');
         
@@ -103,6 +106,7 @@ catch(Exception $e){
     if(str_contains($e, "user_username") && str_contains($e, "Duplicate entry")){
         http_response_code(400);
         
+        $_SESSION['flash_state'] = "error";
         $_SESSION['flash_message'] = "username already exists";
         header('Location: /sign-up');
 

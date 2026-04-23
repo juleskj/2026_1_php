@@ -20,7 +20,10 @@
     $stmt = $_db->prepare($sql);
     $stmt->execute();
     $familiy_house = $stmt->fetchAll();
+  
     
+
+
 ?>
 
 

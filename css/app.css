@@ -486,3 +486,100 @@ section:has(#login-form) , section:has(#signup-form){
         text-transform: capitalize;
     }
  }
+
+
+
+
+ .flash-message{
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  
+    min-width: 250px;
+    padding: 0.5rem;
+    border-radius: 0.3rem;
+
+    display: grid;
+    grid-template-columns: auto 1fr;
+   
+    gap: 0.5rem;
+    align-items: center;
+    align-content: start;
+
+    i{
+        color: rgb(238, 138, 138) !important;
+        content: var(--fa);
+        background: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        place-content: center;
+        display: grid;
+    }
+
+    &.message{
+        background-color: rgb(232 232 232);
+        color: rgb(23, 23, 23);
+        i{
+           color: rgb(23, 23, 23) !important;
+        }
+    }
+    &.error{
+        background-color: rgb(238, 138, 138) ;
+        color: rgb(156, 30, 30);
+        i{
+            color: rgb(238, 138, 138) !important;
+        }
+    }
+    &.success{
+        background-color: rgb(148, 186, 112) ;
+        color: rgb(20, 60, 28);
+        i{
+            color: rgb(148, 186, 112) !important;
+        }
+    }
+ }
+
+
+
+.fade-in {
+	opacity: 1;
+	animation: fadeInOpacity 1 0.5s ease-in;
+    display: grid;
+    
+}
+
+.fade-out {
+	opacity: 0;
+	animation: fadeOutOpacity 1 0.5s ease-in;
+    
+}
+
+.hidden{
+    display: none;
+}
+
+@keyframes fadeInOpacity {
+	0% {
+		opacity: 0;
+        
+
+	}
+	100% {
+		opacity: 1;
+        
+	}
+}
+
+@keyframes fadeOutOpacity {
+	0% {
+		opacity: 1;
+        
+
+	}
+	100% {
+		opacity: 0;
+        
+	}
+}
