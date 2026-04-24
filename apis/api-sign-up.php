@@ -30,6 +30,9 @@ try{
 
 
     require_once __DIR__."/../db.php";
+
+    /* Begin a transaction, turning off autocommit */
+    $_db->beginTransaction();
     
     $sql = <<<SQL
             INSERT INTO users(
@@ -70,6 +73,30 @@ try{
 
     $stmt->execute();
 
+    // get the role id for user
+    $role ="user";
+    $role_sql = "SELECT  `role_pk` FROM `roles` WHERE role_name = :role_name";
+    $stmt = $_db->prepare($role_sql);
+    $stmt->bindValue(":role_name", $role);
+    $stmt->execute();
+
+    $role_pk = $stmt->fetch();
+
+    // inser it into the db for the new signed up user
+    $role_sql = "INSERT INTO `role_table`(`user_fk`, `role_fk`) VALUES (:user_pk,:role_pk)";
+    $stmt = $_db->prepare($role_sql);
+    $stmt->bindValue(":user_pk",$user_pk);
+    $stmt->bindValue(":role_pk",$role_pk["role_pk"]);
+    $stmt->execute();
+
+    if($stmt->rowCount() === 0){
+        throw new Exception("Registration failed. Please contact support.", 500);
+    }
+
+
+    // commit to db
+    $_db->commit();
+
     $_SESSION['flash_state'] = "success";
     $_SESSION['flash_message'] = "Welcome to boligsiden please verfiy your account to login";
 
@@ -80,7 +107,10 @@ try{
 }
 catch(Exception $e){
 
-    
+// incase something unespected happends
+    if ($_db->inTransaction()) {
+        $_db->rollBack();
+    }
 
     if(str_contains($e, "user_email") && str_contains($e, "Duplicate entry")){
         http_response_code(400);
@@ -108,6 +138,15 @@ catch(Exception $e){
         
         $_SESSION['flash_state'] = "error";
         $_SESSION['flash_message'] = "username already exists";
+        header('Location: /sign-up');
+
+        exit;
+    }
+    if(str_contains($e, "Registration failed")){
+        http_response_code(500);
+        
+        $_SESSION['flash_state'] = "error";
+        $_SESSION['flash_message'] = "Registration failed";
         header('Location: /sign-up');
 
         exit;
