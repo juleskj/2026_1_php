@@ -1,0 +1,35 @@
+
+@media(min-width:768px) {
+     #main-content{
+        grid-column: full;
+        display: grid;
+        grid-template-columns: 25% auto;
+       
+
+    }
+
+    .user-info{
+        
+       
+        padding: 1rem 0.5rem;
+
+        background-color: var(--blue);
+        color: var(--white);
+
+        img{
+            aspect-ratio: 1;
+            object-fit: cover;
+            max-height: 200px;
+            max-width: 200px;
+            border-radius: 50%;
+            margin: 0.5rem auto;
+            display: block;
+            
+            border: var(--white) solid 2px;
+            
+
+        }
+        
+    }
+    
+}

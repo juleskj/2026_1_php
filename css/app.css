@@ -1,5 +1,6 @@
 @import url(aside.css);
 @import url(main-grid.css);
+@import url(profil.css);
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 :root{
@@ -18,6 +19,29 @@
 
 }
 
+
+
+/* Apply to your headings and text */
+h1 {
+    font-size: clamp(1.5rem, 4vw, 2.5rem); /* Min: 1.5rem, Preferred: 4vw, Max: 2.5rem */
+}
+
+h2 {
+    font-size: clamp(1.25rem, 3vw, 2rem);
+}
+
+h3 {
+    font-size: clamp(1.1rem, 2.5vw, 1.75rem);
+}
+
+p, div {
+    font-size: clamp(1rem, 2vw, 1.25rem); /* Base text */
+}
+
+/* Optional: Apply to your nav and footer links */
+nav a, footer a {
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+}
 
 .roboto, h1,h2,h3,h4,h5,h6, a, p ,span, form * {
   font-family: "Roboto", sans-serif;
@@ -59,15 +83,7 @@ img{
     height: auto;
 }
 
-body{
-    width: 100%;
-    height: 100vh;
-    overflow-x: hidden;
-    display: grid;
-    grid-template-rows: auto 1fr auto;
 
-    
-}
 nav{
     /* position: fixed; top: 0; left: 0; */
     width: 100%;
@@ -104,7 +120,7 @@ nav{
 }
 
 
-
+/*********** hero img ***********/
 
 #hero{
     display: grid;
@@ -138,6 +154,7 @@ nav{
     }
 }
 
+/*********** map ***********/
 .map-container{
 
     display: flex;
@@ -184,6 +201,7 @@ footer{
     left: 0;
 }
 
+/*********** button ***********/
 
 .filled-btn{
     transition: all 0.1s ease-out;
@@ -221,17 +239,7 @@ footer{
 
 }
 
-.scroll-container{
-    
-    h2{
-        padding: 0 0.5rem;
-    }
-    
-}
-
-
-
-
+/*********** scroler ***********/
 
 .scroller{
     display: flex;
@@ -276,6 +284,7 @@ footer{
         
     }
 }
+
 .see-more{
     font-weight: bolder;
     white-space: nowrap;
@@ -292,6 +301,16 @@ footer{
 
 .scroll-item{
     position: relative;
+
+    display: grid;
+    grid-template-rows: 60% 40%;
+    
+    max-width: 350px;
+    max-height: 250px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0px 3px 10px 1px rgb(230, 230, 230);
+    flex: 0 0 100%;
 
     & .bookmark{
         
@@ -344,17 +363,7 @@ footer{
     
     }
 
-    display: grid;
-    grid-template-rows: 60% 40%;
-    
-    max-width: 350px;
-    max-height: 250px;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0px 3px 10px 1px rgb(230, 230, 230);
-    flex: 0 0 100%;
    
-    
     & img{
         width: 100%;
         height: 100%;
@@ -432,7 +441,7 @@ footer{
     }
 }
 
-
+/*********** sign/login form ***********/
 section:has(#login-form) , section:has(#signup-form){
     display: flex;
     flex-flow: column;
@@ -478,19 +487,19 @@ section:has(#login-form) , section:has(#signup-form){
 }
 
  
- .alert-msg{
+.alert-msg{
 
     color: var(--blue);
     font-size: large;
     &::first-letter{
         text-transform: capitalize;
     }
- }
+}
 
 
+/*********** flash message ***********/
 
-
- .flash-message{
+.flash-message{
     position: absolute;
     top: 10%;
     left: 50%;
@@ -539,7 +548,7 @@ section:has(#login-form) , section:has(#signup-form){
             color: rgb(148, 186, 112) !important;
         }
     }
- }
+}
 
 
 
@@ -583,3 +592,5 @@ section:has(#login-form) , section:has(#signup-form){
         
 	}
 }
+
+
