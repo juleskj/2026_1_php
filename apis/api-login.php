@@ -11,6 +11,9 @@ try{
 
 
     require_once __DIR__."/../db.php";
+
+    $_db->beginTransaction();
+
     // Fetch user from database
     $sql = " SELECT * FROM users WHERE user_email = :email";
 
@@ -38,6 +41,17 @@ try{
        
         // remove password from user
         unset($user['user_password']);
+
+
+        // get the users role
+        $sql = "SELECT get_user_role(:user_pk) AS role_name";
+        $stmt = $_db->prepare($sql);
+        $stmt->bindValue(":user_pk",$user['user_pk']);
+        $stmt->execute();
+
+        $user_role = $stmt->fetch();
+
+
         
         // put user in session
         $_SESSION['user'] = [
@@ -46,6 +60,7 @@ try{
             'user_username' => $user['user_username'],
             'user_lastname' => $user['user_lastname'],
             'user_forename' => $user['user_forename'],
+            'user_role' => $user_role['role_name'],
         ];
 
         require_once __DIR__ . "/../session_utils.php";
@@ -61,7 +76,10 @@ try{
 }catch (Exception $e){
 
     http_response_code(401);
-    $_SESSION['flash_message'] = "Invalid email or password.";
+
+
+    $_SESSION['flash_state'] = "error";
+    $_SESSION['flash_message'] = "Invalid email or password";
     header('Location: /login');
     exit;
 
