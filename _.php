@@ -31,6 +31,7 @@ define("USER_EMAIL_MIN", 6);
 define("USER_EMAIL_MAX", 50);
 function _validate_user_email() {
     $user_email = $_POST["user_email"] ?? "";
+    filter_var($user_email, FILTER_VALIDATE_EMAIL);
     $user_email = trim($user_email);
     if (strlen($user_email) < USER_EMAIL_MIN) {
         throw new Exception("Email must be at least " . USER_EMAIL_MIN . " characters long", 400);
