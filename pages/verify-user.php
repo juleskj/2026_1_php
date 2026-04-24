@@ -41,8 +41,9 @@ try{
 
         $stmt->bindValue(":token",$user['verification_token']);
         $stmt->execute();
-
-        $_SESSION['flash_message'] = "Welcome to boligsiden! you can now login you your account";
+        
+        $_SESSION['flash_state'] = "success";
+        $_SESSION['flash_message'] = "Welcome to boligsiden you can now login you your account";
         header('Location: /login');
         exit;
 
@@ -51,6 +52,7 @@ try{
         echo "your link has expired want to renew? <a href='/resend-verification?email=$user_email'>Click here</a> to request a new one.";
         exit;        
     } else {
+        $_SESSION['flash_state'] = "error";
         $_SESSION['flash_message'] = "no user found to";
         header('Location: /login');
         exit; 
