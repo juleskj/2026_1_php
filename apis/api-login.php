@@ -26,14 +26,12 @@ try{
     // checks if there actually is a user
     if (!$user) {
         throw new Exception("no user", 401);
-        exit;
         
     }
 
     // checks if the user is verified
     if(!$user["is_verified"]){
         throw new Exception("user not verified", 401);
-        exit;
     }
 
     // checks if the password is correct
@@ -50,8 +48,6 @@ try{
         $stmt->execute();
 
         $user_role = $stmt->fetch();
-
-
         
         // put user in session
         $_SESSION['user'] = [
@@ -77,9 +73,33 @@ try{
 
     http_response_code(401);
 
-
+    if(str_contains($e, "no user")){
+        $_SESSION['flash_state'] = "error";
+        $_SESSION['flash_message'] = "User not found";
+        header('Location: /login');
+         exit;
+    }
+    if(str_contains($e, "user not verified")){
+        $_SESSION['flash_state'] = "error";
+        $_SESSION['flash_message'] = "Please verify your email";
+        header('Location: /login');
+         exit;
+    }
+    if(str_contains($e, "Password")){
+        $_SESSION['flash_state'] = "error";
+        $_SESSION['flash_message'] = "invalide password";
+        header('Location: /login');
+         exit;
+    }
+    if(str_contains($e, "email")){
+        $_SESSION['flash_state'] = "error";
+        $_SESSION['flash_message'] = "invalide email";
+        header('Location: /login');
+        exit;
+    }
+    
     $_SESSION['flash_state'] = "error";
-    $_SESSION['flash_message'] = "Invalid email or password";
+    $_SESSION['flash_message'] = "invalide password or email";
     header('Location: /login');
     exit;
 

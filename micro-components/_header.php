@@ -3,6 +3,8 @@
 require_once __DIR__."/../_.php";
 
 $user =  $_SESSION["user"] ?? "";
+
+
 ?>
 
 
