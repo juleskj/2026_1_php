@@ -1,5 +1,16 @@
 <?php
+    session_set_cookie_params([
+    'lifetime' => 0,
+    'path' => '/',
+    'domain' => '', // Adjust as needed
+    'secure' => true, // Only send over HTTPS
+    'httponly' => true,
+    'samesite' => 'Lax' // or 'Strict'
+    ]);
+
+
     ini_set('memory_limit', '512M');
+    
     session_start();
     $title = "Map";
     require_once __DIR__ . '/../session_utils.php';

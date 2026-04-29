@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try{
 
         if(filter_has_var(INPUT_POST, 'token')) {
-            $token = $_POST['token'];
+            $token = $_POST['token'] ?? "";
             
             if (!$token || $token !== $_SESSION['token']) {
                 throw new Exception('token validation failed.', 400);
@@ -18,12 +18,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         } else {
             throw new Exception('token validation failed.', 400);
+            
         }
 
         $item_pk = _validate_property_pk();
         // TODO: make sure user is in session
         
-        if (!isset($_SESSION['user']) || $_SESSION['user'] !== true) {
+        if (isset($_SESSION['user']) || $_SESSION['user'] === true) {
             
             // TODO: get user id
             $user_pk = $_SESSION['user']["user_pk"];
@@ -42,12 +43,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // TODO:save the propety in saved_homes_session
             $saved_home = track_saved_homes($item_pk);
     
-        }  
+        }  else{
+
+            header('Location: /');
+            exit;
+        }
     
     
     } catch (Exception $e){
         error_log($e->getMessage()); // Log the error
-        header($_SERVER['SERVER_PROTOCOL'] . ' 405 Method Not Allowed');
+        header('Location: /');
+        // header($_SERVER['SERVER_PROTOCOL'] . ' 405 Method Not Allowed');
         exit;
     
     }

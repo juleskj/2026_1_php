@@ -1,5 +1,15 @@
 <?php
 
+    session_set_cookie_params([
+    'lifetime' => 0,
+    'path' => '/',
+    'domain' => '', // Adjust as needed
+    'secure' => true, // Only send over HTTPS
+    'httponly' => true,
+    'samesite' => 'Lax' // or 'Strict'
+    ]);
+
+
     session_start();
     date_default_timezone_set('Europe/Copenhagen'); //makes sure its the correct time stamp
     require_once __DIR__ . "/../_.php";
@@ -8,7 +18,7 @@
 try{
 
     $user_email = $_GET["email"] ?? "";
-
+    // TODO: validate email wtf????
     // TODO:get is_verified to chekc if user if already verified
     $sql ="SELECT verification_token, token_expires_at, is_verified FROM `users` WHERE user_email = :email";
     $stmt = $_db->prepare( $sql );

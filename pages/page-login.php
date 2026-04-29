@@ -1,4 +1,13 @@
 <?php
+session_set_cookie_params([
+    'lifetime' => 0,
+    'path' => '/',
+    'domain' => '', // Adjust as needed
+    'secure' => true, // Only send over HTTPS
+    'httponly' => true,
+    'samesite' => 'Lax' // or 'Strict'
+]);
+
 session_start();
 
 $title = "Login";

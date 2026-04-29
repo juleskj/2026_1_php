@@ -1,28 +1,40 @@
 <?php
-try{
+    session_set_cookie_params([
+    'lifetime' => 0,
+    'path' => '/',
+    'domain' => '', // Adjust as needed
+    'secure' => true, // Only send over HTTPS
+    'httponly' => true,
+    'samesite' => 'Lax' // or 'Strict'
+    ]);
+
+
     session_start();
-    $title = "Profile";
-    require_once __DIR__ . "/../session_utils.php";
-    require_once __DIR__ . "/../db.php";
-       
-   
-    if (!isset($_SESSION["user"])) {
-        $_SESSION['flash_state'] = "error";
-        $_SESSION['flash_message'] = "Please login to see your profile";
-        header('Location: /login');
-        exit;
-    }
-        
-    if (!empty($_SESSION['viewed_homes'])) {
-        $viewed_homes = get_viewed_homes();
-    }
     
+    try{
+        $title = "Profile";
+        require_once __DIR__ . "/../session_utils.php";
+        require_once __DIR__ . "/../db.php";
+        
+   
+        if (!isset($_SESSION["user"])) {
+            $_SESSION['flash_state'] = "error";
+            $_SESSION['flash_message'] = "Please login to see your profile";
+            header('Location: /login');
+            exit;
+        }
+            
+        if (!empty($_SESSION['viewed_homes'])) {
+            $viewed_homes = get_viewed_homes();
+        }
+        
 
 
-}catch(Exception $e){
+    }catch(Exception $e){
 
-}
-require_once __DIR__."/../micro-components/_header.php";
+    }
+
+    require_once __DIR__."/../micro-components/_header.php";
 
 ?>
 <main >
