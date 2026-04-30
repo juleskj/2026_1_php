@@ -91,3 +91,7 @@ $stmt->bindValue(":img", $newfilename );
 $stmt->execute();
 
 
+// TODO: if user already has an img, update insted of inserting
+//TODO: if the image is already in the 
+// uplodas file delete it after update so that isnt two images for the same user
+
