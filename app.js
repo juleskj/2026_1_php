@@ -119,3 +119,13 @@ function logout(){
     });
 }
 
+function inputOnChange(input){
+    console.log("changing");
+
+    const file = input.files[0];
+    if(file) {
+    document.getElementById('profile-img').src = window.URL.createObjectURL(file);
+    }
+
+
+}

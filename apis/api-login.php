@@ -15,7 +15,7 @@ try{
     $_db->beginTransaction();
 
     // Fetch user from database
-    $sql = " SELECT * FROM users WHERE user_email = :email";
+    $sql = "call get_user_data_by_email(:email)";
 
     $stmt = $_db->prepare($sql);
     $stmt->bindValue(":email", $user_email);
@@ -56,6 +56,7 @@ try{
             'user_username' => $user['user_username'],
             'user_lastname' => $user['user_lastname'],
             'user_forename' => $user['user_forename'],
+            'user_image' => $user['user_img'],
             'user_role' => $user_role['role_name'],
         ];
 
