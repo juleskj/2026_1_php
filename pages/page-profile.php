@@ -36,15 +36,17 @@
 
     require_once __DIR__."/../micro-components/_header.php";
 
+    echo json_encode($user["user_image"]);
+
 ?>
 <main >
     <section id="main-content">
         <section class="user-info">
-        
-            <img src="https://placehold.co/600x400" alt="">
+
+            <img id="profile-img" src="/../uploads/<?= _($user["user_image"]) ?>" alt="">
            <form mix-post="api-upload" enctype="multipart/form-data">
                 Select image to upload:
-                <input type="file" name="fileToUpload" id="fileToUpload">
+                <input type="file" name="fileToUpload" id="fileToUpload" onChange="inputOnChange(this);">
                 <input type="submit" value="Upload Image" name="submit">
             </form>
             <section>
