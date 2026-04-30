@@ -42,7 +42,11 @@
         <section class="user-info">
         
             <img src="https://placehold.co/600x400" alt="">
-
+           <form mix-post="api-upload" enctype="multipart/form-data">
+                Select image to upload:
+                <input type="file" name="fileToUpload" id="fileToUpload">
+                <input type="submit" value="Upload Image" name="submit">
+            </form>
             <section>
                 <h2>name</h2>
                 <p>adress zip</p>
