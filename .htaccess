@@ -25,3 +25,7 @@ RewriteRule ^api-unsave-property$    /apis/api-unsave-property.php [NC,L]
 RewriteRule ^api-upload$    /apis/api-upload.php [NC,L]
 
 RewriteRule ^session_destroy$      /session_destroy.php [NC,L]
+
+
+php_value post_max_size 12M
+php_value upload_max_filesize 12M
