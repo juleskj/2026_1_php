@@ -258,7 +258,7 @@ function _render_flash_msg(){
 }
 
 
-
+// ################################
 
 function uploadImg() {
 
@@ -325,5 +325,57 @@ function uploadImg() {
             echo "Sorry, there was an error uploading your file.";
         }
     }
+
+}
+
+
+
+// ############################
+
+define("MAX_FILE_SIZE", 500000);
+define("ALLOWED_TYPES", ["jpg", "png", "jpeg", "webp"]);
+function _validate_uploded_file(array $file): array{
+
+    $check = getimagesize($file["tmp_name"]);
+    if($check === false) {
+        return ['valid' => false, 'message' => "sorry your file is not a valide image"];
+    } 
+
+    if ($file["size"] > MAX_FILE_SIZE) {
+        return ['valid' => false, 'message' => "sorry your image is too large"];
+    }
+     
+    $imageFileType = strtolower(pathinfo($file["name"], PATHINFO_EXTENSION));
+    if (!in_array($imageFileType, ALLOWED_TYPES)){
+        return ['valid'=> false, 'message' => "sorry only JPG JPEG PNG and WEBP files allowed"];
+    }
+
+    return ['valid' => true, 'message' => ""];
+}
+
+
+// ####################
+
+function _delete_old_user_image(string $user_pk, string $old_file_name, string $target_dir, PDO $_db):void{
+
+    $old_file_path  = $target_dir . $old_file_name;
+
+    if(file_exists($old_file_path)){
+
+
+        // Get the canonicalized absolute pathname
+        $absolute_path = realpath($old_file_path);
+
+        // Check if the file exists and is writable
+        if ($absolute_path !== false && is_writable($absolute_path)) {
+            unlink($absolute_path);
+        }
+
+    }
+
+    $sql = "DELETE FROM `user_images` where user_fk = :user_pk";
+    $stmt = $_db->prepare($sql);
+    $stmt->bindValue(":user_pk", $user_pk);
+    $stmt->execute();
 
 }
