@@ -42,7 +42,7 @@ try{
 
 
         // get the users role
-        $sql = "SELECT get_user_role(:user_pk) AS role_name";
+        $sql = "SELECT get_user_role(:user_pk) AS role_list";
         $stmt = $_db->prepare($sql);
         $stmt->bindValue(":user_pk",$user['user_pk']);
         $stmt->execute();
@@ -57,7 +57,7 @@ try{
             'user_lastname' => $user['user_lastname'],
             'user_forename' => $user['user_forename'],
             'user_image' => $user['user_img'],
-            'user_role' => $user_role['role_name'],
+            'user_role' =>  explode(',', $user_role['role_list']),
         ];
 
         require_once __DIR__ . "/../session_utils.php";

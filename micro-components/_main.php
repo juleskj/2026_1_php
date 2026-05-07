@@ -10,6 +10,9 @@
    $user =  $_SESSION["user"] ?? "";
 
 
+    
+
+
     $sql = "SELECT * FROM affordable_homes";
     $stmt = $_db->prepare($sql);
     $stmt->execute();
@@ -22,6 +25,7 @@
     $familiy_house = $stmt->fetchAll();
   
     
+    _render_flash_msg();
 
 
 ?>
