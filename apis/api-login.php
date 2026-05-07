@@ -4,10 +4,18 @@ session_start();
 
 require_once __DIR__."/../_.php";
 
+
 try{   
-    
     $user_email = _validate_user_email();
     $user_password = _validate_user_password();
+
+
+    if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+        $_SESSION['flash_state'] = "error";
+        $_SESSION['flash_message'] = "Invalid CSRF token";
+        header('Location: /login');
+        exit;
+    }
 
 
     require_once __DIR__."/../db.php";

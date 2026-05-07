@@ -8,9 +8,10 @@ try{
     $user_password = _validate_user_password();
     $password_verify = $_POST["password_verify"] ?? "";
     
+    
     if ($user_password !== $password_verify){
         throw new Exception("password dont match", 400);
-        exit;
+        
     }
         
     $user_email = _validate_user_email();
