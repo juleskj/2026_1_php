@@ -7,11 +7,15 @@
     'domain' => '', // Adjust as needed
     'secure' => true, // Only send over HTTPS
     'httponly' => true,
-    'samesite' => 'Lax' // or 'Strict'
+    'samesite' => 'Strict' 
     ]);
 
 
     session_start();
+
+    if (empty($_SESSION['csrf_token'])) {
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    }
     
     try{
         $title = "admin";
@@ -30,6 +34,7 @@
             $_SESSION['flash_state'] = "error";
             $_SESSION['flash_message'] = "user not allowed";
             header('Location: /');
+            exit;
         }
 
         

@@ -1,31 +1,37 @@
 RewriteEngine On
-#RewriteCond %{REQUEST_URI}  !(\.png|\.jpg|\.webp|\.gif|\.jpeg|\.zip|\.css|\.svg|\.js|\.pdf)$
-#RewriteRule (.*) routes.php [QSA,L] 
+#RewriteCond %{REQUEST_URI} !(\.png|\.jpg|\.webp|\.gif|\.jpeg|\.zip|\.css|\.svg|\.js|\.pdf)$
+#RewriteRule (.*) routes.php [QSA,L]
 
-RewriteRule ^page-profile$      /pages/page-profile.php [NC,L]
-RewriteRule ^$      /pages/page-index.php [NC,L]
-RewriteRule ^page-map$      /pages/page-map.php [NC,L] 
-RewriteRule ^login$         /pages/page-login.php [NC,L]
-RewriteRule ^sign-up$       /pages/page-sign-up.php [NC,L]
-RewriteRule ^verify-user$   /pages/verify-user.php [NC,L]
-RewriteRule ^test$   /pages/test.php [NC,L]
-RewriteRule ^admin$   /pages/page-admin.php [NC,L]
+<IfModule mod_headers.c>
+    Header set X-Frame-Options "DENY"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set X-Content-Type-Options "nosniff"
+</IfModule>
 
-RewriteRule ^api-save-property$      /apis/api-save-property.php [NC,L]
-RewriteRule ^api-logout$            /apis/api-logout.php [NC,L]
-RewriteRule ^api-get-map-item$      /apis/api-get-map-item.php [NC,L]
-RewriteRule ^api-delete-item$      /apis/api-delete-item.php [NC,L]
-RewriteRule ^api-search$      /apis/api-search.php [NC,L]
-RewriteRule ^api-city-search$      /apis/api-city-search.php [NC,L]
-RewriteRule ^api-sign-up$      /apis/api-sign-up.php [NC,L]
-RewriteRule ^api-login$         /apis/api-login.php [NC,L]
-RewriteRule ^resend-verification    /apis/api-resend-verification.php [NC,L]
-RewriteRule ^get-documents  /apis/get-documents.php [NC,L]
-RewriteRule ^seed  /apis/seed.php [NC,L]
-RewriteRule ^api-unsave-property$    /apis/api-unsave-property.php [NC,L]
-RewriteRule ^api-upload$    /apis/api-upload.php [NC,L]
+RewriteRule ^page-profile$ /pages/page-profile.php [NC,L]
+RewriteRule ^$ /pages/page-index.php [NC,L]
+RewriteRule ^page-map$ /pages/page-map.php [NC,L]
+RewriteRule ^login$ /pages/page-login.php [NC,L]
+RewriteRule ^sign-up$ /pages/page-sign-up.php [NC,L]
+RewriteRule ^verify-user$ /pages/verify-user.php [NC,L]
+RewriteRule ^test$ /pages/test.php [NC,L]
+RewriteRule ^admin$ /pages/page-admin.php [NC,L]
 
-RewriteRule ^session_destroy$      /session_destroy.php [NC,L]
+RewriteRule ^api-save-property$ /apis/api-save-property.php [NC,L]
+RewriteRule ^api-logout$ /apis/api-logout.php [NC,L]
+RewriteRule ^api-get-map-item$ /apis/api-get-map-item.php [NC,L]
+RewriteRule ^api-delete-item$ /apis/api-delete-item.php [NC,L]
+RewriteRule ^api-search$ /apis/api-search.php [NC,L]
+RewriteRule ^api-city-search$ /apis/api-city-search.php [NC,L]
+RewriteRule ^api-sign-up$ /apis/api-sign-up.php [NC,L]
+RewriteRule ^api-login$ /apis/api-login.php [NC,L]
+RewriteRule ^resend-verification /apis/api-resend-verification.php [NC,L]
+RewriteRule ^get-documents /apis/get-documents.php [NC,L]
+RewriteRule ^seed /apis/seed.php [NC,L]
+RewriteRule ^api-unsave-property$ /apis/api-unsave-property.php [NC,L]
+RewriteRule ^api-upload$ /apis/api-upload.php [NC,L]
+
+RewriteRule ^session_destroy$ /session_destroy.php [NC,L]
 
 
 php_value post_max_size 12M
