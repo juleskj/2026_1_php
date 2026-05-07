@@ -20,7 +20,7 @@ try{
     $item = $stmt->fetch();
     
 }catch(Exception $e){
-
+ 
 }
 ?>
 

@@ -51,11 +51,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     
     } catch (Exception $e){
-        error_log($e->getMessage()); // Log the error
-        header('Location: /');
-        // header($_SERVER['SERVER_PROTOCOL'] . ' 405 Method Not Allowed');
-        exit;
-    
+       error_log("Error: " . $e->getMessage() . " (Code: " . $e->getCode() . ")");
+        $_SESSION['flash_state'] = "error";
+        
+        $message = $e->getMessage();
+        switch (true) {
+            case str_contains($message, "token validation failed"):
+                $_SESSION['flash_message'] = "Validation failed";
+                header('Location: /');
+                exit;
+
+            default:
+                $_SESSION['flash_message'] = "An error has occurred Please try again";
+                header('Location: /');
+                exit;
+        }
+        
     }
 
 

@@ -80,36 +80,33 @@ try{
 
 }catch (Exception $e){
 
-    http_response_code(401);
-
-    if(str_contains($e, "no user")){
-        $_SESSION['flash_state'] = "error";
-        $_SESSION['flash_message'] = "User not found";
-        header('Location: /login');
-         exit;
-    }
-    if(str_contains($e, "user not verified")){
-        $_SESSION['flash_state'] = "error";
-        $_SESSION['flash_message'] = "Please verify your email";
-        header('Location: /login');
-         exit;
-    }
-    if(str_contains($e, "Password")){
-        $_SESSION['flash_state'] = "error";
-        $_SESSION['flash_message'] = "invalide password";
-        header('Location: /login');
-         exit;
-    }
-    if(str_contains($e, "email")){
-        $_SESSION['flash_state'] = "error";
-        $_SESSION['flash_message'] = "invalide email";
-        header('Location: /login');
-        exit;
-    }
+    error_log("Error: " . $e->getMessage() . " (Code: " . $e->getCode() . ")");
     
     $_SESSION['flash_state'] = "error";
-    $_SESSION['flash_message'] = "invalide password or email";
-    header('Location: /login');
-    exit;
+    $message = $e->getMessage();
+    switch (true)  {
+        case str_contains($message,"no user"):
+            $_SESSION['flash_message'] = "User not found";
+            header('Location: /login');
+            exit;
+        case str_contains($message,"user not verified");
+            $_SESSION['flash_message'] = "Please verify your email";
+            header('Location: /login');
+            exit;
+        case str_contains($message,"Password"):
+            $_SESSION['flash_message'] = "invalide password or email";
+            header('Location: /login');
+            exit;
+
+        case str_contains($message,"email"):
+            $_SESSION['flash_message'] = "invalide password or email";
+            header('Location: /login');
+            exit;
+
+        default:
+            $_SESSION['flash_message'] = "invalide password or email";
+            header('Location: /login');
+            exit;
+    }
 
 }
