@@ -126,6 +126,7 @@ nav{
     display: grid;
     grid-column: full;
     grid-template-columns: subgrid;
+    z-index: 2;
 
     img{
         grid-column: full;
@@ -504,6 +505,7 @@ section:has(#login-form) , section:has(#signup-form){
     top: 10%;
     left: 50%;
     transform: translate(-50%, -50%);
+    z-index: 100000000000;
   
     min-width: 250px;
     padding: 0.5rem;
