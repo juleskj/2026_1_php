@@ -36,7 +36,7 @@ $user_email = $_GET["email"] ?? "";
         
         _send_welcome_email($user_email, true);
 
-        echo"ok";
+       
         
     } else {
         echo "no token";

@@ -39,18 +39,12 @@ try{
     $validation = _validate_uploded_file($_FILES["fileToUpload"]);
 
     if (!$validation['valid']) {
-        $_SESSION['flash_state'] = "error";
-        $_SESSION['flash_message'] = $validation['message'];
-        header('Location: /page-profile');
-        exit;
+        throw new Exception($validation['message']);
     }
 
     // Check if $uploadOk is set to 0 by an error
     if ($uploadOk == 0) {
-        $_SESSION['flash_state'] = "error";
-        $_SESSION['flash_message'] = "Sorry your file was not uploaded";
-        header('Location: /page-profile');
-        exit;
+        throw new Exception("file not uplodaed", 400);
         // if everything is ok, try to upload file
     } else {
         
@@ -77,15 +71,35 @@ try{
             exit;
             
         } else {
-            $_SESSION['flash_state'] = "error";
-            $_SESSION['flash_message'] = "Sorry there was an error uploading your file";
-            header('Location: /page-profile');
-            exit;
+            throw new Exception("file not uplodaed", 400);
         }
     }
 
 
 }catch ( Exception $e){
 
+    error_log("Error: " . $e->getMessage() . " (Code: " . $e->getCode() . ")");
+    $_SESSION['flash_state'] = "error";
+
+        $message = $e->getMessage();
+        switch (true) {
+            case str_contains($message, "not a valide image"):
+                $_SESSION['flash_message'] = "sorry your file is not a valide image";
+                header('Location: /page-profile');
+                exit;
+            case str_contains($message, "too large"):
+                $_SESSION['flash_message'] = "sorry your file was too large";
+                header('Location: /page-profile');
+                exit;
+            case str_contains($message, "files allowed"):
+                $_SESSION['flash_message'] = "sorry only JPG JPEG PNG and WEBP files allowed";
+                header('Location: /page-profile');
+                exit;
+
+            default:
+                $_SESSION['flash_message'] = "Sorry your file was not uploaded";
+                header('Location: /page-profile');
+                exit;
+    }
 
 }

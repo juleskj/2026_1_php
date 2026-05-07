@@ -1,10 +1,10 @@
 <?php 
-
+session_start();
+require_once __DIR__."/../db.php";
+require_once __DIR__."/../_.php";
 try{
 
-    session_start();
-
-    require_once __DIR__."/../_.php";
+    
     $user_password = _validate_user_password();
     $password_verify = $_POST["password_verify"] ?? "";
     
@@ -30,7 +30,7 @@ try{
     $user_pk = bin2hex(random_bytes(25)); // Returns 50 characters
 
 
-    require_once __DIR__."/../db.php";
+   
 
     /* Begin a transaction, turning off autocommit */
     $_db->beginTransaction();
@@ -107,53 +107,47 @@ try{
     exit;
 }
 catch(Exception $e){
-
-// incase something unespected happends
+    
+   // Rollback any open transactions
     if ($_db->inTransaction()) {
         $_db->rollBack();
     }
 
-    if(str_contains($e, "user_email") && str_contains($e, "Duplicate entry")){
-        http_response_code(400);
+    error_log("Error: " . $e->getMessage() . " (Code: " . $e->getCode() . ")");
 
-        $_SESSION['flash_state'] = "error";
-        $_SESSION['flash_message'] = "email already exists";
-        header('Location: /sign-up');
-
-        exit;
-    }
-
-    if(str_contains($e, "password dont match")){
-        http_response_code(400);
-
-        $_SESSION['flash_state'] = "error";
-        $_SESSION['flash_message'] = "password dont match";
-        header('Location: /sign-up');
-        
-        exit;
-    }
-
-
-    if(str_contains($e, "user_username") && str_contains($e, "Duplicate entry")){
-        http_response_code(400);
-        
-        $_SESSION['flash_state'] = "error";
-        $_SESSION['flash_message'] = "username already exists";
-        header('Location: /sign-up');
-
-        exit;
-    }
-    if(str_contains($e, "Registration failed")){
-        http_response_code(500);
-        
-        $_SESSION['flash_state'] = "error";
-        $_SESSION['flash_message'] = "Registration failed";
-        header('Location: /sign-up');
-
-        exit;
-    }
-
-    http_response_code($e->getCode());
+    // Set HTTP status code (default to 500 if not specified)
+    http_response_code($e->getCode() >= 400 ? $e->getCode() : 500);
+    $_SESSION['flash_state'] = "error";
     
+    // Handle specific errors with switch
+    $message = $e->getMessage();
+    switch (true) {
+        case str_contains($message, "user_email") && str_contains($message, "Duplicate entry"):
+            $_SESSION['flash_message'] = "Email already exists";
+            header('Location: /sign-up');
+            exit;
+
+        case str_contains($message, "password dont match"):
+            $_SESSION['flash_message'] = "Passwords do not match";
+            header('Location: /sign-up');
+            exit;
+
+        case str_contains($message, "user_username") && str_contains($message, "Duplicate entry"):
+            $_SESSION['flash_message'] = "Username already exists";
+            header('Location: /sign-up');
+            exit;
+
+        case str_contains($message, "Registration failed"):
+            $_SESSION['flash_message'] = "Registration failed";
+            header('Location: /sign-up');
+            exit;
+
+        default:
+            // Generic error for unexpected cases
+            $_SESSION['flash_message'] = "An unexpected error occurred Please try again";
+            header('Location: /sign-up');
+            exit;
+    }
+
     exit;
 }

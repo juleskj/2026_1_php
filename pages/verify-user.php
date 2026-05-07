@@ -19,7 +19,7 @@ try{
 
     $user_email = $_GET["email"] ?? "";
     // TODO: validate email wtf????
-    // TODO:get is_verified to chekc if user if already verified
+    
     $sql ="SELECT verification_token, token_expires_at, is_verified FROM `users` WHERE user_email = :email";
     $stmt = $_db->prepare( $sql );
 
@@ -29,15 +29,11 @@ try{
     $user = $stmt->fetch();
     
     if(!$user){
-        $_SESSION['flash_message'] = "no user found";
-        header('Location: /login');
-        exit;
+        throw new Exception("no user found", 401);
     }
     // TODO:check token after sql selector?
     if($user["verification_token"] === NULL){
-        $_SESSION['flash_message'] = "no email found to be verified";
-        header('Location: /login');
-        exit;
+        throw new Exception("no email found to be verified", 400);
     }
 
     
@@ -62,17 +58,34 @@ try{
         echo "your link has expired want to renew? <a href='/resend-verification?email=$user_email'>Click here</a> to request a new one.";
         exit;        
     } else {
-        $_SESSION['flash_state'] = "error";
-        $_SESSION['flash_message'] = "no user found to";
-        header('Location: /login');
-        exit; 
+        throw new Exception("no user found", 401);
 
     }
    
 
 }
 catch(Exception $e){
+    error_log("Error: " . $e->getMessage() . " (Code: " . $e->getCode() . ")");
 
+    switch ($e->getMessage()) {
+        case "no user found":
+            $_SESSION['flash_state'] = "error";
+            $_SESSION['flash_message'] = "no user found";
+            header('Location: /login');
+            exit; 
+
+        case "no email found to be verified":
+            $_SESSION['flash_state'] = "error";
+            $_SESSION['flash_message'] = "there is no email found to be verified";
+            header('Location: /');
+            exit;
+
+        default:
+            $_SESSION['flash_state'] = "error";
+            $_SESSION['flash_message'] = "An error occurred Please try again";
+            header('Location: /');
+            exit;
+    }
 
 }
     

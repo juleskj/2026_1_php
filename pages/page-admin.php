@@ -24,28 +24,45 @@
         
 
         if (!isset($_SESSION["user"])) {
-            $_SESSION['flash_state'] = "error";
-            $_SESSION['flash_message'] = "please login";
-            header('Location: /login');
-            exit;
+           throw new Exception("no user found", 401);
         }
 
         if(!in_array("admin",  $_SESSION["user"]["user_role"])){
-            $_SESSION['flash_state'] = "error";
-            $_SESSION['flash_message'] = "user not allowed";
-            header('Location: /');
-            exit;
+           throw new Exception("user not admin", 403);
         }
 
         
 
     }catch(Exception $e){
-        echo "ups..";
+
+        error_log("Error: " . $e->getMessage() . " (Code: " . $e->getCode() . ")");
+
+
+        $_SESSION['flash_state'] = "error";
+        $message = $e->getMessage();
+        switch (true) {
+            case str_contains($message, "no user found"):
+                $_SESSION['flash_message'] = "You do not have permission to access this page";
+                header('Location: /login');
+                exit;
+
+            case str_contains($message, "user not admin"):
+                $_SESSION['flash_message'] = "You do not have permission to access this page";
+                header('Location: /');
+                exit;
+
+            default:
+                $_SESSION['flash_message'] = "An error occurred Please try again";
+                header('Location: /');
+                exit;
+        }
+
     }
 
 
    $title = "Home";
 
     require_once __DIR__."/../micro-components/_header.php";
+    require_once __DIR__."/../micro-components/_footer.php";
     
 echo "ok";
