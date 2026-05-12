@@ -21,6 +21,7 @@ $user =  $_SESSION["user"] ?? "";
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
     <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+    <link rel="stylesheet"  href="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.css" />
 
     <script src="https://kit.fontawesome.com/a6a9ce4355.js" crossorigin="anonymous"></script>
 
