@@ -30,6 +30,7 @@ RewriteRule ^get-documents /apis/get-documents.php [NC,L]
 RewriteRule ^seed /apis/seed.php [NC,L]
 RewriteRule ^api-unsave-property$ /apis/api-unsave-property.php [NC,L]
 RewriteRule ^api-upload$ /apis/api-upload.php [NC,L]
+RewriteRule ^api-add-new-property$ /apis/api-add-new-property.php [NC,L]
 
 RewriteRule ^session_destroy$ /session_destroy.php [NC,L]
 
