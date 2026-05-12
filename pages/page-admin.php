@@ -70,17 +70,8 @@
 
             <section>
                 <article>
-
-                <!-- `pk`, `lat`, `lon`, `price`, `type`, `city_name`, 
-                    `house_number`, `road_name`, `zip_code`, 
-                    `days_listed`, `energy_label`, `floor_square_meters`,
-                    `lot_square_meters`, `monthly_expenses`, 
-                    `number_of_rooms`, `price_per_meter`, 
-                    `main_image_path`, `floor_plan_path`, 
-                    `deleted_at`, `number_of_baths`, `year_build`, 
-                    `main_image_alt` -->
                     
-                    <img src="https://placehold.co/600x400" alt="">
+                    <img class="property-image" src="https://placehold.co/600x400" alt="">
                     <form id="add-bolig-form" mix-post="/api-add-new-property" >
                         <fieldset>
                             <legend>Address</legend>
@@ -98,52 +89,117 @@
                             </label>
                             <input type="hidden" id="lat" name="lat" />
                             <input type="hidden" id="lon" name="lon" />
+                            <div id="coordinates-result"></div>
                         </fieldset>
                         <fieldset>
                             <legend>
                                 overall bolig info
                             </legend>
-                            <label >
-                                lot square meters
-                                <input name="lot_square_meters" type="text" placeholder="lot square meters">
+                           
+                            <!-- Lot square meters: Positive decimal number (e.g., 100, 123.45) -->
+                            <label>
+                                Lot square meters
+                                <input
+                                    name="lot_square_meters"
+                                    type="text"
+                                    placeholder="lot square meters"
+                                    pattern="^[0-9]+(\.[0-9]{1,2})?$"
+                                    title="Must be a positive number (e.g., 100 or 123.45)"
+                                    required
+                                >
                             </label>
-                            <label >
-                                floor square meters
-                                <input name="floor_square_meters" type="text" placeholder="floor square meters">
+
+                            <!-- Floor square meters: Positive decimal number (e.g., 80, 99.99) -->
+                            <label>
+                                Floor square meters
+                                <input
+                                    name="floor_square_meters"
+                                    type="text"
+                                    placeholder="floor square meters"
+                                    pattern="^[0-9]+(\.[0-9]{1,2})?$"
+                                    title="Must be a positive number (e.g., 80 or 99.99)"
+                                    required
+                                >
                             </label>
-                            <label >
-                                number of rooms
-                                <input name="number_of_rooms" type="text" placeholder="beds">
+
+                            <!-- Number of rooms: Positive integer (e.g., 1, 2, 3) -->
+                            <label>
+                                Number of rooms
+                                <input
+                                    name="number_of_rooms"
+                                    type="text"
+                                    placeholder="number of rooms"
+                                    pattern="^[1-9][0-9]*$"
+                                    title="Must be a positive integer (e.g., 1, 2, 3)"
+                                    required
+                                >
                             </label>
-                            <label >
-                                number of baths
-                                <input name="number_of_baths" type="text" placeholder="baths">
+
+                            <!-- Number of baths: Positive integer or half (e.g., 1, 2, 0.5) -->
+                            <label>
+                                Number of baths
+                                <input
+                                    name="number_of_baths"
+                                    type="text"
+                                    placeholder="number of baths"
+                                    pattern="^[0-9]+(\.5)?$"
+                                    title="Must be a positive integer or half (e.g., 1, 2, 0.5)"
+                                    required
+                                >
                             </label>
-                            <label >
-                                year build
-                                <input name="year_build" type="text" placeholder="year build">
+
+                            <!-- Year built: 4-digit year (e.g., 1990, 2025) -->
+                            <label>
+                                Year built
+                                <input
+                                    name="year_build"
+                                    type="text"
+                                    placeholder="year built"
+                                    pattern="^(19|20)\d{2}$"
+                                    title="Must be a 4-digit year (e.g., 1990, 2025)"
+                                    required
+                                >
                             </label>
-                            <label >
-                                energy label
-                                <input name="energy_label" type="text" placeholder="energy label">
+
+                            <!-- Energy label: Danish energy labels (A1, A2, B, C, etc.) -->
+                            <label>
+                                Energy label
+                                <input
+                                    name="energy_label"
+                                    type="text"
+                                    placeholder="energy label"
+                                    pattern="^(A1|A2|B|C|D|E|F|G)$"
+                                    title="Must be a valid Danish energy label (A1, A2, B, C, D, E, F, G)"
+                                    required
+                                >
                             </label>
                         </fieldset>
-                        <input name="monthly_expenses" type="text" placeholder="monthly expenses">
+                        <fieldset>
+                            <legend>Expenses</legend>
+                            <label>
+                                monthly expenses
+                                <input name="monthly_expenses" type="text" placeholder="monthly expenses">
+                            </label>
+                            <label>
+                                price per meter
+                                <input name="price_per_meter" type="text" placeholder="price per meter">
+                            </label>
+                            <label>
+                                price
+                                <input name="price" type="text" placeholder="price">
+                            </label>
+                        </fieldset>
 
 
-                        <button onclick="geocodeAddress()">Get Coordinates</button>
+                        <button type="button" onclick="geocodeAddress()">Resolve Coordinates</button>
+                        <button type="submit" id="submit-btn" disabled>Save Bolig</button>
+                        
 
                     </form>
 
-                    <div id="coordinates-result"></div>    
                         
-                       
-
-                       
+                                             
                 </article>
-
-
-
 
             </section>
         
@@ -186,22 +242,28 @@
                 if (data.length > 0) {
                 const lat = parseFloat(data[0].lat);
                 const lon = parseFloat(data[0].lon);
+              
 
                 // Update hidden fields
                 document.getElementById('lat').value = lat;
                 document.getElementById('lon').value = lon;
 
+
                 
                 document.getElementById('coordinates-result').textContent =
                     `Latitude: ${lat}, Longitude: ${lon}`;
 
+                document.getElementById('submit-btn').disabled = false;
+
             
                 } else {
                 alert("Address not found. Try a more specific query.");
+                document.getElementById('submit-btn').disabled = true;
                 }
             } catch (error) {
                 console.error("Error fetching coordinates:", error);
                 alert("Failed to fetch coordinates. Check the console for details.");
+                document.getElementById('submit-btn').disabled = true;
             }
         }
 
