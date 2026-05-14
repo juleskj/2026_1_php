@@ -15,41 +15,32 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     try{
         
         $pk = bin2hex(random_bytes(25));
-        $city_name = $_POST[""] ?? null;
-        $house_number =  $_POST[""] ?? null;
-        $type =  $_POST[""] ?? null;
-        $price =  $_POST[""] ?? null;
-        $lat = $_POST["lat"];
-        $lon = $_POST["lon"];
-        $zip_code =  $_POST[""]->zipCode ?? null;
+        
         $days_listed =  $_POST[""] ?? null;
-        $energy_label =  $_POST[""] ?? null;
-        $monthly_expenses=  $_POST[""] ?? null;
-        $lot_square_meters =  $_POST[""] ?? null;
-        $floor_square_meters =  $_POST[""] ?? null;
-        $road_name =  $_POST[""] ?? null;
+        
 
         $main_image_path =  $_POST[""] ?? null;
         $floor_plan_path =  $_POST[""] ?? null;
-        $number_of_rooms =  $_POST[""] ?? null;
-        $price_per_meter =  $_POST[""] ?? null;
-                        
-        $number_of_baths =  $_POST[""];
-        $year_build = $_POST[""] ?? null;
         $main_image_alt =  $_POST[""]?? null;
 
-
-
-
-
-        $lat = $_POST["lat"];
-        $lon = $_POST["lon"];
+        $validation_rules  = require_once __DIR__ . "/../config/validation_rules.php";
+        $property_rules = $validation_rules['property'];
         
-        echo $lat . " " . $lon;
+        require_once __DIR__ . "/../_.php";
+
+        $validated_data = [];
+        foreach ($property_rules as $field => $rules) {
+            $value = $_POST[$field] ?? null;
+            $validated_data[$field] = _validate_field($field, $value, $rules);
+            
+        };
+        
+        
 
 
     } catch ( Exception $e){
 
+        echo $e;
 
     }
     

@@ -76,6 +76,10 @@
                         <fieldset id="address">
                             <legend>Address</legend>
                             <label>
+                                zip code
+                                <input name="zip_code" pattern="\d{4}" type="string"  min="4" max="4" placeholder="zip code" required value="2730">
+                            </label>
+                            <label>
                                 Road name
                                 <input name="road_name" type="text" placeholder="road name" required value="melissehaven">
                             </label>
@@ -176,14 +180,15 @@
                             <label>
                                 House type
                                 <input
-                                    name="house_type"
+                                    name="type"
                                     type="text"
                                     placeholder="House type"
-                                    pattern="^[0-9]+(\.[0-9]{1,2})?$"
+                                    
                                     title="Must be a positive number (e.g., 100 or 123.45)"
                                     required
                                 >
                             </label>
+                           
                         </fieldset>
                         <fieldset id="expenses">
                             <legend>Expenses</legend>
@@ -232,8 +237,9 @@
             const cityName= document.querySelector('input[name="city_name"]').value.trim();
             const roadName= document.querySelector('input[name="road_name"]').value.trim();
             const houseNumber= document.querySelector('input[name="house_number"]').value.trim();
-            
-            const address = cityName + " " + roadName + " " + houseNumber;
+            const zipCode= document.querySelector('input[name="zip_code"]').value.trim();
+
+            const address = cityName + " "+ zipCode + " " + roadName + " " + houseNumber;
 
             
             if (!address) {

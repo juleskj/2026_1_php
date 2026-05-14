@@ -308,3 +308,70 @@ function _delete_old_user_image(string $user_pk, string $old_file_name, string $
     $stmt->execute();
 
 }
+
+
+
+
+// ###################### validate save new property 
+
+function _validate_field($field, $value, $rules) {
+    // Check if the field is required and missing
+    if ($rules['required'] && ($value === null || $value === '')) {
+        throw new Exception("Field '$field' is required.", 400);
+    }
+
+    // Skip validation if the field is not required and empty
+    if (!$rules['required'] && ($value === null || $value === '')) {
+        return null;
+    }
+
+    // Trim strings
+    if (is_string($value)) {
+        $value = trim($value);
+    }
+
+    // Validate type
+    switch ($rules['type']) {
+        case 'int':
+            if (!is_numeric($value) || (int)$value != $value) {
+                throw new Exception("Field '$field' must be an integer.", 400);
+            }
+            $value = (int)$value;
+            break;
+        case 'float':
+            if (!is_numeric($value)) {
+                throw new Exception("Field '$field' must be a number.", 400);
+            }
+            $value = (float)$value;
+            break;
+        case 'string':
+            if (!is_string($value)) {
+                throw new Exception("Field '$field' must be a string.", 400);
+            }
+            break;
+    }
+
+    // Validate min/max for strings (length) and numbers (value)
+    if (isset($rules['min'])) {
+        if ($rules['type'] === 'string' && strlen($value) < $rules['min']) {
+            throw new Exception("Field '$field' must be at least {$rules['min']} characters long.", 400);
+        } elseif (($rules['type'] === 'int' || $rules['type'] === 'float') && $value < $rules['min']) {
+            throw new Exception("Field '$field' must be at least {$rules['min']}.", 400);
+        }
+    }
+
+    if (isset($rules['max'])) {
+        if ($rules['type'] === 'string' && strlen($value) > $rules['max']) {
+            throw new Exception("Field '$field' must be at most {$rules['max']} characters long.", 400);
+        } elseif (($rules['type'] === 'int' || $rules['type'] === 'float') && $value > $rules['max']) {
+            throw new Exception("Field '$field' must be at most {$rules['max']}.", 400);
+        }
+    }
+
+    // Validate pattern (for strings)
+    if (isset($rules['pattern']) && !preg_match($rules['pattern'], $value)) {
+        throw new Exception("Field '$field' has an invalid format.", 400);
+    }
+
+    return $value;
+}
