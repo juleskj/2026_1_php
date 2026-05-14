@@ -317,7 +317,7 @@ function _delete_old_user_image(string $user_pk, string $old_file_name, string $
 function _validate_field($field, $value, $rules) {
     // Check if the field is required and missing
     if ($rules['required'] && ($value === null || $value === '')) {
-        throw new Exception("Field '$field' is required.", 400);
+        throw new Exception("Field '$field' is required", 400);
     }
 
     // Skip validation if the field is not required and empty
@@ -334,19 +334,19 @@ function _validate_field($field, $value, $rules) {
     switch ($rules['type']) {
         case 'int':
             if (!is_numeric($value) || (int)$value != $value) {
-                throw new Exception("Field '$field' must be an integer.", 400);
+                throw new Exception("Field '$field' must be an integer", 400);
             }
             $value = (int)$value;
             break;
         case 'float':
             if (!is_numeric($value)) {
-                throw new Exception("Field '$field' must be a number.", 400);
+                throw new Exception("Field '$field' must be a number", 400);
             }
             $value = (float)$value;
             break;
         case 'string':
             if (!is_string($value)) {
-                throw new Exception("Field '$field' must be a string.", 400);
+                throw new Exception("Field '$field' must be a string", 400);
             }
             break;
     }
