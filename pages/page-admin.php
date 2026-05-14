@@ -60,9 +60,11 @@
     }
 
 
-   $title = "Home";
+    $title = "Admin";
 
     require_once __DIR__."/../micro-components/_header.php";
+    _render_flash_msg();
+
     ?>
 
         <main>
