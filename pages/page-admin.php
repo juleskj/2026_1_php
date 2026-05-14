@@ -73,7 +73,7 @@
                     
                     <img class="property-image" src="https://placehold.co/600x400" alt="">
                     <form id="add-bolig-form" mix-post="/api-add-new-property" >
-                        <fieldset>
+                        <fieldset id="address">
                             <legend>Address</legend>
                             <label>
                                 Road name
@@ -91,12 +91,12 @@
                             <input type="hidden" id="lon" name="lon" />
                             <div id="coordinates-result"></div>
                         </fieldset>
-                        <fieldset>
+                        <fieldset id="info">
                             <legend>
                                 overall bolig info
                             </legend>
                            
-                            <!-- Lot square meters: Positive decimal number (e.g., 100, 123.45) -->
+                            
                             <label>
                                 Lot square meters
                                 <input
@@ -109,7 +109,7 @@
                                 >
                             </label>
 
-                            <!-- Floor square meters: Positive decimal number (e.g., 80, 99.99) -->
+                            
                             <label>
                                 Floor square meters
                                 <input
@@ -122,33 +122,33 @@
                                 >
                             </label>
 
-                            <!-- Number of rooms: Positive integer (e.g., 1, 2, 3) -->
-                            <label>
-                                Number of rooms
-                                <input
-                                    name="number_of_rooms"
-                                    type="text"
-                                    placeholder="number of rooms"
-                                    pattern="^[1-9][0-9]*$"
-                                    title="Must be a positive integer (e.g., 1, 2, 3)"
-                                    required
-                                >
-                            </label>
-
-                            <!-- Number of baths: Positive integer or half (e.g., 1, 2, 0.5) -->
+                           
                             <label>
                                 Number of baths
                                 <input
+                                    type="number"
                                     name="number_of_baths"
-                                    type="text"
-                                    placeholder="number of baths"
-                                    pattern="^[0-9]+(\.5)?$"
-                                    title="Must be a positive integer or half (e.g., 1, 2, 0.5)"
+                                    min="1"
+                                    max="10"
+                                    step="1"
                                     required
-                                >
+                                    placeholder="e.g., 3">
                             </label>
 
-                            <!-- Year built: 4-digit year (e.g., 1990, 2025) -->
+                            
+                           <label>
+                                Number of Rooms
+                                <input
+                                    type="number"
+                                    name="number_of_rooms"
+                                    min="1"
+                                    max="20"
+                                    step="1"
+                                    required
+                                    placeholder="e.g., 3">
+                            </label>
+
+                            
                             <label>
                                 Year built
                                 <input
@@ -161,7 +161,7 @@
                                 >
                             </label>
 
-                            <!-- Energy label: Danish energy labels (A1, A2, B, C, etc.) -->
+                           
                             <label>
                                 Energy label
                                 <input
@@ -169,12 +169,23 @@
                                     type="text"
                                     placeholder="energy label"
                                     pattern="^(A1|A2|B|C|D|E|F|G)$"
-                                    title="Must be a valid Danish energy label (A1, A2, B, C, D, E, F, G)"
+                                    title="Must be a valid energy label (A1, A2, B, C, D, E, F, G)"
+                                    required
+                                >
+                            </label>
+                            <label>
+                                House type
+                                <input
+                                    name="house_type"
+                                    type="text"
+                                    placeholder="House type"
+                                    pattern="^[0-9]+(\.[0-9]{1,2})?$"
+                                    title="Must be a positive number (e.g., 100 or 123.45)"
                                     required
                                 >
                             </label>
                         </fieldset>
-                        <fieldset>
+                        <fieldset id="expenses">
                             <legend>Expenses</legend>
                             <label>
                                 monthly expenses

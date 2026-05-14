@@ -596,7 +596,7 @@ section:has(#login-form) , section:has(#signup-form){
 }
 
 
-
+/* 
 
 
 #add-bolig-form, #add-bolig-form fieldset{
@@ -632,4 +632,125 @@ section:has(#login-form) , section:has(#signup-form){
     height: 250px;
     width: 350px;
 }
+ */
+ #add-bolig-form fieldset {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    
+  
+}
 
+#add-bolig-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    grid-template-areas: 
+    "address info"
+    "expenses info"
+    "button1 button1"
+    "button2 button2"
+    ;
+    gap: 1.5rem;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+#address{
+    grid-area: address;
+}
+#expenses{
+    grid-area: expenses;
+}
+#info{
+    grid-area: info;
+}
+#add-bolig-form button[type=button]{
+grid-area: button1 ;
+}
+
+#add-bolig-form button[type=submit]{
+grid-area: button2 ;
+}
+
+#add-bolig-form fieldset {
+    padding: 1.5rem;
+    border: 1px solid var(--blue);
+    border-radius: 6px;
+   
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+   
+}
+
+#add-bolig-form fieldset legend {
+    padding: 0 0.5rem;
+    font-weight: 600;
+    color: var(--blue);
+    font-size: 1.1rem;
+}
+
+#add-bolig-form label {
+    text-transform: capitalize;
+    color: var(--blue);
+    font-weight: 500;
+    font-size: 0.95rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+#add-bolig-form input,
+#add-bolig-form select {
+    background: var(--white);
+    color: var(--blue);
+    border: 1px solid var(--blue);
+    border-radius: 4px;
+    font-size: 1rem;
+    padding: 0.6rem 0.8rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#add-bolig-form input:focus,
+#add-bolig-form textarea:focus,
+#add-bolig-form select:focus {
+    outline: none;
+    border-color: var(--blue);
+    box-shadow: 0 0 0 2px rgba(0, 120, 255, 0.2);
+}
+
+.property-image {
+    object-fit: cover;
+    height: 250px;
+    width: 100%;
+    border-radius: 6px;
+    border: 1px solid #eee;
+    margin-bottom: 1rem;
+}
+
+/* Submit button styling */
+#add-bolig-form button {
+    background: var(--blue);
+    color: var(--white);
+    border: none;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+   
+}
+#add-bolig-form button:hover {
+    background: #0056b3;
+}
+#add-bolig-form button:disabled{
+    background-color: gray;
+    pointer-events: none;
+
+    
+}
