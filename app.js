@@ -129,3 +129,21 @@ function inputOnChange(input){
 
 
 }
+
+
+
+
+function showModule(button){
+
+    console.log(button);
+
+    const module = button.dataset.module;
+    
+    console.log(module)
+    const closetModule = button.closest(`#${module}-module`)
+    const closetForm = closetModule.querySelector(`#${module}-form`)
+
+ 
+    closetForm.classList.toggle("hidden");
+
+}

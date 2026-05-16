@@ -1,8 +1,26 @@
 <?php
+
+session_set_cookie_params([
+    'lifetime' => 0,
+    'path' => '/',
+    'domain' => '', 
+    'secure' => true, 
+    'httponly' => true,
+    'samesite' => 'Strict' 
+    ]);
+
+
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     try{
+
+        if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+            $_SESSION['flash_state'] = "error";
+            $_SESSION['flash_message'] = "Invalid CSRF token";
+            header('Location: /login');
+            exit;
+        }
 
         // check if the user is actually admin before adding property
         if (!isset($_SESSION["user"])) {
