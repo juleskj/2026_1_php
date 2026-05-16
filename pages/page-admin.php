@@ -109,7 +109,7 @@
                                     <input type="hidden" id="lon" name="lon" />
                                     <div id="coordinates-result"></div>
                                 </fieldset>
-                                <fieldset id="info">
+                                <fieldset id="property-info">
                                     <legend>
                                         overall bolig info
                                     </legend>
