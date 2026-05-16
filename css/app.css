@@ -754,3 +754,8 @@ grid-area: button2 ;
 
     
 }
+
+
+.hidden{
+    display: none;
+}

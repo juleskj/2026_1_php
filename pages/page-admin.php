@@ -16,52 +16,59 @@
     if (empty($_SESSION['csrf_token'])) {
         $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
     }
-    
-    try{
-        $title = "admin";
-        require_once __DIR__ . "/../session_utils.php";
-        require_once __DIR__ . "/../db.php";
+        
+    require_once __DIR__ . "/../session_utils.php";
+    require_once __DIR__ . "/../db.php";
+
+    if ($_SERVER["REQUEST_METHOD"] === "POST") {
+        try{
+            
         
 
-        if (!isset($_SESSION["user"])) {
-           throw new Exception("no user found", 401);
+            if (!isset($_SESSION["user"]) || !is_array($_SESSION["user"])) {
+
+                throw new Exception("no user found", 401);
+            
+            }
+
+            if (!isset($_SESSION["user"]["user_role"]) || !in_array("admin", $_SESSION["user"]["user_role"], true)) {
+                
+                throw new Exception("user not admin", 403);
+                
+            }
+
+            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+            
+
+        }catch(Exception $e){
+
+            error_log("Error: " . $e->getMessage() . " (Code: " . $e->getCode() . ")");
+
+
+            $_SESSION['flash_state'] = "error";
+            $message = $e->getMessage();
+            switch (true) {
+                case str_contains($message, "no user found"):
+                    $_SESSION['flash_message'] = "You do not have permission to access this page";
+                    header('Location: /login');
+                    exit;
+
+                case str_contains($message, "user not admin"):
+                    $_SESSION['flash_message'] = "You do not have permission to access this page";
+                    header('Location: /');
+                    exit;
+
+                default:
+                    $_SESSION['flash_message'] = "An error occurred Please try again";
+                    header('Location: /');
+                    exit;
+            }
+
         }
-
-        if(!in_array("admin",  $_SESSION["user"]["user_role"])){
-           throw new Exception("user not admin", 403);
-        }
-
-        
-
-    }catch(Exception $e){
-
-        error_log("Error: " . $e->getMessage() . " (Code: " . $e->getCode() . ")");
-
-
-        $_SESSION['flash_state'] = "error";
-        $message = $e->getMessage();
-        switch (true) {
-            case str_contains($message, "no user found"):
-                $_SESSION['flash_message'] = "You do not have permission to access this page";
-                header('Location: /login');
-                exit;
-
-            case str_contains($message, "user not admin"):
-                $_SESSION['flash_message'] = "You do not have permission to access this page";
-                header('Location: /');
-                exit;
-
-            default:
-                $_SESSION['flash_message'] = "An error occurred Please try again";
-                header('Location: /');
-                exit;
-        }
-
     }
 
 
-    $title = "Admin";
-
+    $title = "admin";
     require_once __DIR__."/../micro-components/_header.php";
     _render_flash_msg();
 
@@ -72,148 +79,155 @@
 
             <section>
                 <article>
-                    
-                    <img class="property-image" src="https://placehold.co/600x400" alt="">
-                    <form id="add-bolig-form" mix-post="/api-add-new-property" >
-                        <fieldset id="address">
-                            <legend>Address</legend>
-                            <label>
-                                zip code
-                                <input name="zip_code" pattern="\d{4}" type="string"  min="4" max="4" placeholder="zip code" required value="2730">
-                            </label>
-                            <label>
-                                Road name
-                                <input name="road_name" type="text" placeholder="road name" required value="melissehaven">
-                            </label>
-                            <label>
-                                city name
-                                <input name="city_name" type="text" placeholder="city name" required value="herlev">
-                            </label>
-                            <label >
-                                house number
-                                <input name="house_number" type="text" placeholder="house number" required value="34b">
-                            </label>
-                            <input type="hidden" id="lat" name="lat" />
-                            <input type="hidden" id="lon" name="lon" />
-                            <div id="coordinates-result"></div>
-                        </fieldset>
-                        <fieldset id="info">
-                            <legend>
-                                overall bolig info
-                            </legend>
-                           
-                            
-                            <label>
-                                Lot square meters
-                                <input
-                                    name="lot_square_meters"
-                                    type="text"
-                                    placeholder="lot square meters"
-                                    pattern="^[0-9]+(\.[0-9]{1,2})?$"
-                                    title="Must be a positive number (e.g., 100 or 123.45)"
-                                    required
-                                >
-                            </label>
+                    <div id="save-property-module">
+                        <button data-module="save-property" onclick="showModule(this);">add new property</button>    
 
-                            
-                            <label>
-                                Floor square meters
-                                <input
-                                    name="floor_square_meters"
-                                    type="text"
-                                    placeholder="floor square meters"
-                                    pattern="^[0-9]+(\.[0-9]{1,2})?$"
-                                    title="Must be a positive number (e.g., 80 or 99.99)"
-                                    required
-                                >
-                            </label>
+                        <div class="hidden" id="save-property-form">
 
-                           
-                            <label>
-                                Number of baths
-                                <input
-                                    type="number"
-                                    name="number_of_baths"
-                                    min="1"
-                                    max="10"
-                                    step="1"
-                                    required
-                                    placeholder="e.g., 3">
-                            </label>
-
-                            
-                           <label>
-                                Number of Rooms
-                                <input
-                                    type="number"
-                                    name="number_of_rooms"
-                                    min="1"
-                                    max="20"
-                                    step="1"
-                                    required
-                                    placeholder="e.g., 3">
-                            </label>
-
-                            
-                            <label>
-                                Year built
-                                <input
-                                    name="year_build"
-                                    type="text"
-                                    placeholder="year built"
-                                    pattern="^(19|20)\d{2}$"
-                                    title="Must be a 4-digit year (e.g., 1990, 2025)"
-                                    required
-                                >
-                            </label>
-
-                           
-                            <label>
-                                Energy label
-                                <input
-                                    name="energy_label"
-                                    type="text"
-                                    placeholder="energy label"
-                                    pattern="^(A1|A2|B|C|D|E|F|G)$"
-                                    title="Must be a valid energy label (A1, A2, B, C, D, E, F, G)"
-                                    required
-                                >
-                            </label>
-                            <label>
-                                House type
-                                <input
-                                    name="type"
-                                    type="text"
-                                    placeholder="House type"
+                            <img class="property-image" src="https://placehold.co/600x400" alt="">
+                            <form id="add-bolig-form" mix-post="/api-add-new-property" >
+                                <input type="hidden" value="<?= _($_SESSION['csrf_token']) ?>" name="csrf_token">
+                                <fieldset id="address">
+                                    <legend>Address</legend>
+                                    <label>
+                                        zip code
+                                        <input name="zip_code" pattern="\d{4}" type="string"  min="4" max="4" placeholder="zip code" required value="2730">
+                                    </label>
+                                    <label>
+                                        Road name
+                                        <input name="road_name" type="text" placeholder="road name" required value="melissehaven">
+                                    </label>
+                                    <label>
+                                        city name
+                                        <input name="city_name" type="text" placeholder="city name" required value="herlev">
+                                    </label>
+                                    <label >
+                                        house number
+                                        <input name="house_number" type="text" placeholder="house number" required value="34b">
+                                    </label>
+                                    <input type="hidden" id="lat" name="lat" />
+                                    <input type="hidden" id="lon" name="lon" />
+                                    <div id="coordinates-result"></div>
+                                </fieldset>
+                                <fieldset id="info">
+                                    <legend>
+                                        overall bolig info
+                                    </legend>
+                                   
                                     
-                                    title="Must be a positive number (e.g., 100 or 123.45)"
-                                    required
-                                >
-                            </label>
-                           
-                        </fieldset>
-                        <fieldset id="expenses">
-                            <legend>Expenses</legend>
-                            <label>
-                                monthly expenses
-                                <input name="monthly_expenses" type="text" placeholder="monthly expenses">
-                            </label>
-                            <label>
-                                price per meter
-                                <input name="price_per_meter" type="text" placeholder="price per meter">
-                            </label>
-                            <label>
-                                price
-                                <input name="price" type="text" placeholder="price">
-                            </label>
-                        </fieldset>
-
-
-                        <button type="button" onclick="geocodeAddress()">Resolve Coordinates</button>
-                        <button type="submit" id="submit-btn" disabled>Save Bolig</button>
-                        
-
-                    </form>
+                                    <label>
+                                        Lot square meters
+                                        <input
+                                            name="lot_square_meters"
+                                            type="text"
+                                            placeholder="lot square meters"
+                                            pattern="^[0-9]+(\.[0-9]{1,2})?$"
+                                            title="Must be a positive number (e.g., 100 or 123.45)"
+                                            required
+                                        >
+                                    </label>
+        
+                                    
+                                    <label>
+                                        Floor square meters
+                                        <input
+                                            name="floor_square_meters"
+                                            type="text"
+                                            placeholder="floor square meters"
+                                            pattern="^[0-9]+(\.[0-9]{1,2})?$"
+                                            title="Must be a positive number (e.g., 80 or 99.99)"
+                                            required
+                                        >
+                                    </label>
+        
+                                   
+                                    <label>
+                                        Number of baths
+                                        <input
+                                            type="number"
+                                            name="number_of_baths"
+                                            min="1"
+                                            max="10"
+                                            step="1"
+                                            required
+                                            placeholder="e.g., 3">
+                                    </label>
+        
+                                    
+                                   <label>
+                                        Number of Rooms
+                                        <input
+                                            type="number"
+                                            name="number_of_rooms"
+                                            min="1"
+                                            max="20"
+                                            step="1"
+                                            required
+                                            placeholder="e.g., 3">
+                                    </label>
+        
+                                    
+                                    <label>
+                                        Year built
+                                        <input
+                                            name="year_build"
+                                            type="text"
+                                            placeholder="year built"
+                                            pattern="^(19|20)\d{2}$"
+                                            title="Must be a 4-digit year (e.g., 1990, 2025)"
+                                            required
+                                        >
+                                    </label>
+        
+                                   
+                                    <label>
+                                        Energy label
+                                        <input
+                                            name="energy_label"
+                                            type="text"
+                                            placeholder="energy label"
+                                            pattern="^(A1|A2|B|C|D|E|F|G)$"
+                                            title="Must be a valid energy label (A1, A2, B, C, D, E, F, G)"
+                                            required
+                                        >
+                                    </label>
+                                    <label>
+                                        House type
+                                        <input
+                                            name="type"
+                                            type="text"
+                                            placeholder="House type"
+                                            
+                                            title="Must be a positive number (e.g., 100 or 123.45)"
+                                            required
+                                        >
+                                    </label>
+                                   
+                                </fieldset>
+                                <fieldset id="expenses">
+                                    <legend>Expenses</legend>
+                                    <label>
+                                        monthly expenses
+                                        <input name="monthly_expenses" type="text" placeholder="monthly expenses">
+                                    </label>
+                                    <label>
+                                        price per meter
+                                        <input name="price_per_meter" type="text" placeholder="price per meter">
+                                    </label>
+                                    <label>
+                                        price
+                                        <input name="price" type="text" placeholder="price">
+                                    </label>
+                                </fieldset>
+        
+        
+                                <button type="button" onclick="geocodeAddress()">Resolve Coordinates</button>
+                                <button type="submit" id="submit-btn" disabled>Save Bolig</button>
+                                
+        
+                            </form>
+                        </div>
+                    </div>
 
                         
                                              
