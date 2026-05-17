@@ -75,7 +75,7 @@ try{
         header('Location: /');
     } else {
         throw new Exception("password incorect", 401);
-        exit;
+       
     }
 
 }catch (Exception $e){

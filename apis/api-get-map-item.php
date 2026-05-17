@@ -1,7 +1,7 @@
 <?php 
-try{
 
     session_start();
+try{
     require_once __DIR__ . '/../session_utils.php';
     require_once __DIR__ . "/../_.php";
     
@@ -28,7 +28,18 @@ try{
     }
     
 }catch(Exception $e){
+    error_log("Error: " . $e->getMessage() . " (Code: " . $e->getCode() . ")");
 
+
+    $_SESSION['flash_state'] = "error";
+    $message = $e->getMessage();
+    switch (true) {
+        
+        default:
+            $_SESSION['flash_message'] = "An error occurred Please try again";
+            header('Location: /');
+            exit;
+    }
 }
 
  require __DIR__ . "/../micro-components/_aside.php"; ?>
