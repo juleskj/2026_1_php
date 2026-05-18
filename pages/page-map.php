@@ -28,14 +28,26 @@
     }
 
 
-    $sql = "SELECT * FROM `items`";
+    $sql = "SELECT * FROM `items` LIMIT 10";
     $stmt = $_db->prepare( $sql );
     
     $stmt->execute();
 
     $items = $stmt->fetchAll();
 
+    
+    $N = 10;
+    $firstNElements = array_slice($items, 0, $N);
+    
     $items = json_encode($items);
+    
+    
+    
+
+
+
+
+
 ?>
    
 <script>
@@ -163,7 +175,72 @@
             </script>
     
     
-            <aside class="" id="info"></aside>
+            <aside class="" id="info">
+                <h2>Udvalgte boliger</h2>
+                <div class="vertical-scroller">
+                    <!-- Eksempel på boligkort -->
+                     <?php foreach ($firstNElements as $item){ ?>
+                        <article class="bolig-kort">
+
+                        <?php if (empty($item['floor_plan_path'])): ?>
+                            <div class="img-container">
+
+                                <?php if ($item['deleted_at']): ?>
+                                    <p><span> SOLD </span></p>
+                                <?php endif;?>
+                                
+                                <img 
+                                    
+                                    loading="lazy" 
+                                    src="<?= _($item['main_image_path']); ?>" 
+                                    alt="image of property"
+                                >
+
+                            </div>
+                        <?php else: ?>
+                            
+                        <ul>
+                            <li class="img-container">
+                                
+                                <?php if ($item['deleted_at']): ?>
+                                    <p><span> SOLD </span></p>
+                                <?php endif;?>
+                                
+                                <img 
+                                class="property-img" 
+                                loading="lazy" 
+                                src="<?= _($item['main_image_path']); ?>" 
+                                alt="image of property"
+                                >                    
+                                
+                            </li>
+                            <li>
+                                <img 
+                                class="property-img floor-plan-img" 
+                                loading="lazy" 
+                                src="<?= _($item['floor_plan_path']); ?>" 
+                                alt="image of property">
+                            </li>
+                                
+                        </ul>
+                        <?php endif;?>   
+                                <div class="bolig-info">
+                                <p><span><?= _( $item["type"]) ?></span></p>
+                                <h3><?=  _($item['road_name'])?> <?= _($item['house_number'])  ?></h3>
+                                <p><?= _($item['zip_code']) ?> <?= _($item['city_name']) ?></p>
+                                <p class="pris"><?= _(number_format($item['price'], 0, ',', '.') . "kr")?></p>
+                            </div>
+                        </article>
+                    <?php } ?>
+                    
+                </div>
+
+
+                </article>
+
+
+
+            </aside>
         </section>
     </main>
   
