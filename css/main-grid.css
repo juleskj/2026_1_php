@@ -5,8 +5,9 @@
         display: grid;
         grid-template-rows: auto 1fr auto;
         grid-template-columns:[full-start] 1fr [content] minmax(auto, 1024px) 1fr  [full-end] ;
-        min-height: 100vh;
-        overflow-x: hidden;
+
+        overflow: hidden;
+        height: 100%;
        
         > * {
         grid-column: content;
@@ -18,7 +19,9 @@
         display: grid;
         grid-column: full;
         grid-template-columns: subgrid;      
-    
+        height: 100vh;
+        width: 100vw;
+
         > * {
             grid-column: content;
         }

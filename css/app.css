@@ -161,6 +161,7 @@ nav{
     display: flex;
     flex-flow: column;
     grid-column: full;
+    height: calc(100vh - 3rem) ;
 
     @media (min-width:768px){
         display: grid;

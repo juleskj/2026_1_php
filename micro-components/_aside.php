@@ -1,5 +1,8 @@
-<section >
-        
+<section  class="vertical-scroller" >
+    
+    <div class="property-info">
+
+    
 
 
     <?php if (empty($item['floor_plan_path'])): ?>
@@ -100,6 +103,6 @@
         </button>
     <?php endif;?>
 
-   
+   </div>
 
 </section>
