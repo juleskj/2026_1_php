@@ -34,7 +34,7 @@
     $stmt->execute();
 
     $items = $stmt->fetchAll();
-
+    
     
     $N = 10;
     $firstNElements = array_slice($items, 0, $N);

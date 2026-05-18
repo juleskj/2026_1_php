@@ -121,6 +121,11 @@ aside, #info {
   object-position: center;
 }
 
+.floor-plan-img{
+    object-fit: contain;
+    height: 100%;
+}
+
 @media (min-width: 768px) {
   .img-container img {
     height: auto;
@@ -148,7 +153,7 @@ ul:has(.img-container){
     overflow-y:hidden;
     
     @media (min-width: 768px){
-        height: 150px
+        height: 200px
         
     }
                     
@@ -157,6 +162,11 @@ ul:has(.img-container){
         list-style-type: none;
         scroll-snap-align: center;
         flex: 0 0 100%;
+        @media (min-width: 768px){
+            height: auto
+        
+        }
+
         
     }
     
