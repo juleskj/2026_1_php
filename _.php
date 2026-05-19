@@ -213,9 +213,9 @@ function _validate_flash_message($flash_msg){
     if(strlen($flash_msg) > FLASH_MSG_MAX){
         throw new Exception("flash must be max ".FLASH_MSG_MAX." characters long", 400);
     }
-    $pattern = '/^[a-zA-Z ]*$/';
+    $pattern = '/^[a-zA-Z0-9 .,!]*$/';
     if (!preg_match($pattern, $flash_msg)) {
-        throw new Exception("Invalid flash. Only letters and spaces are allowed.", 400);
+        throw new Exception("Invalid flash Only letters and spaces are allowed", 400);
     }
     return $flash_msg;
 }
@@ -410,3 +410,19 @@ function _is_lmage_accessible($imageUrl) {
     endif;
     return ob_get_clean();
 } 
+
+
+
+function _validate_pk(string $pk): string {
+    // Check length (must be exactly 50 characters)
+    if (strlen($pk) !== 50) {
+        throw new Exception("Primary key must be exactly 50 characters long", 400);
+    }
+
+    // Check if the pk is a valid hexadecimal string
+    if (!ctype_xdigit($pk)) {
+        throw new Exception("Primary key must be a valid hexadecimal string", 400);
+    }
+
+    return $pk;
+}
