@@ -1,6 +1,9 @@
 
 
 
+
+
+
 <section  class="vertical-scroller" >
     
     <div class="property-info">
@@ -16,12 +19,11 @@
             <?php endif;?>
             
             <img 
-            class="property-img" 
-            loading="lazy" 
-            src="<?= _($item['main_image_path']); ?>" 
-            alt="image of property"
-            >
-
+                class='property-img'
+                loading='lazy' 
+                src="<?= _(_is_lmage_accessible($item['main_image_path']))?>" 
+                alt='image of property'
+            >      
         </div>
     <?php else: ?>
            
@@ -35,7 +37,7 @@
             <img 
             class="property-img" 
             loading="lazy" 
-            src="<?= _($item['main_image_path']); ?>" 
+            src="<?= _(_is_lmage_accessible($item['main_image_path']))?>" 
             alt="image of property"
             >                    
             
@@ -60,45 +62,24 @@
         <p class="property-price">  <?=  _(number_format($item['price'], 0, ',', '.')) ?> kr</p>
     </section>
     
-            
-      
-    <?php if (isset($item['floor_square_meters']) && $item['floor_square_meters'] !== null): ?>
-        <article class="row">
-            <h4><i class="fa-solid fa-house" style="color: rgb(64, 92, 185);"></i> Home size</h4>
-            <p><?= _($item['floor_square_meters']) ?> M²</p>
-        </article>
-    <?php endif; ?>
-
-   
-    <?php if (isset($item['lot_square_meters']) && $item['lot_square_meters'] !== null): ?>
-        <article class="row">
-            <h4><i class="fa-solid fa-house" style="color: rgb(64, 92, 185);"></i> plot size</h4>
-            <p><?= _($item['lot_square_meters']) ?> M²</p>
-        </article>
-    <?php endif; ?>
-
     
-    <?php if (isset($item['number_of_rooms']) && $item['number_of_rooms'] !== null): ?>
-        <article class="row">
-            <h4><i class="fa-solid fa-door-open" style="color: rgb(64, 92, 185);"></i> Number of rooms</h4>
-            <p><?= _($item['number_of_rooms']) ?></p>
-        </article>
-    <?php endif; ?>
+    
+    
+    
+    <?= _row_block_HTML($item['floor_square_meters'], "fa-house", "M²", "Home size") ?>
+    <?= _row_block_HTML($item['lot_square_meters'], "fa-house", "M²", "plot size") ?>
+    <?= _row_block_HTML($item['number_of_rooms'], "fa-door-open", "", "Number of rooms") ?>
+    <?= _row_block_HTML($item['number_of_baths'], "fa-bath", "", "Number of bathrooms") ?>
 
-  
-    <?php if (isset($item['number_of_baths']) && $item['number_of_baths'] !== null): ?>
-        <article class="row">
-            <h4><i class="fa-solid fa-bath" style="color: rgb(64, 92, 185);"></i> Number of bathrooms</h4>
-            <p><?= _($item['number_of_baths']) ?></p>
-        </article>
-    <?php endif; ?>   
-       
-
+    <?php if ($item['price_per_meter']): ?> 
     <article class="row">
         <h4>M² price</h4>
         <p><?=_(number_format($item['price_per_meter'], 0, ',', '.'))  ?> kr</p>
 
-    </article>  
+    </article> 
+    <?php endif;?>
+
+
     <?php if ($item['energy_label']): ?> 
         <article class="row">
             <h4>Energy label</h4>
@@ -119,3 +100,5 @@
    </div>
 
 </section>
+
+
