@@ -376,3 +376,37 @@ function _validate_field($field, $value, $rules) {
     return $value;
 }
 
+
+
+function _is_lmage_accessible($imageUrl) {
+    $ch = curl_init($imageUrl);
+    curl_setopt($ch, CURLOPT_HEADER, true);
+    curl_setopt($ch, CURLOPT_NOBODY, true);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    curl_setopt($ch, CURLOPT_MAXREDIRS, 5);
+
+    curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    if($httpCode !== 200){
+        return "../images/johnson-U6Q6zVDgmSs-unsplash.jpg";
+    }
+
+    // Return true if the status code is 200 (OK)
+    return $imageUrl;
+}
+
+ function _row_block_HTML($value, $icon, $metric, $text) {
+    ob_start(); ?>
+    <?php if($value != null):?>
+    <article class="row">
+        <h4><i class="fa-solid <?= _($icon) ?>" style="color: rgb(64, 92, 185);"></i> <?= _($text) ?></h4>
+        <p><?= _($value) . _($metric) ?></p>
+    </article>
+    
+    <?php
+    endif;
+    return ob_get_clean();
+} 

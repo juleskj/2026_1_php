@@ -30,14 +30,15 @@
                     <img 
                     class="property-img" 
                     loading="lazy" 
-                    src="<?= _($item['main_image_path']); ?>" 
+                    src="<?= _( _is_lmage_accessible($item['main_image_path'])); ?>" 
                     alt="image of property"
                     >              
                     <article>
                         
                         <p class="type <?= str_replace(' ', '_',  $item['type']); ?>"><?= _($item['type'] ?? '') ?></p>
-                        <h3><?php _(number_format($item['price'], 0, ',', '.')) ?>kr</h3>
-                        <p><span><?php _($item['number_of_rooms'] ?? '0') ?> beds</span><span>1 ba</span><span><?php _($item['lot_square_meters']) . " " || _($item['floor_square_meters'] ?? '')  ?> sqft</span></p>
+                        <?php if($item['price'] != null): ?><h3><?php _(number_format($item['price'], 0, ',', '.')) ?>kr</h3><?php endif; ?>
+
+                        <p><span><?php _($item['number_of_rooms'] ?? '0') ?> beds</span><span>1 ba</span><span><?php _($item['lot_square_meters']?? 0) . " " || _($item['floor_square_meters'] ?? 0)  ?> sqft</span></p>
                         <p><?php _($item['house_number'] ?? '')?> <?php _($item['road_name'])?>, <?php _($item['city_name'])?> <?php _($item['zip_code']) ?></p>
                     </article>
                 </a>

@@ -41,12 +41,6 @@
     
     $items = json_encode($items);
     
-    
-    
-
-
-
-
 
 ?>
    
@@ -176,10 +170,12 @@
     
     
             <aside class="" id="info">
-                <h2>Udvalgte boliger</h2>
+                <h2 class="info-h2">Udvalgte boliger</h2>
                 <div class="vertical-scroller">
                     <!-- Eksempel på boligkort -->
                      <?php foreach ($firstNElements as $item){ ?>
+
+                        <a href="/page-map?item_pk=<?= $item['pk']?>">
                         <article class="bolig-kort">
 
                         <?php if (empty($item['floor_plan_path'])): ?>
@@ -192,12 +188,13 @@
                                 <img 
                                     
                                     loading="lazy" 
-                                    src="<?= _($item['main_image_path']); ?>" 
+                                    src="<?= _(_is_lmage_accessible($item['main_image_path'])); ?>" 
                                     alt="image of property"
                                 >
 
                             </div>
                         <?php else: ?>
+                        
                             
                         <ul>
                             <li class="img-container">
@@ -209,7 +206,7 @@
                                 <img 
                                 class="property-img" 
                                 loading="lazy" 
-                                src="<?= _($item['main_image_path']); ?>" 
+                                src="<?= _(_is_lmage_accessible($item['main_image_path'])); ?>" 
                                 alt="image of property"
                                 >                    
                                 
@@ -231,6 +228,7 @@
                                 <p class="pris"><?= _(number_format($item['price'], 0, ',', '.') . "kr")?></p>
                             </div>
                         </article>
+                        </a>
                     <?php } ?>
                     
                 </div>
