@@ -15,38 +15,61 @@
     $title = "Map";
     require_once __DIR__ . '/../session_utils.php';
     require_once __DIR__ . "/../db.php";
+    require_once __DIR__ . "/../_.php";
+    
+    _render_flash_msg();
 
-    // looks if there is any item_pk sent
-    if (isset($_GET["item_pk"])) {
-        $item_pk = $_GET["item_pk"];
+    try {    
+    
+        $items = [];
+        $firstNElements = [];
+        if (isset($_GET["item_pk"]) && _validate_pk($_GET["item_pk"])) {
+        
+            $item_pk = _validate_pk($_GET["item_pk"]) ?? "";
 
-        $viewed_homes = track_viewed_homes();
+            $viewed_homes = track_viewed_homes();
+            
+        }
+        $sql = "SELECT * FROM `items` LIMIT 10";
+        $stmt = $_db->prepare( $sql );
+        
+        $stmt->execute();
 
+        $items = $stmt->fetchAll();
+        
+        
+        $N = 10;
+        $firstNElements = array_slice($items, 0, $N);
+        
+        $items = json_encode($items);
+
+    }catch(Exception $e){
+
+       
+
+        error_log("Error: " . $e->getMessage() . " (Code: " . $e->getCode() . ")");
+
+
+            $_SESSION['flash_state'] = "error";
+            $message = $e->getMessage();
+            switch (true) {
+
+                default:
+                    $_SESSION['flash_message'] = "An error occurred Please try again";
+                    header('Location: /page-map');
+                    exit;
+            }
     }
-    else {
-        $item_pk = null;
-    }
 
+  
 
-    $sql = "SELECT * FROM `items` LIMIT 10";
-    $stmt = $_db->prepare( $sql );
+    require_once __DIR__ . "/../micro-components/_header.php"
     
-    $stmt->execute();
-
-    $items = $stmt->fetchAll();
-    
-    
-    $N = 10;
-    $firstNElements = array_slice($items, 0, $N);
-    
-    $items = json_encode($items);
-    
-
 ?>
    
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const item_pk = <?= json_encode($item_pk)?>
+        const item_pk = <?= json_encode($item_pk ?? "") ?>
         
 
         if (item_pk) {
@@ -63,10 +86,6 @@
 </script>
 
 
-<?php
-
-    require_once __DIR__ . "/../micro-components/_header.php"
-?>
     <main id="page-map">
         <section class="map-container">
 
@@ -143,7 +162,7 @@
                 });
                 
                 
-                let items = <?=  $items?>       
+                let items = <?= $items ?? []?>       
                     
                 
                 
@@ -170,73 +189,11 @@
     
     
             <aside class="" id="info">
-                <h2 class="info-h2">Udvalgte boliger</h2>
-                <div class="vertical-scroller">
-                    <!-- Eksempel på boligkort -->
-                     <?php foreach ($firstNElements as $item){ ?>
-
-                        <a href="/page-map?item_pk=<?= $item['pk']?>">
-                        <article class="bolig-kort">
-
-                        <?php if (empty($item['floor_plan_path'])): ?>
-                            <div class="img-container">
-
-                                <?php if ($item['deleted_at']): ?>
-                                    <p><span> SOLD </span></p>
-                                <?php endif;?>
-                                
-                                <img 
-                                    
-                                    loading="lazy" 
-                                    src="<?= _(_is_lmage_accessible($item['main_image_path'])); ?>" 
-                                    alt="image of property"
-                                >
-
-                            </div>
-                        <?php else: ?>
-                        
-                            
-                        <ul>
-                            <li class="img-container">
-                                
-                                <?php if ($item['deleted_at']): ?>
-                                    <p><span> SOLD </span></p>
-                                <?php endif;?>
-                                
-                                <img 
-                                class="property-img" 
-                                loading="lazy" 
-                                src="<?= _(_is_lmage_accessible($item['main_image_path'])); ?>" 
-                                alt="image of property"
-                                >                    
-                                
-                            </li>
-                            <li>
-                                <img 
-                                class="property-img floor-plan-img" 
-                                loading="lazy" 
-                                src="<?= _($item['floor_plan_path']); ?>" 
-                                alt="image of property">
-                            </li>
-                                
-                        </ul>
-                        <?php endif;?>   
-                                <div class="bolig-info">
-                                <p><span><?= _( $item["type"]) ?></span></p>
-                                <h3><?=  _($item['road_name'])?> <?= _($item['house_number'])  ?></h3>
-                                <p><?= _($item['zip_code']) ?> <?= _($item['city_name']) ?></p>
-                                <p class="pris"><?= _(number_format($item['price'], 0, ',', '.') . "kr")?></p>
-                            </div>
-                        </article>
-                        </a>
-                    <?php } ?>
-                    
-                </div>
-
-
-                </article>
-
-
+                <?php
+                if (!empty($firstNElements)) {
+                    include __DIR__ . '/../micro-components/_vertical_scroller.php';
+                }
+                ?>
 
             </aside>
         </section>
