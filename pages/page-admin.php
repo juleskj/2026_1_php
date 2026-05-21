@@ -44,7 +44,34 @@
 
             // TODO: get items so that admin can "delete/sold" them
             //TODO: user can contact about a bolig and admin can accept or declin and the user gets and email.
+            
+            
+            require_once __DIR__ . "/../db.php";
+            $sql ="SELECT * FROM `user_property_offers`";
+            $stmt = $_db->prepare($sql);
+            $stmt->execute();
+            $all_offers = $stmt->fetchAll();
 
+            
+
+            $all_offers_data = [];
+            
+
+            foreach($all_offers as $offer){
+                $sql ="CALL `get_offer_details_of_user_and_property`(:user_fk, :property_fk)";
+                $stmt = $_db->prepare($sql);
+                $stmt->bindValue(":user_fk", $offer["user_fk"]);
+                $stmt->bindValue(":property_fk", $offer["property_fk"]);
+                $stmt->execute();
+                $one_offers_data = $stmt->fetch();
+                
+                array_push($all_offers_data, $one_offers_data);
+                
+
+            }
+
+            
+            
 
         }catch(Exception $e){
 
@@ -107,16 +134,72 @@
                 </aside>
                     
                 <section>
-                    <h1>hello</h1>
+                    <h1>ello</h1>
+                    <section class="scroll-container">
 
-                    <section>
+                        <h2>hi</h2>
+                            
+                        <section class="scroller" >
+                        <?php if(!empty($all_offers_data)): ?>
+                            <?php foreach ($all_offers_data as $offer): ?>
+                                <a href="/page-map?item_pk=<?= $offer['pk'] ?>">
+                                    <article class="bolig-kort">
+                                        <!-- Property Image -->
+                                        <?php if (empty($offer['floor_plan_path'])): ?>
+                                            <div class="img-container">
+                                                <?php if ($offer['deleted_at']): ?>
+                                                    <p><span>SOLD</span></p>
+                                                <?php endif; ?>
+                                                <img
+                                                    loading="lazy"
+                                                    src="<?= _(_is_lmage_accessible($offer['main_image_path'])) ?>"
+                                                    alt="Property image"
+                                                >
+                                            </div>
+                                        <?php else: ?>
+                                            <ul>
+                                                <li class="img-container">
+                                                    <?php if ($offer['deleted_at']): ?>
+                                                        <p><span>SOLD</span></p>
+                                                    <?php endif; ?>
+                                                    <img
+                                                        class="property-img"
+                                                        loading="lazy"
+                                                        src="<?= _(_is_lmage_accessible($offer['main_image_path'])) ?>"
+                                                        alt="Property image"
+                                                    >
+                                                </li>
+                                                <li>
+                                                    <img
+                                                        class="property-img floor-plan-img"
+                                                        loading="lazy"
+                                                        src="<?= _($offer['floor_plan_path']) ?>"
+                                                        alt="Floor plan"
+                                                    >
+                                                </li>
+                                            </ul>
+                                        <?php endif; ?>
 
+                                        <!-- Property Info -->
+                                        <div class="bolig-info">
+                                            <p><span><?= _($offer["type"]) ?></span></p>
+                                            <h3><?= _($offer['road_name']) ?> <?= _($offer['house_number']) ?></h3>
+                                            <p><?= _($offer['zip_code']) ?> <?= _($offer['city_name']) ?></p>
+                                            <p class="pris"><?= _(number_format($offer['price'], 0, ',', '.') . "kr") ?></p>
+                                        </div>
 
-
-
-
+                                        <!-- User Info (Offer Maker) -->
+                                        <div class="user-info">
+                                            <p><strong>Offer by:</strong> <?= _($offer['user_forename']) ?> <?= _($offer['user_lastname']) ?></p>
+                                            <p><strong>Email:</strong> <?= _($offer['user_email']) ?></p>
+                                            <p><strong>Phone:</strong> <?= _($offer['user_phone'] ?? 'N/A') ?></p>
+                                        </div>
+                                    </article>
+                                </a>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </section>
-
+            
 
                     <article>
                         <div id="save-property-module">
