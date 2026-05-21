@@ -1,8 +1,8 @@
 <?php
+session_start(); 
 
 try{
 
-    session_start(); 
 
 
     $_SESSION = array(); 
