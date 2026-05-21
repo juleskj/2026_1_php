@@ -134,11 +134,13 @@
                 </aside>
                     
                 <section>
-                    <h1>ello</h1>
+                   
                     <section class="scroll-container">
 
-                        <h2>hi</h2>
-                            
+                        <h2>offers from buyers</h2>
+                        <!-- TODO: make button to decline or accept offer from buyer -->
+                        <!-- TODO: send email to buyer regarding request -->
+                         
                         <section class="scroller" >
                         <?php if(!empty($all_offers_data)): ?>
                             <?php foreach ($all_offers_data as $offer): ?>
@@ -192,12 +194,13 @@
                                         <div class="user-info">
                                             <p><strong>Offer by:</strong> <?= _($offer['user_forename']) ?> <?= _($offer['user_lastname']) ?></p>
                                             <p><strong>Email:</strong> <?= _($offer['user_email']) ?></p>
-                                            <p><strong>Phone:</strong> <?= _($offer['user_phone'] ?? 'N/A') ?></p>
                                         </div>
                                     </article>
                                 </a>
                             <?php endforeach; ?>
                         <?php endif; ?>
+                        </section>
+                        
                     </section>
             
 
