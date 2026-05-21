@@ -68,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                 $_SESSION['flash_state'] = "success";
                 $_SESSION['flash_message'] = "the file has been uploaded";
-                header('Location: /page-profile');
+                
                 exit;
                 
             } else {

@@ -156,7 +156,7 @@ nav{
 }
 
 /*********** map ***********/
-.map-container{
+.map-content{
 
     display: flex;
     flex-flow: column;
@@ -213,15 +213,16 @@ footer{
     max-width: 100%;
     text-align: center;
     cursor: pointer;
+    border: 2px solid var(--blue);
     
     &.white{
     background-color: var(--white);
     color: var(--blue);
-    border: 1px solid var(--blue);
         &:hover, &:focus{
             
             background-color: var(--blue);
             color: var(--white);
+            border: solid 2px var(--white);
             
             
         }
@@ -229,9 +230,9 @@ footer{
     &.blue{
     background-color: var(--blue);
     color: var(--white);
-    border: 1px solid var(--blue);
+    
         &:hover, &:focus{
-            border: solid 1px var(--blue);
+            border: solid 2px var(--blue);
             background-color: var(--white);
             color: var(--blue);
             
