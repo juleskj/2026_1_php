@@ -1,15 +1,28 @@
 
 
+<?php
 
+$user = $user ?? [];
+
+if(isset($_SESSION["user"])){
+    $user = $_SESSION["user"];
+}
+
+$item = $item ?? [];
+
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
+$_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+
+?>
 
 
 
 <section  class="vertical-scroller" >
     
     <div class="property-info">
-
-    
-
 
     <?php if (empty($item['floor_plan_path'])): ?>
         <div class="img-container">
@@ -52,9 +65,20 @@
             
     </ul>
     <?php endif;?>
-    <button class="filled-btn blue" onclick="map.flyTo([<?= _($item['lat']) ?>, <?= _($item['lon']) ?>], 15);">
+    <button class="filled-btn white" onclick="map.flyTo([<?= _($item['lat']) ?>, <?= _($item['lon']) ?>], 15);">
         zoom in on map
-    </button>   
+    </button>  
+    
+    <!-- the user is only allowed to send a request when they are logged in -->
+    <?php if($user):?>
+    <form id="make-offer-form" mix-post="send_offer_request_email" onsubmit="mixhtml(); return false;">
+        <input type="hidden" value="<?=_($item['pk'])?>" name="item_pk">
+        <input type="hidden" value="<?=$_SESSION['csrf_token']?>" name="csrf_token">
+        <button class="filled-btn blue">Make an offer</button>
+
+    </form>
+    <?php endif;?>
+
     <section>
         <p><?= _($item['type']) ?></p>
         <h3><?=  _($item['road_name'])?> <?= _($item['house_number'])  ?></h3>
@@ -93,9 +117,11 @@
     
     <?php if (!$item['deleted_at']): ?>
         <button id="sold" onclick="mixhtml(); return false;"
-        mix-put="api-delete-item?item_pk=<?=_($item['pk'])?>">Mark as sold
+            mix-put="api-delete-item?item_pk=<?=_($item['pk'])?>">Mark as sold
         </button>
     <?php endif;?>
+
+    
 
    </div>
 

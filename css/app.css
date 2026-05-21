@@ -765,3 +765,16 @@ grid-area: button2 ;
 .hidden{
     display: none;
 }
+
+
+
+
+
+
+#make-offer-form{
+    margin-top: 0.5rem ;
+    button{
+        width: 100%;
+       
+    }
+}
