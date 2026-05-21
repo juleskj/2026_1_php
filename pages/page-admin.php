@@ -42,6 +42,9 @@
 
             $user = $_SESSION["user"];
 
+            // TODO: get items so that admin can "delete/sold" them
+            //TODO: user can contact about a bolig and admin can accept or declin and the user gets and email.
+
 
         }catch(Exception $e){
 
@@ -107,7 +110,7 @@
                     <h1>hello</h1>
 
                     <section>
-                        
+
 
 
 

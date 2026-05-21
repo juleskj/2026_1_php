@@ -31,6 +31,7 @@ RewriteRule ^seed /apis/seed.php [NC,L]
 RewriteRule ^api-unsave-property$ /apis/api-unsave-property.php [NC,L]
 RewriteRule ^api-upload$ /apis/api-upload.php [NC,L]
 RewriteRule ^api-add-new-property$ /apis/api-add-new-property.php [NC,L]
+RewriteRule ^send_offer_request_email$ /apis/send_offer_request_email.php [NC,L]
 
 RewriteRule ^session_destroy$ /session_destroy.php [NC,L]
 
