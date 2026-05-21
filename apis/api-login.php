@@ -3,7 +3,7 @@
 session_start();
 
 require_once __DIR__."/../_.php";
-
+require_once __DIR__."/../db.php";
 
 try{   
     $user_email = _validate_user_email();
@@ -18,7 +18,7 @@ try{
     }
 
 
-    require_once __DIR__."/../db.php";
+    
 
     $_db->beginTransaction();
 
@@ -56,6 +56,8 @@ try{
         $stmt->execute();
 
         $user_role = $stmt->fetch();
+
+        $_db->commit();
         
         // put user in session
         $_SESSION['user'] = [
@@ -79,6 +81,11 @@ try{
     }
 
 }catch (Exception $e){
+
+    if (isset($_db)) {
+        $_db->rollback();
+    }
+    
 
     error_log("Error: " . $e->getMessage() . " (Code: " . $e->getCode() . ")");
     
