@@ -74,6 +74,11 @@ aside, #info {
 }
 
 /* ===== Card Styles ===== */
+a:has(.bolig-kort){
+  text-decoration: none;
+}
+
+
 .bolig-kort {
   scroll-snap-align: start;
   background: white;
