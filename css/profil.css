@@ -1,14 +1,14 @@
 
 @media(min-width:768px) {
-     #main-content{
+     #profil-content, #admin-content{
         grid-column: full;
         display: grid;
-        grid-template-columns: 25% auto;
+        grid-template-columns: 3fr 10fr;
        
 
     }
 
-    .user-info{
+    .user-info, .admin-info{
         
        
         padding: 1rem 0.5rem;

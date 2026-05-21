@@ -62,7 +62,7 @@
 
     <section class="grid_1-1-1">
         <article>
-            <img src="https://placehold.co/400" alt="placeholder">
+            <img src="../images/johnson-U6Q6zVDgmSs-unsplash.jpg" alt="placeholder">
                 Buy a home
             A real estate agent can provide you with a clear breakdown of costs so that you can avoid surprise expenses.
             <a href="/"></a>

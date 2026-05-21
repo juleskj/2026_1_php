@@ -87,7 +87,7 @@
 
 
     <main id="page-map">
-        <section class="map-container">
+        <section class="map-content">
 
             <form id="map-form" mix-post action="api-search">
                 

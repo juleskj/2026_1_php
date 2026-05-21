@@ -10,7 +10,7 @@
 }
 
 /* ===== Layout ===== */
-aside, #info {
+#info {
   grid-area: 2/2;
   min-width: 230px;
   width: calc(100% - 20px);
@@ -31,7 +31,7 @@ aside, #info {
 }
 
 @media (min-width: 768px) {
-  aside, #info {
+  #info {
     overflow-y: auto;
     box-shadow: none;
     height: 100%;
