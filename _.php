@@ -180,6 +180,62 @@ function _send_welcome_email($user_email, $isReverify = false){
 }
 
 
+
+function _send_offer_request($date, $buyer_namer, $property_price){
+    
+    
+    $mail = new PHPMailer(true);
+
+    $sender_email = "juicefrog2610@gmail.com";
+    $email_password = "uwms bmfe bnhk qajz" ;
+    
+    $admin_email = "juljen2730@gmail.com";
+
+
+    $mail->isSMTP();
+    $mail->Host       = 'smtp.gmail.com';
+    $mail->SMTPAuth   = true;
+    $mail->Username   = $sender_email;
+    $mail->Password   = $email_password;
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+    $mail->Port       = 587;
+
+
+    $mail->setFrom($sender_email, 'JuiceFrog');
+    $mail->addAddress($admin_email);
+
+    $mail->isHTML(true);
+
+    
+    $mail->Subject = "Offer made on property";
+    $mail->Body = "
+       <h2>New Offer Received for Your Property</h2>
+        <p>A new purchase offer has been submitted for <strong>[Property Address]</strong>.</p>
+
+        <p><strong>Offer Details:</strong></p>
+        <ul>
+        <li><strong>Amount:</strong> $property_price</li>
+        <li><strong>Buyer:</strong> $buyer_namer</li>
+        <li><strong>Submitted:</strong> $date</li>
+        <li><strong>Additional Terms:</strong> [e.g., Contingencies, Closing Date]</li>
+        </ul>
+
+        <p>Please review and <strong>approve, counter, or reject</strong> this offer at your earliest convenience.</p>
+
+        
+        <br>
+        <p>Best regards,<br>JuiceFrog</p>
+    ";
+
+    
+
+    $mail->AltBody = "request";
+
+    $mail->send();
+
+}
+
+
 // ##############################
 function _validate_property_pk() {
     
