@@ -127,8 +127,10 @@ function _send_welcome_email($user_email, $isReverify = false){
     
     $mail = new PHPMailer(true);
 
-    $sender_email = "juicefrog2610@gmail.com";
-    $email_password = "uwms bmfe bnhk qajz" ; 
+   
+    $sender_email   = $_ENV['MAIL_FROM'];
+    $email_password = $_ENV['MAIL_PASSWORD'];
+   
 
 
     $mail->isSMTP();
@@ -140,7 +142,7 @@ function _send_welcome_email($user_email, $isReverify = false){
     $mail->Port       = 587;
 
 
-    $mail->setFrom($sender_email, 'JuiceFrog');
+    $mail->setFrom($sender_email, $_ENV['MAIL_FROM_NAME']);
     $mail->addAddress($user_email);
 
     $mail->isHTML(true);
@@ -186,10 +188,10 @@ function _send_offer_request($date, $buyer_namer, $property_price){
     
     $mail = new PHPMailer(true);
 
-    $sender_email = "juicefrog2610@gmail.com";
-    $email_password = "uwms bmfe bnhk qajz" ;
+    $sender_email   = $_ENV['MAIL_FROM'];
+    $email_password = $_ENV['MAIL_PASSWORD'];
     
-    $admin_email = "juljen2730@gmail.com";
+    $admin_email = $_ENV['ADMIN_EMAIL'];
 
 
     $mail->isSMTP();
@@ -201,7 +203,7 @@ function _send_offer_request($date, $buyer_namer, $property_price){
     $mail->Port       = 587;
 
 
-    $mail->setFrom($sender_email, 'JuiceFrog');
+    $mail->setFrom($sender_email, $_ENV['MAIL_FROM_NAME']);
     $mail->addAddress($admin_email);
 
     $mail->isHTML(true);

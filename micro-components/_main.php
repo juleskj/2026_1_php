@@ -10,8 +10,6 @@
    $user =  $_SESSION["user"] ?? "";
 
 
-    
-
 
     $sql = "SELECT * FROM affordable_homes";
     $stmt = $_db->prepare($sql);

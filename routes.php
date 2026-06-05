@@ -13,5 +13,11 @@ get('/items/$category', 'pages/items.php');
 get('/items/$category/size/$size', 'pages/items.php');
 
 
-
+// Load .env
+foreach (file(__DIR__ . '/.env') as $line) {
+    $line = trim($line);
+    if ($line === '' || str_starts_with($line, '#')) continue;
+    [$key, $value] = explode('=', $line, 2);
+    $_ENV[trim($key)] = trim($value);
+}
 

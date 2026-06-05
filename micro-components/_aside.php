@@ -83,15 +83,16 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
         <p><?= _($item['type']) ?></p>
         <h3><?=  _($item['road_name'])?> <?= _($item['house_number'])  ?></h3>
         <p><?= _($item['zip_code'] ?? "-") . _($item['city_name']) ?></p>
-        <p class="property-price">  <?=  _(number_format($item['price'], 0, ',', '.')) ?> kr</p>
+        <p class="property-price">  <?=  _(number_format($item['price'], 0, ',', '.')) . " " ?> kr.</p>
     </section>
     
     
     
+
     
     
     <?= _row_block_HTML($item['floor_square_meters'], "fa-house", "M²", "Home size") ?>
-    <?= _row_block_HTML($item['lot_square_meters'], "fa-house", "M²", "plot size") ?>
+    <?= _row_block_HTML($item['lot_square_meters'], "fa-house", "M²", "Plot size") ?>
     <?= _row_block_HTML($item['number_of_rooms'], "fa-door-open", "", "Number of rooms") ?>
     <?= _row_block_HTML($item['number_of_baths'], "fa-bath", "", "Number of bathrooms") ?>
 

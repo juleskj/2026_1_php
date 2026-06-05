@@ -30,7 +30,7 @@
             $viewed_homes = track_viewed_homes();
             
         }
-        $sql = "SELECT * FROM `items` LIMIT 10";
+        $sql = "SELECT * FROM `items` LIMIT 50";
         $stmt = $_db->prepare( $sql );
         
         $stmt->execute();

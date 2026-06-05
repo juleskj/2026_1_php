@@ -61,7 +61,7 @@ $firstNElements = $firstNElements ?? [];
                 <p><span><?= _( $item["type"]) ?></span></p>
                 <h3><?=  _($item['road_name'])?> <?= _($item['house_number'])  ?></h3>
                 <p><?= _($item['zip_code']) ?> <?= _($item['city_name']) ?></p>
-                <p class="pris"><?= _(number_format($item['price'], 0, ',', '.') . "kr")?></p>
+                <p class="pris"><?= _(number_format($item['price'], 0, ',', '.') . " kr.")?></p>
             </div>
         </article>
         </a>

@@ -2,6 +2,7 @@
 session_start();
 require_once __DIR__."/../db.php";
 require_once __DIR__."/../_.php";
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     try{
 
@@ -30,8 +31,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $hashed_password = password_hash($user_password, PASSWORD_DEFAULT);
         $user_pk = bin2hex(random_bytes(25)); // Returns 50 characters
 
-
-    
 
         /* Begin a transaction, turning off autocommit */
         $_db->beginTransaction();
@@ -150,6 +149,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 exit;
         }
 
-        exit;
+        
     }
 }
