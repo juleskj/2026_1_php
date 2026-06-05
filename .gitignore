@@ -1,0 +1,33 @@
+# Environment & secrets — NEVER commit these
+.env
+*.env
+.env.*
+!.env.example
+
+# Composer dependencies
+/vendor/
+
+# Uploaded user files
+/uploads/
+/images/uploads/
+
+# Docker override (local settings)
+docker-compose.override.yml
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# PHP logs
+*.log
+/logs/
+
+# PHPMailer cache / temp
+/tmp/
