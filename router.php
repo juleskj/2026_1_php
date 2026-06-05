@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . "/_.php";
 
 function get($route, $path_to_include)
 {
@@ -91,21 +92,29 @@ function out($text)
 
 function set_csrf()
 {
-	session_start();
-	if (!isset($_SESSION["csrf"])) {
-		$_SESSION["csrf"] = bin2hex(random_bytes(50));
+	if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+	if (!isset($_SESSION["csrf_token"])) {
+		$_SESSION["csrf_token"] = bin2hex(random_bytes(50));
 	}
-	echo '<input type="hidden" name="csrf" value="' . $_SESSION["csrf"] . '">';
+	echo '<input type="hidden" name="csrf_token" value="' . htmlspecialchars($_SESSION["csrf_token"]) . '">';
 }
 
 function is_csrf_valid()
 {
-	session_start();
-	if (!isset($_SESSION['csrf']) || !isset($_POST['csrf'])) {
+	if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+	if (!isset($_SESSION['csrf_token']) || !isset($_POST['csrf_token'])) {
 		return false;
 	}
-	if ($_SESSION['csrf'] != $_POST['csrf']) {
+	if(!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])){
+		return false;
+	}
+	if ($_SESSION['csrf_token'] != $_POST['csrf_token']) {
 		return false;
 	}
 	return true;
 }
+

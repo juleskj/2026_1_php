@@ -10,11 +10,12 @@
 
 
     session_start();
+    require_once __DIR__ . "/../session_utils.php";
+    require_once __DIR__ . "/../db.php";
+    require_once __DIR__ . "/../routes.php";
     
     try{
         $title = "Profile";
-        require_once __DIR__ . "/../session_utils.php";
-        require_once __DIR__ . "/../db.php";
         
    
         if (!isset($_SESSION["user"])) {
@@ -44,8 +45,10 @@
         <aside class="user-info">
 
             <img id="profile-img" src="/../uploads/<?= _($user["user_image"]) ?>" alt="">
-            <form action="api-upload" method="POST" enctype="multipart/form-data">
+            <form mix-post="api-upload" method="POST" enctype="multipart/form-data">
+
                 Select image to upload:
+                <?php set_csrf();?>
                 <input type="file" name="fileToUpload" id="fileToUpload" onChange="inputOnChange(this);">
                 <input type="submit" value="Upload Image" name="submit">
             </form>

@@ -10,11 +10,9 @@ if(isset($_SESSION["user"])){
 
 $item = $item ?? [];
 
-if (empty($_SESSION['csrf_token'])) {
-    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-}
+require_once __DIR__ . "/../routes.php";
 
-$_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+
 
 ?>
 
@@ -73,7 +71,7 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
     <?php if($user):?>
     <form id="make-offer-form" mix-post="send_offer_request_email" onsubmit="mixhtml(); return false;">
         <input type="hidden" value="<?=_($item['pk'])?>" name="item_pk">
-        <input type="hidden" value="<?=$_SESSION['csrf_token']?>" name="csrf_token">
+        <?php set_csrf(); ?>
         <button class="filled-btn blue">Make an offer</button>
 
     </form>

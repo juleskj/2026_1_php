@@ -3,6 +3,7 @@ session_start();
 
 require_once __DIR__ . "/../db.php";
 require_once __DIR__ . "/../_.php";
+require_once __DIR__ . "/../routes.php";
 
 date_default_timezone_set('Europe/Copenhagen'); //makes sure its the correct time stamp
 
@@ -12,9 +13,9 @@ try{
    
     
 
-    if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-        echo "no token";
-        exit;
+
+    if (!is_csrf_valid()) {
+        throw new Exception("Invalid CSRF token", 403);
     }
 
 
@@ -63,12 +64,28 @@ try{
     header("Location: /page-map?item_pk=$item_pk");
     exit;
    
-    // echo "ok";
+    
 
 }catch(Exception $e){
 
     if (isset($_db)) {
         $_db->rollback();
+    }
+
+    error_log("Error: " . $e->getMessage() . " (Code: " . $e->getCode() . ")");
+    $_SESSION['flash_state'] = "error";
+
+    $message = $e->getMessage();
+    switch (true) {
+        case str_contains($message, "Invalid CSRF token"):
+            $_SESSION['flash_message'] = "Invalid CSRF token";
+            header('Location: /page-map');
+            exit;
+        
+        default:
+            $_SESSION['flash_message'] = "An error occurred Please try again";
+            header('Location: /page-map');
+            exit;
     }
 
     echo $e;

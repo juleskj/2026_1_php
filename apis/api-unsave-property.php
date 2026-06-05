@@ -1,22 +1,16 @@
 <?php
 
 session_start();
+require_once __DIR__ . "/../_.php";
+require_once __DIR__ . "/../routes.php";
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-    require_once __DIR__ . "/../_.php";
-
-    try{
-
     
-        if(filter_has_var(INPUT_POST, 'token')) {
-            $token = $_POST['token'];
-            
-            if (!$token || $token !== $_SESSION['token']) {
-                throw new Exception('token validation failed.', 400);
-            }
+    try{
+  
 
-        } else {
-            throw new Exception('token validation failed.', 400);
+        if (!is_csrf_valid()) {
+            throw new Exception("Invalid CSRF token", 403);
         }
                 
                 
@@ -43,10 +37,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     }catch(Exception $e){
 
-        error_log($e->getMessage()); // Log the error
-        header($_SERVER['SERVER_PROTOCOL'] . ' 405 Method Not Allowed');
-        exit;
-   
+        error_log("Error: " . $e->getMessage() . " (Code: " . $e->getCode() . ")");
+        $_SESSION['flash_state'] = "error";
+
+        $message = $e->getMessage();
+        switch (true) {
+            case str_contains($message, "Invalid CSRF token"):
+                $_SESSION['flash_message'] = "Invalid CSRF token";
+                header('Location: /page-profile');
+                exit;
+            
+            default:
+                $_SESSION['flash_message'] = "An error occurred Please try again";
+                header('Location: /');
+                exit;
+        }
     }
 
     

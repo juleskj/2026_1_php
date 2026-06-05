@@ -1,7 +1,7 @@
 <?php
 
 
- session_set_cookie_params([
+    session_set_cookie_params([
     'lifetime' => 0,
     'path' => '/',
     'domain' => '', 
@@ -13,92 +13,89 @@
 
     session_start();
 
-    if (empty($_SESSION['csrf_token'])) {
-        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-    }
-        
+    require_once __DIR__ . "/../routes.php";
     require_once __DIR__ . "/../session_utils.php";
     require_once __DIR__ . "/../db.php";
 
     
-        try{
-            
+    
+    try{
         
 
-            if (!isset($_SESSION["user"]) || !is_array($_SESSION["user"])) {
+        if (!isset($_SESSION["user"]) || !is_array($_SESSION["user"])) {
 
-                throw new Exception("no user found", 401);
+            throw new Exception("no user found", 401);
+        
+        }
+
+        if (!isset($_SESSION["user"]["user_role"]) || !in_array("admin", $_SESSION["user"]["user_role"], true)) {
             
-            }
-
-            if (!isset($_SESSION["user"]["user_role"]) || !in_array("admin", $_SESSION["user"]["user_role"], true)) {
-                
-                throw new Exception("user not admin", 403);
-                
-            }
-
-            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+            throw new Exception("user not admin", 403);
             
+        }
 
-            $user = $_SESSION["user"];
+        
+        
 
-            // TODO: get items so that admin can "delete/sold" them
-            //TODO: user can contact about a bolig and admin can accept or declin and the user gets and email.
-            
-            
-            require_once __DIR__ . "/../db.php";
-            $sql ="SELECT * FROM `user_property_offers`";
+        $user = $_SESSION["user"];
+
+        // TODO: get items so that admin can "delete/sold" them
+        //TODO: user can contact about a bolig and admin can accept or declin and the user gets and email.
+        
+        
+        require_once __DIR__ . "/../db.php";
+        $sql ="SELECT * FROM `user_property_offers`";
+        $stmt = $_db->prepare($sql);
+        $stmt->execute();
+        $all_offers = $stmt->fetchAll();
+
+        
+
+        $all_offers_data = [];
+        
+
+        foreach($all_offers as $offer){
+            $sql ="CALL `get_offer_details_of_user_and_property`(:user_fk, :property_fk)";
             $stmt = $_db->prepare($sql);
+            $stmt->bindValue(":user_fk", $offer["user_fk"]);
+            $stmt->bindValue(":property_fk", $offer["property_fk"]);
             $stmt->execute();
-            $all_offers = $stmt->fetchAll();
-
+            $one_offers_data = $stmt->fetch();
             
-
-            $all_offers_data = [];
+            array_push($all_offers_data, $one_offers_data);
             
-
-            foreach($all_offers as $offer){
-                $sql ="CALL `get_offer_details_of_user_and_property`(:user_fk, :property_fk)";
-                $stmt = $_db->prepare($sql);
-                $stmt->bindValue(":user_fk", $offer["user_fk"]);
-                $stmt->bindValue(":property_fk", $offer["property_fk"]);
-                $stmt->execute();
-                $one_offers_data = $stmt->fetch();
-                
-                array_push($all_offers_data, $one_offers_data);
-                
-
-            }
-
-            
-            
-
-        }catch(Exception $e){
-
-            error_log("Error: " . $e->getMessage() . " (Code: " . $e->getCode() . ")");
-
-
-            $_SESSION['flash_state'] = "error";
-            $message = $e->getMessage();
-            switch (true) {
-                case str_contains($message, "no user found"):
-                    $_SESSION['flash_message'] = "You do not have permission to access this page";
-                    header('Location: /login');
-                    exit;
-
-                case str_contains($message, "user not admin"):
-                    $_SESSION['flash_message'] = "You do not have permission to access this page";
-                    header('Location: /');
-                    exit;
-
-                default:
-                    $_SESSION['flash_message'] = "An error occurred Please try again";
-                    header('Location: /');
-                    exit;
-            }
 
         }
-    
+
+            
+            
+
+    }catch(Exception $e){
+
+        error_log("Error: " . $e->getMessage() . " (Code: " . $e->getCode() . ")");
+
+
+        $_SESSION['flash_state'] = "error";
+        $message = $e->getMessage();
+        switch (true) {
+            case str_contains($message, "no user found"):
+                $_SESSION['flash_message'] = "You do not have permission to access this page";
+                header('Location: /login');
+                exit;
+
+            case str_contains($message, "user not admin"):
+                $_SESSION['flash_message'] = "You do not have permission to access this page";
+                header('Location: /');
+                exit;
+
+            default:
+                $_SESSION['flash_message'] = "An error occurred Please try again";
+                header('Location: /');
+                exit;
+        }
+
+    }
+
 
 
     $title = "admin";
@@ -121,6 +118,7 @@
 
                             <form action="api-upload" method="POST" enctype="multipart/form-data">
                                 Select image to upload:
+                                <?php set_csrf();?>
                                 <input type="file" name="fileToUpload" id="fileToUpload" onChange="inputOnChange(this);">
                                 <input type="submit" value="Upload Image" name="submit">
                             </form>
@@ -212,7 +210,7 @@
 
                                 <img class="property-image" src="https://placehold.co/600x400" alt="">
                                 <form id="add-bolig-form" mix-post="/api-add-new-property" >
-                                    <input type="hidden" value="<?= _($_SESSION['csrf_token']) ?>" name="csrf_token">
+                                    <?php set_csrf();?>
                                     <fieldset id="address">
                                         <legend>Address</legend>
                                         <label>

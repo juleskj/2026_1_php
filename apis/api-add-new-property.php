@@ -9,18 +9,21 @@ session_set_cookie_params([
     'samesite' => 'Strict' 
     ]);
 
-
+    
 session_start();
+require_once __DIR__ . "/../routes.php";
+require_once __DIR__ . "/../_.php";
+require_once __DIR__ . "/../db.php";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
     try{
 
-        if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-            $_SESSION['flash_state'] = "error";
-            $_SESSION['flash_message'] = "Invalid CSRF token";
-            header('Location: /login');
-            exit;
+
+        if (!is_csrf_valid()) {
+            throw new Exception("Invalid CSRF token", 403);
         }
+
 
         // check if the user is actually admin before adding property
         if (!isset($_SESSION["user"])) {
@@ -40,7 +43,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $validation_rules  = require_once __DIR__ . "/../config/validation_rules.php";
         $property_rules = $validation_rules['property'];
         
-        require_once __DIR__ . "/../_.php";
         
         // validate and saniatice all the data from the form
         $validated_data = [];
@@ -51,7 +53,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         };
 
 
-        require_once __DIR__ . "/../db.php";
 
         // insert sql for the save propery
         $sql = "INSERT INTO items(pk, lat, lon, price, type, city_name, 
@@ -86,6 +87,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $_SESSION['flash_state'] = "error";
         $message = $e->getMessage();
         switch (true) {
+            case str_contains($message, "Invalid CSRF token"):
+                $_SESSION['flash_message'] = "Invalid CSRF token";
+                header('Location: /admin');
+                exit;
             case str_contains($message, "no user found"):
                 $_SESSION['flash_message'] = "You do not have permission to access this page";
                 header('Location: /admin');

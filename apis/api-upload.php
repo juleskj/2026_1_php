@@ -2,17 +2,21 @@
 
 session_start();
 require_once __DIR__ . "/../_.php";
-
 require_once __DIR__ . "/../db.php";
+require_once __DIR__ . "/../routes.php";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     try{
-            
+
+
+        if (!is_csrf_valid()) {
+            throw new Exception("Invalid CSRF token", 403);
+        }
+
+        
         if (!isset($_SESSION["user"])) {
-            $_SESSION['flash_state'] = "error";
-            $_SESSION['flash_message'] = "Please login to see your profile";
-            header('Location: /login');
-            exit;
+            throw new Exception("Please login to see your profile", 403);
+            
         }
 
         $target_dir = "../uploads/";
@@ -82,6 +86,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             $message = $e->getMessage();
             switch (true) {
+                case str_contains($message, "Invalid CSRF token"):
+                    $_SESSION['flash_message'] = "Invalid CSRF token";
+                    header('Location: /page-profile');
+                    exit;
+                case str_contains($message, "Please login to see your profile"):
+                    $_SESSION['flash_message'] = "Please login to see your profile";
+                    header('Location: /login');
+                    exit;
                 case str_contains($message, "not a valide image"):
                     $_SESSION['flash_message'] = "sorry your file is not a valide image";
                     header('Location: /page-profile');

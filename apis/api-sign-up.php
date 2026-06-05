@@ -2,9 +2,15 @@
 session_start();
 require_once __DIR__."/../db.php";
 require_once __DIR__."/../_.php";
+require_once __DIR__ . "/../routes.php";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     try{
+
+
+        if (!is_csrf_valid()) {
+            throw new Exception("Invalid CSRF token", 403);
+        }
 
         
         $user_password = _validate_user_password();
@@ -126,11 +132,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $_SESSION['flash_message'] = "Email already exists";
                 header('Location: /sign-up');
                 exit;
-
-            case str_contains($message, "password dont match"):
-                $_SESSION['flash_message'] = "Passwords do not match";
+            
+            case str_contains($message, "Invalid CSRF token"):
+                $_SESSION['flash_message'] = "Invalid CSRF token";
                 header('Location: /sign-up');
                 exit;
+                
 
             case str_contains($message, "user_username") && str_contains($message, "Duplicate entry"):
                 $_SESSION['flash_message'] = "Username already exists";

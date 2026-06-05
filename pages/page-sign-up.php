@@ -16,6 +16,7 @@ $title = "Sign up";
 
 require_once __DIR__."/../micro-components/_header.php";
 require_once __DIR__."/../_.php";
+require_once __DIR__ . "/../routes.php";
 
 _render_flash_msg();
 ?>
@@ -31,7 +32,8 @@ _render_flash_msg();
         <div class="alert-msg"><p>welcome to boligsiden please sign up</p></div>
 
         <form action="api-sign-up" method="post" id="signup-form">
-            <label for="username">Username must be between
+        <?php set_csrf();?>
+        <label for="username">Username must be between
             <?= _(USER_USERNAME_MIN) ?> and
             <?= _(USER_USERNAME_MAX) ?> characters.
             <input min="<?= _(USER_USERNAME_MIN) ?>" max="<?= _(USER_USERNAME_MAX) ?>" id="username" type="text" name="user_username" value="jules307">

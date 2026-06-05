@@ -12,12 +12,10 @@ session_start();
 
 $title = "Login";
 
-if (empty($_SESSION['csrf_token'])) {
-    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-}
-
-
+require_once __DIR__ . "/../routes.php";
 require_once __DIR__."/../micro-components/_header.php";
+
+
 
 _render_flash_msg();
 
@@ -29,7 +27,7 @@ _render_flash_msg();
         <!-- <div class="alert-msg"><p>Please login</p></div> -->
 
         <form id="login-form" action="/api-login" method="POST">
-            <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
+            <?php set_csrf();?>
             <label for="email">
                 email 
                 <input type="email" name="user_email" id="email" value="juljen2730@gmail.com">

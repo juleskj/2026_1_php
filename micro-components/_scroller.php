@@ -1,13 +1,9 @@
 <?php
+
+    require_once __DIR__ . "/../routes.php";
     $user =  $_SESSION["user"] ?? "";
 
     $saved_homes = $_SESSION["saved_homes"] ?? [];
-
-    if (empty($_SESSION['token'])) {
-        $_SESSION['token'] = bin2hex(random_bytes(32));
-    }
-
-
 
     $items = $items ?? [];
 
@@ -26,7 +22,7 @@
                 <?php if($user){ ?>
                     <form id="save-form-<?=_($item['pk'])?>" mix-post="<?= in_array($item["pk"], $saved_homes) ? "api-unsave-property" : "api-save-property" ?>">
                         <input type="hidden" name="item_pk" value="<?= _($item['pk'], ENT_QUOTES, 'UTF-8') ?>">
-                        <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
+                        <?php set_csrf();?>
                         <button class="bookmark <?= in_array($item["pk"], $saved_homes) ? "solid" : "regular" ?>"></button>
                     </form>
                 <?php } ?>

@@ -4,21 +4,18 @@ session_start();
 
 require_once __DIR__."/../_.php";
 require_once __DIR__."/../db.php";
+require_once __DIR__ . "/../routes.php";
 
 try{   
     $user_email = _validate_user_email();
     $user_password = _validate_user_password();
 
 
-    if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-        $_SESSION['flash_state'] = "error";
-        $_SESSION['flash_message'] = "Invalid CSRF token";
-        header('Location: /login');
-        exit;
+
+    if (!is_csrf_valid()) {
+        throw new Exception("Invalid CSRF token", 403);
     }
-
-
-    
+       
 
     $_db->beginTransaction();
 
@@ -92,6 +89,10 @@ try{
     $_SESSION['flash_state'] = "error";
     $message = $e->getMessage();
     switch (true)  {
+        case str_contains($message, "Invalid CSRF token"):
+            $_SESSION['flash_message'] = "Invalid CSRF token";
+            header('Location: /login');
+            exit;
         case str_contains($message,"no user"):
             $_SESSION['flash_message'] = "User not found";
             header('Location: /login');
