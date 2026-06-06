@@ -44,6 +44,23 @@
 
     </section>
 
+    
+
+    <?php
+
+        if(!empty($viewed_homes)){
+            $items = $viewed_homes;
+            $scroller_header = "Resently viewed homes";
+            include __DIR__ . '/../micro-components/_scroller.php';
+        }
+        
+        $items = $affordable_homes;
+        $scroller_header = "Find homes you can afford";
+        include  '_scroller.php';
+
+    ?> 
+
+
     <section class="grid_1-1-1">
         <article>
             <img src="../images/johnson-U6Q6zVDgmSs-unsplash.jpg" alt="placeholder">
@@ -67,18 +84,8 @@
     
     </section>
 
-    <?php
 
-        if(!empty($viewed_homes)){
-            $items = $viewed_homes;
-            $scroller_header = "Resently viewed homes";
-            include __DIR__ . '/../micro-components/_scroller.php';
-        }
-        
-        $items = $affordable_homes;
-        $scroller_header = "Find homes you can afford";
-        include  '_scroller.php';
-    
+    <?php
     
         $items = $familiy_house;
         $scroller_header = "Familiy homes";
@@ -87,6 +94,9 @@
     ?>
 
     
+
+
+
             
     
 

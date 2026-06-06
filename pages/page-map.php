@@ -128,21 +128,7 @@
     
             <script>
 
-                // Create custom icon
-                var house_icon = L.icon({
-                    // iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png',
-                    iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png',
-                    iconSize: [24, 24],
-                    iconAnchor: [16, 16],
-                    popupAnchor: [0, -24]
-                });
-                var apartment_icon = L.icon({
-                    // iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png',
-                    iconUrl: 'http://127.0.0.1/static/apartment.svg',
-                    iconSize: [24, 24],
-                    iconAnchor: [16, 16],
-                    popupAnchor: [0, -24]
-                });
+                
     
                 // Initialize the map
                 const map = L.map('map').setView([55.67960020013266, 12.56464935119663], 7);

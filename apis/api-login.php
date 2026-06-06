@@ -94,25 +94,35 @@ try{
         // TODO: fetch all the save_homes and put into session when the user logs in
         get_saved_homes();
 
+        
+        // Hvis login lykkes — reset tæller
+        $attempts['count'] = 0;
+        
+        header('Location: /');
+    } else {
+
         // Hvis login fejler — increment tæller
         $attempts['count']++;
         $attempts['last_attempt'] = time();
         error_log("SECURITY: Failed login attempt $attempts[count]/$max_attempts from IP: $ip");
 
-        // Hvis login lykkes — reset tæller
-        $attempts['count'] = 0;
 
-        header('Location: /');
-    } else {
         throw new Exception("password incorect", 401);
        
     }
 
 }catch (Exception $e){
 
+// closeCursor() frigiver result settet fra stored procedure kaldet, så rollBack() kan køre uden at PDO klager.
     if (isset($_db)) {
-        $_db->rollback();
+        if (isset($stmt)) {
+            $stmt->closeCursor();
+        }
+        if ($_db->inTransaction()) {
+            $_db->rollBack();
+        }
     }
+
     
 
     error_log("Error: " . $e->getMessage() . " (Code: " . $e->getCode() . ")");

@@ -46,7 +46,7 @@ function _validate_user_email() {
 
 
 function _get_validate_user_email() {
-    $user_email = filter_var(trim($_GET["user_email"] ?? ""), FILTER_VALIDATE_EMAIL);
+    $user_email = filter_var(trim($_GET["email"] ?? ""), FILTER_VALIDATE_EMAIL);
     if (strlen($user_email) < USER_EMAIL_MIN) {
         throw new Exception("Email must be at least " . USER_EMAIL_MIN . " characters long", 400);
     }
@@ -165,7 +165,7 @@ function _send_welcome_email($user_email, $isReverify = false){
 
     $mail->isHTML(true);
 
-    $verificationLink = "http://127.0.0.1/verify-user?email=" . urlencode($user_email);
+    $verificationLink = $_ENV['BASE_URL'] . "/verify-user?email=" . urlencode($user_email);
 
     if($isReverify){
 
