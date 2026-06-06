@@ -8,7 +8,7 @@ require_once __DIR__."/../db.php";
 
 try{   
 
-    $ip = $_SERVER['REMOTE_ADDR'];
+    $ip = $_SERVER['HTTP_X_REAL_IP'] ?? $_SERVER['REMOTE_ADDR'];
     $max_attempts = 5;
     $lockout_time = 15 * 60; // 15 minutter i sekunder
 

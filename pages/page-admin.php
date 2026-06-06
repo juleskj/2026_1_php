@@ -23,14 +23,14 @@
         
 
         if (!isset($_SESSION["user"]) && !is_array($_SESSION["user"])) {
-            $ip = $_SERVER['REMOTE_ADDR'];
+            $ip = $_SERVER['HTTP_X_REAL_IP'] ?? $_SERVER['REMOTE_ADDR'];
             error_log("SECURITY: Unauthenticated admin access attempt from IP: $ip");
             throw new Exception("no user found", 401);
         
         }
 
         if (!isset($_SESSION["user"]["user_role"]) && !in_array("admin", $_SESSION["user"]["user_role"], true)) {
-            $ip = $_SERVER['REMOTE_ADDR'];
+            $ip = $_SERVER['HTTP_X_REAL_IP'] ?? $_SERVER['REMOTE_ADDR'];
             $user_pk = $_SESSION["user"]["user_pk"];
             error_log("SECURITY: Unauthorized admin access attempt from user: $user_pk IP: $ip");
             throw new Exception("user not admin", 403);
