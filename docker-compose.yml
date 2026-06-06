@@ -19,6 +19,7 @@ services:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: 2026_1_php
     volumes:
+      - ./db-files:/docker-entrypoint-initdb.d
       - mariadb_data:/var/lib/mysql
     ports:
       - 3306:3306
