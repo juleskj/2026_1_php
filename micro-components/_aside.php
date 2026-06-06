@@ -10,7 +10,7 @@ if(isset($_SESSION["user"])){
 
 $item = $item ?? [];
 
-require_once __DIR__ . "/../routes.php";
+require_once __DIR__ . "/../_.php";
 
 
 

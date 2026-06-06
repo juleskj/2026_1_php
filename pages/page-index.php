@@ -20,6 +20,7 @@ if (!isset($_SESSION['viewed_homes'])) {
 
 $title = "Home";
 
+
 require_once __DIR__."/../micro-components/_header.php";
 require_once __DIR__."/../micro-components/_main.php";
 require_once __DIR__."/../micro-components/_footer.php";

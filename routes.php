@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__.'/router.php';
 
+
 get('/', 'pages/page-index.php');
 get('/contact-us', 'pages/page-contact-us.php');
 get('/about-us', 'pages/page-about-us.php');

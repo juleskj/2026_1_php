@@ -1,6 +1,10 @@
 <?php
 
     require_once __DIR__ . "/../_.php";
+
+    $flash_state = $flash_state ?? "";
+
+    $msg = $msg ?? '';
     $msg = _validate_flash_message($msg);
 
 ?>

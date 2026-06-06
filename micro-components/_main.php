@@ -1,5 +1,7 @@
 <?php
+
     require_once __DIR__ . "/../db.php";
+    require_once __DIR__ . "/../_.php";
     require_once __DIR__ . "/../session_utils.php";
        
 
@@ -7,7 +9,7 @@
         $viewed_homes = get_viewed_homes();
     }
 
-   $user =  $_SESSION["user"] ?? "";
+    $user =  $_SESSION["user"] ?? "";
 
 
 
@@ -22,6 +24,8 @@
     $stmt->execute();
     $familiy_house = $stmt->fetchAll();
   
+   
+    
     
     _render_flash_msg();
 
@@ -39,24 +43,6 @@
         </h1>
 
     </section>
-
-
-    <?php
-
-    if(!empty($viewed_homes)){
-        $items = $viewed_homes;
-        $scroller_header = "Resently viewed homes";
-        include '_scroller.php';
-    }
-    
-    ?>
-
-    <?php
-    $items = $affordable_homes;
-    $scroller_header = "Find homes you can afford";
-    include '_scroller.php';
-    
-    ?>
 
     <section class="grid_1-1-1">
         <article>
@@ -77,18 +63,30 @@
             A real estate agent can provide you with a clear breakdown of costs so that you can avoid surprise expenses.
             <a href="/"></a>
         </article>
-
-
+    
+    
     </section>
 
     <?php
-    $items = $familiy_house;
-    $scroller_header = "Familiy homes";
-    include '_scroller.php';
+
+        if(!empty($viewed_homes)){
+            $items = $viewed_homes;
+            $scroller_header = "Resently viewed homes";
+            include __DIR__ . '/../micro-components/_scroller.php';
+        }
+        
+        $items = $affordable_homes;
+        $scroller_header = "Find homes you can afford";
+        include  '_scroller.php';
+    
+    
+        $items = $familiy_house;
+        $scroller_header = "Familiy homes";
+        include __DIR__ . '/../micro-components/_scroller.php';
     
     ?>
 
-    </section>
+    
             
     
 

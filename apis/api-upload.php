@@ -3,7 +3,7 @@
 session_start();
 require_once __DIR__ . "/../_.php";
 require_once __DIR__ . "/../db.php";
-require_once __DIR__ . "/../routes.php";
+
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     try{

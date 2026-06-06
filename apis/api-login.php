@@ -4,9 +4,32 @@ session_start();
 
 require_once __DIR__."/../_.php";
 require_once __DIR__."/../db.php";
-require_once __DIR__ . "/../routes.php";
+
 
 try{   
+
+    $ip = $_SERVER['REMOTE_ADDR'];
+    $max_attempts = 5;
+    $lockout_time = 15 * 60; // 15 minutter i sekunder
+
+    // Initialiser tæller
+    if (!isset($_SESSION['login_attempts'][$ip])) {
+        $_SESSION['login_attempts'][$ip] = ['count' => 0, 'last_attempt' => time()];
+    }
+
+    $attempts = &$_SESSION['login_attempts'][$ip];
+
+    // Reset hvis lockout-tid er udløbet
+    if (time() - $attempts['last_attempt'] > $lockout_time) {
+        $attempts['count'] = 0;
+    }
+
+    // Blokér hvis for mange forsøg
+    if ($attempts['count'] >= $max_attempts) {
+
+        throw new Exception("SECURITY: Brute force attempt from IP: $ip", 429); // Too Many Requests
+    }
+
     $user_email = _validate_user_email();
     $user_password = _validate_user_password();
 
@@ -71,6 +94,14 @@ try{
         // TODO: fetch all the save_homes and put into session when the user logs in
         get_saved_homes();
 
+        // Hvis login fejler — increment tæller
+        $attempts['count']++;
+        $attempts['last_attempt'] = time();
+        error_log("SECURITY: Failed login attempt $attempts[count]/$max_attempts from IP: $ip");
+
+        // Hvis login lykkes — reset tæller
+        $attempts['count'] = 0;
+
         header('Location: /');
     } else {
         throw new Exception("password incorect", 401);
@@ -93,6 +124,11 @@ try{
             $_SESSION['flash_message'] = "Invalid CSRF token";
             header('Location: /login');
             exit;
+        case str_contains($message, "Brute force attempt"):
+            $_SESSION['flash_message'] = "Too many login attempts, try again later";
+            header('Location: /login');
+            exit;
+            
         case str_contains($message,"no user"):
             $_SESSION['flash_message'] = "User not found";
             header('Location: /login');

@@ -16,7 +16,7 @@ $title = "Sign up";
 
 require_once __DIR__."/../micro-components/_header.php";
 require_once __DIR__."/../_.php";
-require_once __DIR__ . "/../routes.php";
+
 
 _render_flash_msg();
 ?>

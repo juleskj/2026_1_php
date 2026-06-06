@@ -44,6 +44,24 @@ function _validate_user_email() {
 }
 
 
+
+function _get_validate_user_email() {
+    $user_email = filter_var(trim($_GET["user_email"] ?? ""), FILTER_VALIDATE_EMAIL);
+    if (strlen($user_email) < USER_EMAIL_MIN) {
+        throw new Exception("Email must be at least " . USER_EMAIL_MIN . " characters long", 400);
+    }
+    if (strlen($user_email) > USER_EMAIL_MAX) {
+        throw new Exception("Email must be max " . USER_EMAIL_MAX . " characters long", 400);
+    }
+    if (!filter_var($user_email, FILTER_VALIDATE_EMAIL)) {
+        throw new Exception("Invalid email $user_email", 400);
+    }
+    return $user_email;
+}
+
+
+
+
 // ##############################
 define("USER_USERNAME_MIN", 2);
 define("USER_USERNAME_MAX", 20);
@@ -484,3 +502,34 @@ function _validate_pk(string $pk): string {
 
     return $pk;
 }
+
+
+
+function set_csrf()
+{
+	if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+	if (!isset($_SESSION["csrf_token"])) {
+		$_SESSION["csrf_token"] = bin2hex(random_bytes(50));
+	}
+	echo '<input type="hidden" name="csrf_token" value="' . htmlspecialchars($_SESSION["csrf_token"]) . '">';
+}
+
+function is_csrf_valid()
+{
+	if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+	if (!isset($_SESSION['csrf_token']) || !isset($_POST['csrf_token'])) {
+		return false;
+	}
+	if(!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])){
+		return false;
+	}
+	if ($_SESSION['csrf_token'] != $_POST['csrf_token']) {
+		return false;
+	}
+	return true;
+}
+

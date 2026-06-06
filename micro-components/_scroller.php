@@ -1,6 +1,6 @@
 <?php
 
-    require_once __DIR__ . "/../routes.php";
+   
     $user =  $_SESSION["user"] ?? "";
 
     $saved_homes = $_SESSION["saved_homes"] ?? [];
@@ -22,7 +22,7 @@
                 <?php if($user){ ?>
                     <form id="save-form-<?=_($item['pk'])?>" mix-post="<?= in_array($item["pk"], $saved_homes) ? "api-unsave-property" : "api-save-property" ?>">
                         <input type="hidden" name="item_pk" value="<?= _($item['pk'], ENT_QUOTES, 'UTF-8') ?>">
-                        <?php set_csrf();?>
+                        <?php set_csrf(); ?>
                         <button class="bookmark <?= in_array($item["pk"], $saved_homes) ? "solid" : "regular" ?>"></button>
                     </form>
                 <?php } ?>
@@ -50,9 +50,5 @@
     </section>
 </section>
 
-<script>
 
-
-
-</script>
 
