@@ -30,7 +30,7 @@ function track_viewed_homes($item_pk = null) {
 
 
 // get the homes from the session viewed homes and get them from the db
-function get_viewed_homes(){
+function get_viewed_homes(): array{
     require_once __DIR__ . "/db.php";
     global $_db; 
     
@@ -77,8 +77,8 @@ function track_saved_homes($item_pk = null) {
         if its in the url i gets put in the items_pk variable
     */
     
-    if ($item_pk === null && isset($_post["item_pk"])) {
-        $item_pk = $_post["item_pk"];
+    if ($item_pk === null && isset($_POST["item_pk"])) {
+        $item_pk = $_POST["item_pk"];
     }
 
     // If the session array doesn't exist, create it

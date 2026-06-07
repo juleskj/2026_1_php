@@ -88,5 +88,5 @@ try{
             exit;
     }
 
-    echo $e;
+    
 }

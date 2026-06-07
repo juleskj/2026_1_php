@@ -1,14 +1,14 @@
 <?php
 
 // ##############################
-function _($text){
-    echo htmlspecialchars($text);
-
-}
+function _($text): void{
+     echo htmlspecialchars($text);
+ 
+ }
 
 define("city_search_min", 0);
 define("city_search_max", 20);
-function _validate_city_search(){
+function _validate_city_search(): string{
     $city_name = trim($_POST['city_name'])  ?? '';
 
     if(strlen($city_name) < city_search_min){
@@ -29,7 +29,10 @@ function _validate_city_search(){
 // ##############################
 define("USER_EMAIL_MIN", 6);
 define("USER_EMAIL_MAX", 50);
-function _validate_user_email() {
+/**
+* @return false|string
+*/
+function _validate_user_email(): string|false {
     $user_email = filter_var(trim($_POST["user_email"] ?? ""), FILTER_VALIDATE_EMAIL);
     if (strlen($user_email) < USER_EMAIL_MIN) {
         throw new Exception("Email must be at least " . USER_EMAIL_MIN . " characters long", 400);
@@ -45,7 +48,10 @@ function _validate_user_email() {
 
 
 
-function _get_validate_user_email() {
+/**
+* @return false|string
+*/
+function _get_validate_user_email(): string|false {
     $user_email = filter_var(trim($_GET["email"] ?? ""), FILTER_VALIDATE_EMAIL);
     if (strlen($user_email) < USER_EMAIL_MIN) {
         throw new Exception("Email must be at least " . USER_EMAIL_MIN . " characters long", 400);
@@ -65,7 +71,7 @@ function _get_validate_user_email() {
 // ##############################
 define("USER_USERNAME_MIN", 2);
 define("USER_USERNAME_MAX", 20);
-function _validate_user_username(){
+function _validate_user_username(): string{
     $user_username = $_POST["user_username"] ?? "";
     $user_username = trim($user_username);
     if(strlen($user_username) < USER_USERNAME_MIN){
@@ -80,7 +86,7 @@ function _validate_user_username(){
 // ##############################
 define("USER_FORENAME_MIN", 2);
 define("USER_FORENAME_MAX", 20);
-function _validate_user_forename(){
+function _validate_user_forename(): string{
     $user_forename = $_POST["user_forename"] ?? "";
     $user_forename = trim($user_forename);
     if(strlen($user_forename) < USER_FORENAME_MIN){
@@ -95,7 +101,7 @@ function _validate_user_forename(){
 // ##############################
 define("USER_LASTNAME_MIN", 2);
 define("USER_LASTNAME_MAX", 20);
-function _validate_user_lastname(){
+function _validate_user_lastname(): string{
     $user_lastname = $_POST["user_lastname"] ?? "";
     $user_lastname = trim($user_lastname);
     if(strlen($user_lastname) < USER_LASTNAME_MIN){
@@ -112,7 +118,7 @@ function _validate_user_lastname(){
 // ##############################
 define("USER_PASSWORD_MIN", 6);
 define("USER_PASSWORD_MAX", 50);
-function _validate_user_password(){
+function _validate_user_password(): string{
 
     $user_password = $_POST["user_password"] ?? "";
     $user_password = trim($user_password);
@@ -126,7 +132,7 @@ function _validate_user_password(){
 }
 
 // ##############################
-function _no_cache(){
+function _no_cache(): void{
     header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
     header("Pragma: no-cache");
     header("Expires: 0");
@@ -140,7 +146,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-function _send_welcome_email($user_email, $isReverify = false){
+function _send_welcome_email($user_email, $isReverify = false): void{
     
     
     $mail = new PHPMailer(true);
@@ -201,7 +207,7 @@ function _send_welcome_email($user_email, $isReverify = false){
 
 
 
-function _send_offer_request($date, $buyer_namer, $property_price){
+function _send_offer_request($date, $buyer_namer, $property_price): void{
     
     
     $mail = new PHPMailer(true);
@@ -257,7 +263,7 @@ function _send_offer_request($date, $buyer_namer, $property_price){
 
 
 // ##############################
-function _validate_property_pk() {
+function _validate_property_pk(): string {
     
     $property_pk = filter_input(INPUT_POST, "item_pk") ?? null;
 
@@ -280,7 +286,7 @@ function _validate_property_pk() {
 
 define("FLASH_MSG_MIN", 0);
 define("FLASH_MSG_MAX", 200);
-function _validate_flash_message($flash_msg){
+function _validate_flash_message($flash_msg): string{
     $flash_msg = trim($flash_msg);
     
     if(strlen($flash_msg) < FLASH_MSG_MIN){
@@ -298,7 +304,7 @@ function _validate_flash_message($flash_msg){
 
 
 
-function _render_flash_msg(){
+function _render_flash_msg(): void{
 
     $message = "";
     $flash_state = "";
@@ -474,7 +480,10 @@ function _is_lmage_accessible($imageUrl) {
     return $imageUrl;
 }
 
- function _row_block_HTML($value, $icon, $metric, $text) {
+/**
+* @return false|string
+*/
+function _row_block_HTML($value, $icon, $metric, $text): string|false {
     ob_start(); ?>
     <?php if($value != null):?>
     <article class="row">
@@ -505,7 +514,7 @@ function _validate_pk(string $pk): string {
 
 
 
-function set_csrf()
+function set_csrf(): void
 {
 	if (session_status() === PHP_SESSION_NONE) {
         session_start();
@@ -516,7 +525,7 @@ function set_csrf()
 	echo '<input type="hidden" name="csrf_token" value="' . htmlspecialchars($_SESSION["csrf_token"]) . '">';
 }
 
-function is_csrf_valid()
+function is_csrf_valid(): bool
 {
 	if (session_status() === PHP_SESSION_NONE) {
         session_start();

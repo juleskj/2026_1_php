@@ -29,7 +29,7 @@
         
         }
 
-        if (!isset($_SESSION["user"]["user_role"]) && !in_array("admin", $_SESSION["user"]["user_role"], true)) {
+        if (!isset($_SESSION["user"]["user_role"]) || !in_array("admin", $_SESSION["user"]["user_role"], true)) {
             $ip = $_SERVER['HTTP_X_REAL_IP'] ?? $_SERVER['REMOTE_ADDR'];
             $user_pk = $_SESSION["user"]["user_pk"];
             error_log("SECURITY: Unauthorized admin access attempt from user: $user_pk IP: $ip");

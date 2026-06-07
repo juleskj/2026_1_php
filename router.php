@@ -1,41 +1,41 @@
 <?php
 require_once __DIR__ . "/_.php";
 
-function get($route, $path_to_include)
+function get($route, $path_to_include): void
 {
 	if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 		route($route, $path_to_include);
 	}
 }
-function post($route, $path_to_include)
+function post($route, $path_to_include): void
 {
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		route($route, $path_to_include);
 	}
 }
-function put($route, $path_to_include)
+function put($route, $path_to_include): void
 {
 	if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
 		route($route, $path_to_include);
 	}
 }
-function patch($route, $path_to_include)
+function patch($route, $path_to_include): void
 {
 	if ($_SERVER['REQUEST_METHOD'] == 'PATCH') {
 		route($route, $path_to_include);
 	}
 }
-function delete($route, $path_to_include)
+function delete($route, $path_to_include): void
 {
 	if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
 		route($route, $path_to_include);
 	}
 }
-function any($route, $path_to_include)
+function any($route, $path_to_include): void
 {
 	route($route, $path_to_include);
 }
-function route($route, $path_to_include)
+function route($route, $path_to_include): void
 {
 	$callback = $path_to_include;
 	if (!is_callable($callback)) {
@@ -85,7 +85,7 @@ function route($route, $path_to_include)
 	include_once __DIR__ . "/$path_to_include";
 	exit();
 }
-function out($text)
+function out($text): void
 {
 	echo htmlspecialchars($text);
 }
