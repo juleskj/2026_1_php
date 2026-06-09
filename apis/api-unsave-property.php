@@ -7,7 +7,8 @@ require_once __DIR__ . "/../_.php";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     try{
-  
+    
+        $item_pk =  $item_pk ?? " ";
 
         if (!is_csrf_valid()) {
             throw new Exception("Invalid CSRF token", 403);
@@ -55,18 +56,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     
-
-}
-
-
 ?>
+
 
 <browser mix-replace="#save-form-<?=_($item_pk)?>">
 
     <form id="save-form-<?=_($item_pk)?>" mix-post="api-save-property">
         <input type="hidden" name="item_pk" value="<?= _($item_pk) ?>">
-        <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
+       <?php set_csrf();?>
         <button class="bookmark regular"></button>
     </form>
 
 </browser>
+
+<?php
+}
+
+
+?>

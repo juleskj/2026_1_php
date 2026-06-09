@@ -1,7 +1,10 @@
 <?php
 
+header_remove("X-Powered-By");
+
+
 // ##############################
-function _($text): void{
+function _($text): void{                                      
      echo htmlspecialchars($text);
  
  }

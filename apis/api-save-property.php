@@ -43,7 +43,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     
     } catch (Exception $e){
-         error_log("Error: " . $e->getMessage() . " (Code: " . $e->getCode() . ")");
+        
+
+    
+    
+        error_log("Error: " . $e->getMessage() . " (Code: " . $e->getCode() . ")");
         $_SESSION['flash_state'] = "error";
         
         $message = $e->getMessage();
@@ -62,22 +66,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
 
-}
-
 ?>
 
 <browser mix-replace="#save-form-<?=_($item_pk)?>">
 
     <form id="save-form-<?=_($item_pk)?>" mix-post="api-unsave-property">
         <input type="hidden" name="item_pk" value="<?= _($item_pk) ?>">
-        <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
+       <?php set_csrf();?>
         <button class="bookmark solid"></button>
     </form>
 
 </browser> 
 
 
+<?php
+}
 
-
+?>
 
 
