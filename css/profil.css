@@ -1,35 +1,24 @@
-
-@media(min-width:768px) {
-     #profil-content, #admin-content{
-        grid-column: full;
-        display: grid;
-        grid-template-columns: 3fr 10fr;
-       
-
+@media (min-width: 768px) {
+  #profil-content,
+  #admin-content {
+    grid-column: full;
+    display: grid;
+    grid-template-columns: 3fr 10fr;
+  }
+  .user-info,
+  .admin-info {
+    padding: 1rem 0.5rem;
+    background-color: var(--blue);
+    color: var(--white);
+    img {
+      aspect-ratio: 1;
+      object-fit: cover;
+      max-height: 200px;
+      max-width: 200px;
+      border-radius: 50%;
+      margin: 0.5rem auto;
+      display: block;
+      border: var(--white) solid 2px;
     }
-
-    .user-info, .admin-info{
-        
-       
-        padding: 1rem 0.5rem;
-
-        background-color: var(--blue);
-        color: var(--white);
-
-        img{
-            aspect-ratio: 1;
-            object-fit: cover;
-            max-height: 200px;
-            max-width: 200px;
-            border-radius: 50%;
-            margin: 0.5rem auto;
-            display: block;
-            
-            border: var(--white) solid 2px;
-            
-
-        }
-        
-    }
-    
+  }
 }

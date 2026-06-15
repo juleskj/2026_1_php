@@ -1,21 +1,17 @@
-/* ===== Base Styles ===== */
 .hidden {
   display: none;
 }
-
 @media (min-width: 768px) {
   .hidden {
     display: block;
   }
 }
-
-/* ===== Layout ===== */
 #info {
   grid-area: 2/2;
   min-width: 230px;
   width: calc(100% - 20px);
   height: 250px;
-  background: white;
+  background: #fff;
   box-shadow: 1px 5px 10px gray;
   margin: 10px;
   position: absolute;
@@ -23,13 +19,10 @@
   right: 0;
   z-index: 2;
 }
-
-.property-info{
-    display: flex;
-    flex-direction: column;
-    
+.property-info {
+  display: flex;
+  flex-direction: column;
 }
-
 @media (min-width: 768px) {
   #info {
     overflow-y: auto;
@@ -40,115 +33,92 @@
     margin: 0;
   }
 }
-
-/* ===== Vertical Scroller (Reusable) ===== */
 .vertical-scroller {
   flex: 1;
-  
   padding: 10px;
-  height: 100%; /* Ensures it fills the container */
+  height: 100%;
 }
-.vertical-scroller:has(.property-info){
-    padding: 0;
+.vertical-scroller:has(.property-info) {
+  padding: 0;
 }
-
 .vertical-scroller::-webkit-scrollbar {
   width: 6px;
 }
-
 .vertical-scroller::-webkit-scrollbar-thumb {
   background: #ccc;
   border-radius: 3px;
 }
-
 .vertical-scroller::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
-
-.info-h2{
+.info-h2 {
   position: sticky;
-    top: 0;
-    background: white;
-    z-index: 3;
-    padding: 0.2rem 0.5rem;
+  top: 0;
+  background: #fff;
+  z-index: 3;
+  padding: 0.2rem 0.5rem;
 }
-
-/* ===== Card Styles ===== */
-a:has(.bolig-kort){
+a:has(.bolig-kort) {
   text-decoration: none;
   max-width: 350px;
   width: 350px;
 }
-
-
 .bolig-kort {
   scroll-snap-align: start;
-  background: white;
+  background: #fff;
   border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 5px rgb(0 0 0 / 0.1);
   margin-bottom: 15px;
   overflow: hidden;
   transition: transform 0.2s;
   z-index: 2;
   position: relative;
 }
-
-
 .bolig-info {
   padding: 10px;
 }
-
 .bolig-info h3 {
   margin: 0 0 5px 0;
   font-size: 16px;
   color: #333;
 }
-
 .bolig-info p {
   margin: 0;
   font-size: 14px;
   color: #666;
 }
-
-.pris, .property-price {
-  font-weight: bold;
+.pris,
+.property-price {
+  font-weight: 700;
   color: #2a6496;
   font-size: 16px;
   margin-top: 5px;
 }
-
-/* Capitalize first letter */
 .bolig-kort *::first-letter {
   text-transform: capitalize;
 }
-
-/* ===== Image Container ===== */
 .img-container {
-    display: grid;
-    position: relative;
-    overflow: hidden;
-    height: 150px;
+  display: grid;
+  position: relative;
+  overflow: hidden;
+  height: 150px;
 }
-
 .img-container img {
   grid-area: 1/1;
   object-fit: cover;
   height: 100px;
   object-position: center;
 }
-
-.floor-plan-img{
-    object-fit: contain;
-    height: 100%;
+.floor-plan-img {
+  object-fit: contain;
+  height: 100%;
 }
-
 @media (min-width: 768px) {
   .img-container img {
     height: 150px;
     object-fit: cover;
   }
 }
-
 .img-container p {
   grid-area: 1/1;
   display: block;
@@ -159,42 +129,29 @@ a:has(.bolig-kort){
   color: var(--white);
   z-index: 1;
 }
-
-/* ===== Horizontal Image Scroller (for floor plans) ===== */
-ul:has(.img-container){
-        
-    display: flex;
-    overflow-x: scroll;
-    scroll-snap-type: x mandatory;
-    height: 100px;
-    overflow-y:hidden;
-    
-    @media (min-width: 768px){
-        height: 200px
-        
+ul:has(.img-container) {
+  display: flex;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  height: 100px;
+  overflow-y: hidden;
+  @media (min-width: 768px) {
+    height: 200px;
+  }
+  li {
+    list-style-type: none;
+    scroll-snap-align: center;
+    flex: 0 0 100%;
+    @media (min-width: 768px) {
+      height: auto;
     }
-                    
-    
-    li {
-        list-style-type: none;
-        scroll-snap-align: center;
-        flex: 0 0 100%;
-        @media (min-width: 768px){
-            height: auto
-        
-        }
-
-        
-    }
-    
-    &::-webkit-scrollbar {
+  }
+  &::-webkit-scrollbar {
     display: none;
-    }
-
-    &::scroll-button(*) {
+  }
+  &::scroll-button(*) {
     border: 0;
     font-size: 1rem;
-    
     opacity: 0.7;
     cursor: pointer;
     color: var(--black);
@@ -203,122 +160,109 @@ ul:has(.img-container){
     opacity: 0.7;
     aspect-ratio: 1;
     z-index: 2;
-
-    }
-
-    &::scroll-button(*):hover,
-    &::scroll-button(*):focus {
+  }
+  &::scroll-button(*):hover,
+  &::scroll-button(*):focus {
     opacity: 1;
-    }
-
-    &::scroll-button(*):active {
+  }
+  &::scroll-button(*):active {
     translate: 1px 1px;
-    }
-
-    
-    &::scroll-button(left) {
+  }
+  &::scroll-button(left) {
     content: "◄" / "Previous";
-    }
-
-    &::scroll-button(right) {
+  }
+  &::scroll-button(right) {
     content: "►" / "Next";
-    }
-    & {
+  }
+  & {
     anchor-name: --my-carousel;
-    }
-
-    &::scroll-button(*) {
+  }
+  &::scroll-button(*) {
     position: absolute;
     position-anchor: --my-carousel;
-    
-    }
-    &::scroll-button(left) {
+  }
+  &::scroll-button(left) {
     right: calc(anchor(left) - 40px);
     bottom: calc(anchor(bottom) + 1rem);
-    }
-
-    &::scroll-button(right) {
+  }
+  &::scroll-button(right) {
     left: calc(anchor(right) - 40px);
     bottom: calc(anchor(bottom) + 1rem);
-    }
-
-    & {
+  }
+  & {
     scroll-marker-group: after;
-    }
-
-    &::scroll-marker-group {
-        position: absolute;
-        position-anchor: --my-carousel;
-        bottom: calc(anchor(bottom) + 1.2rem);
-
-        display: flex;
-        justify-self: anchor-center;
-        justify-content: center;
-        gap: 20px;
-        z-index: 2;
-    }
-
-    li::scroll-marker {
-        
-        content: attr(data-accName);
-        width: 10px;
-        height: 10px;
-        background-color: var(--white);
-    
-        border-radius: 50%;
-        overflow: hidden;
-        text-indent: 16px;
-    }
-
-    li::scroll-marker:target-current {
-        background-color: var(--white);
-        opacity: 0.5;
-        
-    }
+  }
+  &::scroll-marker-group {
+    position: absolute;
+    position-anchor: --my-carousel;
+    bottom: calc(anchor(bottom) + 1.2rem);
+    display: flex;
+    justify-self: anchor-center;
+    justify-content: center;
+    gap: 20px;
+    z-index: 2;
+  }
+  li::scroll-marker {
+    content: attr(data-accName);
+    width: 10px;
+    height: 10px;
+    background-color: var(--white);
+    border-radius: 50%;
+    overflow: hidden;
+    text-indent: 16px;
+  }
+  li::scroll-marker:target-current {
+    background-color: var(--white);
+    opacity: 0.5;
+  }
 }
-
 @media (min-width: 768px) {
   ul:has(.img-container) {
     height: 150px;
   }
 }
-
 ul:has(.img-container) li {
   list-style-type: none;
   scroll-snap-align: center;
   flex: 0 0 100%;
 }
-
 ul:has(.img-container)::-webkit-scrollbar {
   display: none;
 }
-
-/* ===== Energy Label ===== */
 .energy-label {
-    display: grid;
-    place-content: center;
-    min-width: 2rem;
-    height: 2rem;
-    border-radius: 2px;
-    padding: 0.5rem;
-    --energy-color: grey;
-    background-color: var(--energy-color);
-    text-align: center;
-    line-height: 1;
+  display: grid;
+  place-content: center;
+  min-width: 2rem;
+  height: 2rem;
+  border-radius: 2px;
+  padding: 0.5rem;
+  --energy-color: grey;
+  background-color: var(--energy-color);
+  text-align: center;
+  line-height: 1;
 }
-
-.energy-label.a { --energy-color: var(--dark-green); }
-.energy-label.b { --energy-color: var(--green); }
-.energy-label.c { --energy-color: var(--light-green); }
+.energy-label.a {
+  --energy-color: var(--dark-green);
+}
+.energy-label.b {
+  --energy-color: var(--green);
+}
+.energy-label.c {
+  --energy-color: var(--light-green);
+}
 .energy-label.d {
   --energy-color: var(--yellow);
   border: solid 1px var(--black);
 }
-.energy-label.e { --energy-color: var(--orange); }
-.energy-label.f { --energy-color: var(--dark-orange); }
-.energy-label.g { --energy-color: var(--red); }
-
-/* ===== Rows (Property Details) ===== */
+.energy-label.e {
+  --energy-color: var(--orange);
+}
+.energy-label.f {
+  --energy-color: var(--dark-orange);
+}
+.energy-label.g {
+  --energy-color: var(--red);
+}
 .row {
   padding: 0.5rem 0;
   margin: 0.2rem;
@@ -328,31 +272,24 @@ ul:has(.img-container)::-webkit-scrollbar {
   justify-content: end;
   align-items: center;
 }
-
 .row h4 {
   margin-right: auto;
 }
-
-/* ===== Buttons ===== */
-
-#sold{
-    color: var(--white);
-    background-color: var(--red);
-    border: none;
-    text-transform: uppercase;
-    font-weight: bolder;
-    display: block;
-    padding: 1rem 0.2rem;
-    margin: 0.1rem 2rem;
+#sold {
+  color: var(--white);
+  background-color: var(--red);
+  border: none;
+  text-transform: uppercase;
+  font-weight: bolder;
+  display: block;
+  padding: 1rem 0.2rem;
+  margin: 0.1rem 2rem;
 }
-
-/* ===== Mobile Adjustments ===== */
 @media (max-width: 768px) {
   .vertical-scroller {
     height: 100%;
   }
-
-  .bolig-kort{
+  .bolig-kort {
     margin-bottom: 10px;
   }
 }

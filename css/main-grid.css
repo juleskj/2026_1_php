@@ -1,79 +1,63 @@
-
-@media(max-width: 768px) { 
- 
- body:has(#page-map){
-        display: grid;
-        grid-template-rows: auto 1fr auto;
-        grid-template-columns:[full-start] 1fr [content] minmax(auto, 1024px) 1fr  [full-end] ;
-
-        overflow: hidden;
-        height: 100%;
-       
-        > * {
-        grid-column: content;
-        }
-    }    
-    
-    #page-map{
-        
-        display: grid;
-        grid-column: full;
-        grid-template-columns: subgrid;      
-        height: 100vh;
-        width: 100vw;
-
-        > * {
-            grid-column: content;
-        }
+@media (max-width: 768px) {
+  body:has(#page-map) {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: [full-start] 1fr [content] minmax(
+        auto,
+        1024px
+      ) 1fr [full-end];
+    overflow: hidden;
+    height: 100%;
+    > * {
+      grid-column: content;
     }
-
-}
-
-@media(min-width: 768px) {
-    body{
-        display: grid;
-        grid-template-rows: auto 1fr auto;
-        grid-template-columns:[full-start] 1fr [content] minmax(auto, 1024px) 1fr  [full-end] ;
-        min-height: 100vh;
-        overflow-x: hidden;
-        z-index: 1;
-    }
-    
-    body > * {
-        grid-column: content;
-    }
-    footer, main{
-        
-        display: grid;
-        grid-column: full;
-        grid-template-columns: subgrid;
-        gap: 2rem 0; 
-        position: relative;
-        
-        
-    
-        > * {
-            grid-column: content;
-        }
-    }
-
-   
-    
-}
-
-
-
-.grid_1-1-1{
+  }
+  #page-map {
     display: grid;
     grid-column: full;
-    grid-template-columns: repeat(auto-fit, minmax(min-content, 300px));
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    background-color: rgb(188, 188, 188);
-    min-height: 80vh;
-    padding: 1rem 0;
+    grid-template-columns: subgrid;
+    height: 100vh;
+    width: 100vw;
+    > * {
+      grid-column: content;
+    }
+  }
 }
-
-/* to have an element to be the full with just put 
-grid-column:full; and grid-template-columns: subgrid; */
+@media (min-width: 768px) {
+  body {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: [full-start] 1fr [content] minmax(
+        auto,
+        1024px
+      ) 1fr [full-end];
+    min-height: 100vh;
+    overflow-x: hidden;
+    z-index: 1;
+  }
+  body > * {
+    grid-column: content;
+  }
+  footer,
+  main {
+    display: grid;
+    grid-column: full;
+    grid-template-columns: subgrid;
+    gap: 2rem 0;
+    position: relative;
+    > * {
+      grid-column: content;
+    }
+  }
+}
+.grid_1-1-1 {
+  display: grid;
+  grid-column: full;
+  grid-template-columns: repeat(auto-fit, minmax(min-content, 300px));
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  background-color: #bcbcbc;
+  min-height: 80vh;
+  padding: 1rem 0;
+}

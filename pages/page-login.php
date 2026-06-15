@@ -5,7 +5,7 @@ session_set_cookie_params([
     'domain' => '', // Adjust as needed
     'secure' => true, // Only send over HTTPS
     'httponly' => true,
-    'samesite' => 'Lax' // or 'Strict'
+    'samesite' => 'Strict' // or 'Strict'
 ]);
 
 session_start();

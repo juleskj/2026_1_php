@@ -78,6 +78,8 @@ try{
         $user_role = $stmt->fetch();
 
         $_db->commit();
+
+        session_regenerate_id(true);
         
         // put user in session
         $_SESSION['user'] = [
@@ -104,7 +106,8 @@ try{
         // Hvis login fejler — increment tæller
         $attempts['count']++;
         $attempts['last_attempt'] = time();
-        error_log("SECURITY: Failed login attempt $attempts[count]/$max_attempts from IP: $ip");
+        error_log("SECURITY: Failed login attempt 
+        $attempts[count]/$max_attempts from IP: $ip");
 
 
         throw new Exception("password incorect", 401);
